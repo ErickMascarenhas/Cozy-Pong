@@ -3462,6 +3462,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Adjustments",
+            "id": "64eded9c-f4da-4bfb-b565-58aec524b288",
+            "actions": [
+                {
+                    "name": "Open Menu",
+                    "type": "Button",
+                    "id": "834c1e89-4e15-4200-af95-b0d7423704c6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2a6cf37a-4f85-4d30-af2e-b73ab6fb5ead",
+                    "path": "<XRController>{LeftHand}/{MenuButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

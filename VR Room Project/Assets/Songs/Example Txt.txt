@@ -1,0 +1,8 @@
+# Formato: TempoMS, PontoIndex, DirX, DirY, DirZ, Velocidade
+
+# ponto central (2), mirando pra baixo (-0.5) e frente (1)
+1000, 2, 0, -0.5, 1, 8.5
+# esquerda (0), jogando na diagonal
+2500, 0, 0.3, -0.5, 1, 9.0
+# direita (4), jogando na diagonal oposta
+3200, 4, -0.3, -0.5, 1, 9.0
