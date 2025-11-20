@@ -1,0 +1,12 @@
+# Blender 4.5.4 LTS MTL File: 'Table Tennis.blend'
+# www.blender.org
+
+newmtl 10520_pingpongtable_mat
+Ns 54.000008
+Ka 1.000000 1.000000 1.000000
+Ks 0.531000 0.531000 0.531000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd Table.jpg
