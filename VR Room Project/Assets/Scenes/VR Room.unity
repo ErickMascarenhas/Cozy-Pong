@@ -905,7 +905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CustomInputActions
   customButton: {fileID: 8685983895738351204, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   objectToSummon: {fileID: 1286841219}
-  handInteractor: {fileID: 331402230}
+  handInteractor: {fileID: 1417986403}
   interactionManager: {fileID: 130009822}
 --- !u!1 &331402227
 GameObject:
@@ -2399,7 +2399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomInputActions
   customButton: {fileID: 5613841344557643674, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  objectToSummon: {fileID: 1286841219}
+  objectToSummon: {fileID: 1324652198}
   handInteractor: {fileID: 331402230}
   interactionManager: {fileID: 130009822}
 --- !u!1 &602410660
@@ -2806,7 +2806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomInputActions
   customButton: {fileID: -9080645788943350382, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  objectToSummon: {fileID: 1286841219}
+  objectToSummon: {fileID: 481717341}
   handInteractor: {fileID: 331402230}
   interactionManager: {fileID: 130009822}
 --- !u!1 &684024005
@@ -4023,8 +4023,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomInputActions
   customButton: {fileID: 7019976521110326087, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  objectToSummon: {fileID: 1286841219}
-  handInteractor: {fileID: 331402230}
+  objectToSummon: {fileID: 1324652198}
+  handInteractor: {fileID: 1417986403}
   interactionManager: {fileID: 130009822}
 --- !u!4 &869592594 stripped
 Transform:
@@ -6788,8 +6788,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomInputActions
   customButton: {fileID: -5053260653631045575, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  objectToSummon: {fileID: 1286841219}
-  handInteractor: {fileID: 331402230}
+  objectToSummon: {fileID: 481717341}
+  handInteractor: {fileID: 1417986403}
   interactionManager: {fileID: 130009822}
 --- !u!1 &1364698792
 GameObject:

@@ -1,7 +1,10 @@
+using System.Collections;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class CustomInputActions : MonoBehaviour
 {
@@ -9,8 +12,8 @@ public class CustomInputActions : MonoBehaviour
     public InputActionReference customButton;
 
     [Header("Configurações de Interação")]
-    public UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable objectToSummon;
-    public UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor handInteractor;
+    public XRGrabInteractable objectToSummon;
+    public XRBaseInteractor handInteractor;
     public XRInteractionManager interactionManager;
 
     void Start()
@@ -33,25 +36,42 @@ public class CustomInputActions : MonoBehaviour
 
     void ButtonWasPressed(InputAction.CallbackContext context)
     {
-        
+        if (handInteractor.hasSelection)
+        {
+            interactionManager.SelectExit((IXRSelectInteractor)handInteractor, (IXRSelectInteractable)objectToSummon);
+        }
     }
 
     void ButtonWasReleased(InputAction.CallbackContext context)
     {
-        SummonAndGrab();
+        StartCoroutine(SummonAndGrabRoutine());
     }
 
-    void SummonAndGrab()
+    IEnumerator SummonAndGrabRoutine()
     {
-        interactionManager.SelectExit((UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor) handInteractor, (UnityEngine.XR.Interaction.Toolkit.Interactables.IXRSelectInteractable) objectToSummon);
+        if (objectToSummon == null || handInteractor == null || interactionManager == null) yield break;
         Rigidbody rb = objectToSummon.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = false;
         }
         objectToSummon.transform.position = handInteractor.transform.position;
         objectToSummon.transform.rotation = handInteractor.transform.rotation;
-        interactionManager.SelectEnter((UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor) handInteractor, (UnityEngine.XR.Interaction.Toolkit.Interactables.IXRSelectInteractable) objectToSummon);
+        yield return new WaitForFixedUpdate();
+        interactionManager.SelectEnter((IXRSelectInteractor)handInteractor, (IXRSelectInteractable)objectToSummon);
+        objectToSummon.selectExited.AddListener(OnObjectReleased);
+    }
+
+    void OnObjectReleased(SelectExitEventArgs args)
+    {
+        Rigidbody rb = args.interactableObject.transform.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.useGravity = true;
+            rb.isKinematic = false;
+        }
+        objectToSummon.selectExited.RemoveListener(OnObjectReleased);
     }
 }
