@@ -1,8 +1,17 @@
-# Formato: TempoMS, PontoIndex, DirX, DirY, DirZ, Velocidade
+# CABEÇALHO (Offset, Intervalo, Teto, DirZ_Padrao, Modo)
+# Offset: 2000ms (começa 2s depois da música)
+# Intervalo: 500ms (uma bola a cada meio segundo)
+# Teto: 0 (sem limite)
+# DirZ: 1 (velocidade pra frente padrão)
+# Modo: letters (usar o sistema de letras)
+5000, 1000, 30000, 1, letters
 
-# ponto central (2), mirando pra baixo (-0.5) e frente (1)
-1000, 2, 0, -0.5, 1, 8.5
-# esquerda (0), jogando na diagonal
-2500, 0, 0.3, -0.5, 1, 9.0
-# direita (4), jogando na diagonal oposta
-3200, 4, -0.3, -0.5, 1, 9.0
+# Para usar o modo antigo: 0, 0, 0, 0, numbers
+
+# --- INÍCIO DAS NOTAS ---
+
+CSNU
+# C=Centro(2), S=Reto(0), N=Normal, U=Muito Cima(0.1)
+
+CSNu
+# C=Centro(2), S=Reto(0), N=Normal, u=Cima(0.2)
