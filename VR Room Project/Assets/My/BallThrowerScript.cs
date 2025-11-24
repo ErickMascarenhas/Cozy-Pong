@@ -172,7 +172,12 @@ public class BallThrowerScript : MonoBehaviour
                 int stringIndex = (chartInterval > 0) ? 0 : 1;
                 if (data.Length > stringIndex)
                 {
-                    ResolveLetters(data[stringIndex].Trim(), newNote);
+                    string code = data[stringIndex].Trim();
+                    if (chartInterval > 0 && code.ToUpper() == "NOP")
+                    {
+                        continue;
+                    }
+                    ResolveLetters(code, newNote);
                 }
             }
             else
