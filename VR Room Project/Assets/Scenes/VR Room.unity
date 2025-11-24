@@ -507,15 +507,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c899d95335b734ea607d833c97c9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallThrowerScript
-  Ball: {fileID: 2078022550957097246, guid: f030fa7b722c6ae498d780d84430b1fc, type: 3}
+  KeyPos_Left: 76
+  KeyPos_MidLeft: 108
+  KeyPos_Center: 67
+  KeyPos_MidRight: 114
+  KeyPos_Right: 82
+  KeyAng_Straight: 83
+  KeyAng_Left: 108
+  KeyAng_HardLeft: 76
+  KeyAng_Right: 114
+  KeyAng_HardRight: 82
+  KeyHgt_Up: 85
+  KeyHgt_Top: 117
+  KeyHgt_Mid: 77
+  KeyHgt_Bot: 100
+  KeyHgt_Down: 68
+  KeySpd_Slow: 83
+  KeySpd_Normal: 78
+  KeySpd_Fast: 70
+  BallPrefab: {fileID: 2078022550957097246, guid: f030fa7b722c6ae498d780d84430b1fc, type: 3}
+  IndicatorPrefab: {fileID: 919132149155446097, guid: f44b2f6c8de0723408262aa69a636a1f, type: 3}
   Points:
   - {fileID: 139458977}
   - {fileID: 1065940205}
   - {fileID: 1400581180}
   - {fileID: 699717038}
   - {fileID: 627200600}
-  MusicSource: {fileID: 1865446887}
   RhythmDataFile: {fileID: 4900000, guid: 5753b6ef6704ed34a928cf2552b39f91, type: 3}
+  MusicSource: {fileID: 1865446887}
+  SfxSource: {fileID: 0}
+  SoundIndicator: {fileID: 0}
+  SoundShoot: {fileID: 0}
+  PreSpawnTime: 1
   DestroyBallAfter: 2
 --- !u!1 &139458976
 GameObject:
@@ -13861,15 +13884,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155480245869208569}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 1}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7196723497757427971}
   - {fileID: 843227528}
   m_Father: {fileID: 1521908990}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7069010686841274028
 MonoBehaviour:
   m_ObjectHideFlags: 0
