@@ -254,15 +254,15 @@ public class BallThrowerScript : MonoBehaviour
         {
             if (heightChar == KeyHgt_Mid)
             {
-                if (angleChar == KeyAng_Straight) spd = 4.5f; else spd = 4.8f;
+                if (angleChar == KeyAng_Straight) spd = 5.0f; else spd = 4.8f;
             }
-            else spd = 4.5f;
+            else spd = 5.0f;
         }
         else if (speedChar == KeySpd_Normal)
         {
             if (heightChar == KeyHgt_Mid)
             {
-                if (angleChar == KeyAng_Straight) spd = 5.0f;
+                if (angleChar == KeyAng_Straight) spd = 5.6f;
                 else if (angleChar == KeyAng_Left || angleChar == KeyAng_Right) spd = 5.6f;
                 else spd = 5.0f;
             }
