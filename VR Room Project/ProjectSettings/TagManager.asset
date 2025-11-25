@@ -12,6 +12,7 @@ TagManager:
   - Flame
   - Trail
   - Ball
+  - Racket
   layers:
   - Default
   - TransparentFX
