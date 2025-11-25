@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1233149941 &-8616736939394255798
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bounce3_{-8616736939394255798}
+  m_AudioClip: {fileID: 8300000, guid: cfc2ed75072217241be84b54c286a62c, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-7911394440853723998
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bounce1_{-7911394440853723998}
+  m_AudioClip: {fileID: 8300000, guid: 3e93663b5a6d4f745862a94dd62793fe, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-6753076462886832847
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bounce5_{-6753076462886832847}
+  m_AudioClip: {fileID: 8300000, guid: f646c54df38d31341ab150acbbd0cb1f, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-5245193450601872494
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bounce7_{-5245193450601872494}
+  m_AudioClip: {fileID: 8300000, guid: 92a149ebd13583a45ad3a0537d3485e1, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-2755214475625211532
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bounce4_{-2755214475625211532}
+  m_AudioClip: {fileID: 8300000, guid: b1d2f7f8dee9fa24191ea6c6b59e4ea8, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-1776107532941892220
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bounce2_{-1776107532941892220}
+  m_AudioClip: {fileID: 8300000, guid: 13b0a056808791244a3ae2d117229001, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &2682718116754373239
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bounce8_{2682718116754373239}
+  m_AudioClip: {fileID: 8300000, guid: 8b2ad341bb9fbc346a46370fc78f9e62, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &4076658553138987492
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bounce6_{4076658553138987492}
+  m_AudioClip: {fileID: 8300000, guid: 0a03e920ecd1ba545809719e93f305a7, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1307931743 &6418180475301049370
+AudioRandomContainer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Bounce
+  m_Volume: 0
+  m_Pitch: 100
+  m_AutomaticTriggerTime: 0
+  m_LoopCount: 1
+  m_VolumeRandomizationRange: {x: 0, y: 0}
+  m_PitchRandomizationRange: {x: 0, y: 0}
+  m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
+  m_LoopCountRandomizationRange: {x: 0, y: 0}
+  m_Elements:
+  - {fileID: -7911394440853723998}
+  - {fileID: -1776107532941892220}
+  - {fileID: -8616736939394255798}
+  - {fileID: -2755214475625211532}
+  - {fileID: -6753076462886832847}
+  - {fileID: 4076658553138987492}
+  - {fileID: -5245193450601872494}
+  - {fileID: 2682718116754373239}
+  - {fileID: 6479846241592761121}
+  m_AvoidRepeatingLast: 1
+  m_PlaybackMode: 2
+  m_TriggerMode: 1
+  m_AutomaticTriggerMode: 1
+  m_LoopMode: 2
+  m_VolumeRandomizationEnabled: 0
+  m_PitchRandomizationEnabled: 0
+  m_AutomaticTriggerTimeRandomizationEnabled: 0
+  m_LoopCountRandomizationEnabled: 0
+--- !u!1233149941 &6479846241592761121
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bounce9_{6479846241592761121}
+  m_AudioClip: {fileID: 8300000, guid: ba8936fb02e7805488f72b7768d44c1b, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
