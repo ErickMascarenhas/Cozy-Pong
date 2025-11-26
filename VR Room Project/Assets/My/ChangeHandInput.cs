@@ -8,14 +8,10 @@ public class ChangeHandInput : MonoBehaviour
     public InputActionReference customButton;
     [Tooltip("Check Lobby")]
     public GameObject lobby;
-    [Tooltip("Racket Shakehand Left")]
-    public GameObject racketShakehandLeft;
-    [Tooltip("Racket Penhold Left")]
-    public GameObject racketPenholdLeft;
-    [Tooltip("Racket Shakehand Right")]
-    public GameObject racketShakehandRight;
-    [Tooltip("Racket Penhold Right")]
-    public GameObject racketPenholdRight;
+    [Tooltip("Racket Left")]
+    public GameObject racketLeft;
+    [Tooltip("Racket Right")]
+    public GameObject racketRight;
     [Tooltip("Left Ray Interactor")]
     public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor leftRayInteractor;
     [Tooltip("Left Hand Model")]
@@ -33,7 +29,6 @@ public class ChangeHandInput : MonoBehaviour
             customButton.action.performed += OnSwapButtonData;
         }
     }
-
     private void OnDisable()
     {
         if (customButton != null && customButton.action != null)
@@ -42,7 +37,6 @@ public class ChangeHandInput : MonoBehaviour
             customButton.action.Disable();
         }
     }
-
     private void OnSwapButtonData(InputAction.CallbackContext context)
     {
         SwapHand();
@@ -50,53 +44,17 @@ public class ChangeHandInput : MonoBehaviour
 
     public void SwapHand()
     {
-        if (lobby.activeSelf)
+        if (WristMenuManager.IsMenuOpen)
         {
             return;
         }
-        if (racketShakehandRight.activeSelf) // se shakehand right, então shakehand left
+        if (racketRight.activeSelf) // se racket right, então racket left
         {
-            PerformSwap(
-                currentRacket: racketShakehandRight,
-                newRacket: racketShakehandLeft,
-                currentHandRay: rightRayInteractor,
-                currentHandModel: rightHandModel,
-                newHandRay: leftRayInteractor,
-                newHandModel: leftHandModel
-            );
+            PerformSwap(currentRacket: racketRight, newRacket: racketLeft, currentHandRay: rightRayInteractor, currentHandModel: rightHandModel, newHandRay: leftRayInteractor, newHandModel: leftHandModel);
         }
-        else if (racketPenholdRight.activeSelf) // se penhold right, então penhold left
+        else if (racketLeft.activeSelf) // senao faz o contrario
         {
-            PerformSwap(
-                currentRacket: racketPenholdRight,
-                newRacket: racketPenholdLeft,
-                currentHandRay: rightRayInteractor,
-                currentHandModel: rightHandModel,
-                newHandRay: leftRayInteractor,
-                newHandModel: leftHandModel
-            );
-        }
-        else if (racketShakehandLeft.activeSelf)  // se shakehand left, então shakehand right
-        {
-            PerformSwap(
-                currentRacket: racketShakehandLeft,
-                newRacket: racketShakehandRight,
-                currentHandRay: leftRayInteractor,
-                currentHandModel: leftHandModel,
-                newHandRay: rightRayInteractor,
-                newHandModel: rightHandModel
-            );
-        }
-        else if (racketPenholdLeft.activeSelf)  // se penhold left, então penhold right
-        {
-            PerformSwap(
-                currentRacket: racketPenholdLeft,
-                newRacket: racketPenholdRight,
-                currentHandRay: leftRayInteractor,
-                currentHandModel: leftHandModel,
-                newHandRay: rightRayInteractor,
-                newHandModel: rightHandModel
-            );
+            PerformSwap(currentRacket: racketLeft, newRacket: racketRight, currentHandRay: leftRayInteractor, currentHandModel: leftHandModel, newHandRay: rightRayInteractor, newHandModel: rightHandModel);
         }
     }
 

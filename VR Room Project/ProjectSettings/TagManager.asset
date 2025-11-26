@@ -13,6 +13,7 @@ TagManager:
   - Trail
   - Ball
   - Racket
+  - Table
   layers:
   - Default
   - TransparentFX

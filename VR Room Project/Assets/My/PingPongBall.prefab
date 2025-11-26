@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8459691761854716384}
   - component: {fileID: -5130450840795578449}
   - component: {fileID: 5622642834499888832}
+  - component: {fileID: 1113312535671930834}
   m_Layer: 0
   m_Name: PingPongBall
   m_TagString: Ball
@@ -412,7 +413,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2.5
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -521,5 +522,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 92a149ebd13583a45ad3a0537d3485e1, type: 3}
   - {fileID: 8300000, guid: 8b2ad341bb9fbc346a46370fc78f9e62, type: 3}
   - {fileID: 8300000, guid: ba8936fb02e7805488f72b7768d44c1b, type: 3}
-  minVelocityToPlay: 0.5
+  minVelocityToPlay: 0.2
   pitchVariation: 0.5
+--- !u!114 &1113312535671930834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078022550957097246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a0e5303c399984598a60facd10b077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GuidedBall

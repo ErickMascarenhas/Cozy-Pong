@@ -3493,6 +3493,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Action (Left)",
+                    "type": "Button",
+                    "id": "f7d7bd11-6b83-469b-a601-1c7fa6add283",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Action (Right)",
+                    "type": "Button",
+                    "id": "805f1b62-0c82-4069-b87e-e6bf74dc7db6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -3526,6 +3544,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Hand Swap (Right)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8c2c29a-b5d0-4e76-afcc-b851af8e17d1",
+                    "path": "<XRController>{RightHand}/{SecondaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Action (Right)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "428ed65f-d160-424a-a91c-93f32622279d",
+                    "path": "<XRController>{LeftHand}/{SecondaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Action (Left)",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
