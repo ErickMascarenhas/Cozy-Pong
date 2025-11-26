@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 7889751486886826915}
   - component: {fileID: 641529184398894986}
   - component: {fileID: 8459691761854716384}
+  - component: {fileID: -5130450840795578449}
+  - component: {fileID: 5622642834499888832}
   m_Layer: 0
   m_Name: PingPongBall
   m_TagString: Ball
@@ -124,7 +126,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078022550957097246}
   serializedVersion: 5
-  m_Mass: 0.25
+  m_Mass: 0.1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -140,7 +142,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!114 &641529184398894986
@@ -389,3 +391,135 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!82 &-5130450840795578449
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078022550957097246}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &5622642834499888832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078022550957097246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e8baeb9e0225c449c4871e1d02e946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RacketSoundController
+  racketTag: Racket
+  racketHitSounds:
+  - {fileID: 8300000, guid: 5978c1c84e3b2b649b88009a1112de17, type: 3}
+  - {fileID: 8300000, guid: e0f95546469a74540a55cb23edb7795c, type: 3}
+  - {fileID: 8300000, guid: 6768f4c21cbf4104c8152c010dee2e11, type: 3}
+  - {fileID: 8300000, guid: 3e52fd20a25e4714f8d9f5f5bcf24820, type: 3}
+  - {fileID: 8300000, guid: 4da1db583f6b10f45962bb0bff3481b4, type: 3}
+  - {fileID: 8300000, guid: 0de4e9c97a175854288288691f77793d, type: 3}
+  - {fileID: 8300000, guid: 39f2c98aa58e8b44db006321df63a36b, type: 3}
+  - {fileID: 8300000, guid: c8937f5c9f0dac24d9a960418054b73a, type: 3}
+  - {fileID: 8300000, guid: acb500e28ddf8ba498df3eb8e08c386c, type: 3}
+  bounceSounds:
+  - {fileID: 8300000, guid: 3e93663b5a6d4f745862a94dd62793fe, type: 3}
+  - {fileID: 8300000, guid: 13b0a056808791244a3ae2d117229001, type: 3}
+  - {fileID: 8300000, guid: cfc2ed75072217241be84b54c286a62c, type: 3}
+  - {fileID: 8300000, guid: b1d2f7f8dee9fa24191ea6c6b59e4ea8, type: 3}
+  - {fileID: 8300000, guid: f646c54df38d31341ab150acbbd0cb1f, type: 3}
+  - {fileID: 8300000, guid: 0a03e920ecd1ba545809719e93f305a7, type: 3}
+  - {fileID: 8300000, guid: 92a149ebd13583a45ad3a0537d3485e1, type: 3}
+  - {fileID: 8300000, guid: 8b2ad341bb9fbc346a46370fc78f9e62, type: 3}
+  - {fileID: 8300000, guid: ba8936fb02e7805488f72b7768d44c1b, type: 3}
+  minVelocityToPlay: 0.5
+  pitchVariation: 0.5
