@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -5130450840795578449}
   - component: {fileID: 5622642834499888832}
   - component: {fileID: 1113312535671930834}
+  - component: {fileID: 3952517800142557974}
   m_Layer: 0
   m_Name: PingPongBall
   m_TagString: Ball
@@ -525,3 +526,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a0e5303c399984598a60facd10b077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GuidedBall
+--- !u!114 &3952517800142557974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078022550957097246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0f4aa883b369ce438e6a770062b9bca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallGameLogic
+  racketTag: Racket
+  forbiddenTag: Forbidden
+  floorTag: Floor
+  velocityHomeRunThreshold: 7
+  velocityOkThreshold: 2
