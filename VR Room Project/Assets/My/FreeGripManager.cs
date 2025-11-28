@@ -15,6 +15,8 @@ public class FreeGripManager : MonoBehaviour
         {
             ResetGrip();
         }
+        _currentRacketPhysics = null;
+        _currentRacketRb = null;
 
         if (racketObj != null)
         {
@@ -45,10 +47,19 @@ public class FreeGripManager : MonoBehaviour
         if (_isAdjusting)
         {
             _isAdjusting = false;
-            _currentRacketPhysics.enabled = true;
-            if (_currentRacketRb) _currentRacketRb.isKinematic = false;
-            if (_currentHandModel) _currentHandModel.SetActive(false);
+
+            if (_currentRacketRb)
+            {
+                _currentRacketRb.isKinematic = false;
+            }
+
+            if (_currentHandModel)
+            {
+                _currentHandModel.SetActive(false);
+            }
         }
+
+        _currentRacketPhysics.enabled = true;
         _currentRacketPhysics.ResetCustomOffset();
     }
 
@@ -68,10 +79,12 @@ public class FreeGripManager : MonoBehaviour
     private void FinishAdjustment()
     {
         _isAdjusting = false;
+
         if (_currentHandAnchor && _currentRacketRb)
         {
             Vector3 newPosOffset = _currentHandAnchor.InverseTransformPoint(_currentRacketRb.transform.position);
             Quaternion newRotOffset = Quaternion.Inverse(_currentHandAnchor.rotation) * _currentRacketRb.transform.rotation;
+
             if (_currentRacketPhysics)
                 _currentRacketPhysics.SetCustomOffset(newPosOffset, newRotOffset);
         }

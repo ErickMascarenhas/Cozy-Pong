@@ -81,6 +81,12 @@ public class WristMenuManager : MonoBehaviour
         }
     }
 
+    public void CloseMenu()
+    {
+        IsMenuOpen = false;
+        if (menuCanvas) menuCanvas.SetActive(false);
+    }
+
     private void FollowHand()
     {
         if (targetHand == null || headCamera == null) return;
