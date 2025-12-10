@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: IT'S GOING DOWN
+  m_EditorClassIdentifier: Assembly-CSharp::SongChart
+  songName: IT'S GOING DOWN
+  artistName: The Vanished People
+  audioClip: {fileID: 8300000, guid: 32511de040bc2cb4795e5ee73d233616, type: 3}
+  bpm: 73
+  notes:
+  - timeInBeats: 8
+    lane: 0
+    noteType: 1
+  - timeInBeats: 9
+    lane: 1
+    noteType: 1
+  - timeInBeats: 10
+    lane: 2
+    noteType: 1
+  - timeInBeats: 11
+    lane: 3
+    noteType: 1
+  - timeInBeats: 12
+    lane: 4
+    noteType: 1
+  - timeInBeats: 13
+    lane: 3
+    noteType: 1
+  - timeInBeats: 14
+    lane: 2
+    noteType: 0
+  - timeInBeats: 15
+    lane: 1
+    noteType: 1
+  - timeInBeats: 16
+    lane: 0
+    noteType: 1
+  - timeInBeats: 17
+    lane: 1
+    noteType: 1
+  - timeInBeats: 18
+    lane: 4
+    noteType: 1
+  - timeInBeats: 19
+    lane: 3
+    noteType: 1
+  - timeInBeats: 20
+    lane: 2
+    noteType: 1
+  - timeInBeats: 21
+    lane: 0
+    noteType: 1
+  - timeInBeats: 22
+    lane: 4
+    noteType: 1
+  - timeInBeats: 23
+    lane: 1
+    noteType: 1
+  - timeInBeats: 24
+    lane: 3
+    noteType: 1
+  - timeInBeats: 25
+    lane: 2
+    noteType: 1
+  - timeInBeats: 26
+    lane: 0
+    noteType: 1
+  - timeInBeats: 27
+    lane: 1
+    noteType: 1
+  - timeInBeats: 28
+    lane: 2
+    noteType: 1
+  - timeInBeats: 29
+    lane: 3
+    noteType: 1
+  - timeInBeats: 30
+    lane: 0
+    noteType: 1
+  - timeInBeats: 31
+    lane: 0
+    noteType: 1
+  - timeInBeats: 32
+    lane: 2
+    noteType: 1
+  - timeInBeats: 33
+    lane: 1
+    noteType: 1
+  - timeInBeats: 34
+    lane: 0
+    noteType: 1
+  - timeInBeats: 35
+    lane: 4
+    noteType: 1
+  - timeInBeats: 36
+    lane: 0
+    noteType: 1
+  - timeInBeats: 37
+    lane: 4
+    noteType: 1
+  - timeInBeats: 38
+    lane: 2
+    noteType: 1
+  - timeInBeats: 39
+    lane: 1
+    noteType: 1
+  - timeInBeats: 40
+    lane: 3
+    noteType: 1
+  - timeInBeats: 41
+    lane: 0
+    noteType: 1
+  - timeInBeats: 42
+    lane: 2
+    noteType: 1
+  - timeInBeats: 43
+    lane: 2
+    noteType: 1
