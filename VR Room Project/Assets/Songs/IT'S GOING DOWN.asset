@@ -19,49 +19,49 @@ MonoBehaviour:
   notes:
   - timeInBeats: 8
     lane: 0
-    noteType: 1
+    noteType: 0
   - timeInBeats: 9
     lane: 1
-    noteType: 1
+    noteType: 0
   - timeInBeats: 10
     lane: 2
-    noteType: 1
+    noteType: 0
   - timeInBeats: 11
     lane: 3
-    noteType: 1
+    noteType: 0
   - timeInBeats: 12
     lane: 4
-    noteType: 1
+    noteType: 0
   - timeInBeats: 13
     lane: 3
-    noteType: 1
+    noteType: 0
   - timeInBeats: 14
     lane: 2
     noteType: 0
   - timeInBeats: 15
     lane: 1
-    noteType: 1
+    noteType: 0
   - timeInBeats: 16
     lane: 0
-    noteType: 1
+    noteType: 0
   - timeInBeats: 17
     lane: 1
-    noteType: 1
+    noteType: 0
   - timeInBeats: 18
     lane: 4
-    noteType: 1
+    noteType: 0
   - timeInBeats: 19
     lane: 3
-    noteType: 1
+    noteType: 0
   - timeInBeats: 20
     lane: 2
-    noteType: 1
+    noteType: 0
   - timeInBeats: 21
     lane: 0
-    noteType: 1
+    noteType: 0
   - timeInBeats: 22
     lane: 4
-    noteType: 1
+    noteType: 0
   - timeInBeats: 23
     lane: 1
     noteType: 1

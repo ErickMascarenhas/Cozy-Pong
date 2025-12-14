@@ -1,74 +1,109 @@
+using System.Diagnostics;
 using UnityEngine;
-using System;
 
 public class Conductor : MonoBehaviour
 {
     public static Conductor Instance;
     [Header("Configuracao")]
-    public SongChart currentChart; // "mapeamento" das notas
+    public float bpm;
+    public float firstBeatOffset;
+    public float spawnOffsetBeats = 2.0f;
+    [Header("Referencias")]
     public AudioSource musicSource;
-    public float spawnOffsetBeats = 2.0f; // tempo antes do hit pra bola nascer
-    [Header("Estado Atual")]
-    public float songPosition; // tempo atual da musica em segundos
-    public float songPositionInBeats; // tempo atual em beats
-    public float secPerBeat; // segundos por beat
-    public float dspSongTime; // momento de inicio da musica
-    public event Action<NoteData> OnSpawnNote; // evento de spawn da nota
+    public SongChart currentChart;
+    public float songPosition;
+    public float songPositionInBeats;
+    public float secPerBeat;
+    public float dspSongTime;
+    public bool isPlaying = false;
+    private float pauseStartDspTime;
+    private float accumulatedPauseTime = 0f;
+    public delegate void SpawnNoteAction(NoteData note);
+    public event SpawnNoteAction OnSpawnNote;
     private int nextNoteIndex = 0;
-    private bool isPlaying = false;
 
     void Awake()
     {
         Instance = this;
+        secPerBeat = 60f / bpm;
     }
 
     void Start()
     {
-        if (currentChart != null)
-        {
-            PlaySong(currentChart);
-        }
+        isPlaying = false;
+        if (musicSource != null) musicSource.Stop();
     }
 
     public void PlaySong(SongChart chart)
     {
         currentChart = chart;
-        secPerBeat = 60f / currentChart.bpm;
-        musicSource.clip = currentChart.audioClip;
+        bpm = chart.bpm;
+        secPerBeat = 60f / bpm;
         nextNoteIndex = 0;
-        songPosition = 0;
-        dspSongTime = (float)AudioSettings.dspTime + 1.0f; // delay de loading pre play
-        musicSource.PlayScheduled(dspSongTime);
+        accumulatedPauseTime = 0f;
+        musicSource.Play();
+        dspSongTime = (float)AudioSettings.dspTime;
         isPlaying = true;
+    }
+
+    public void PauseMusic()
+    {
+        if (isPlaying)
+        {
+            musicSource.Pause();
+            isPlaying = false;
+            pauseStartDspTime = (float)AudioSettings.dspTime;
+            //UnityEngine.Debug.Log("Music PAUSED at " + songPosition);
+        }
+    }
+
+    public void ResumeMusic()
+    {
+        if (!isPlaying)
+        {
+            float pauseDuration = (float)AudioSettings.dspTime - pauseStartDspTime;
+            accumulatedPauseTime += pauseDuration;
+            musicSource.Play();
+            isPlaying = true;
+            //UnityEngine.Debug.Log("Music RESUMED. Total Paused: " + accumulatedPauseTime);
+        }
     }
 
     void Update()
     {
         if (!isPlaying) return;
-        songPosition = (float)(AudioSettings.dspTime - dspSongTime); // calcular tempo atual
-        songPositionInBeats = songPosition / secPerBeat; // calcular beat atual
-        if (nextNoteIndex < currentChart.notes.Count)
+        songPosition = (float)(AudioSettings.dspTime - dspSongTime - accumulatedPauseTime - firstBeatOffset);
+        songPositionInBeats = songPosition / secPerBeat;
+        if (currentChart != null && nextNoteIndex < currentChart.notes.Count)
         {
             NoteData nextNote = currentChart.notes[nextNoteIndex];
-            float spawnBeat = nextNote.timeInBeats - spawnOffsetBeats; // tempo pra spawnar eh tempo em beats - tempo de viagem da bola
-            if (songPositionInBeats >= spawnBeat)
+            if (nextNote.timeInBeats - spawnOffsetBeats <= songPositionInBeats)
             {
-                OnSpawnNote?.Invoke(nextNote); // lanca ela
+                if (OnSpawnNote != null)
+                {
+                    OnSpawnNote(nextNote);
+                }
                 nextNoteIndex++;
             }
         }
     }
 
-    public void PauseMusic()
+    public NoteData GetNextNote()
     {
-        musicSource.Pause();
-        isPlaying = false;
+        if (currentChart != null && nextNoteIndex < currentChart.notes.Count)
+        {
+            return currentChart.notes[nextNoteIndex];
+        }
+        return null;
     }
 
-    public void ResumeMusic()
+    public void StopAnySong()
     {
-        dspSongTime = (float)AudioSettings.dspTime - songPosition;
-        musicSource.Play();
-        isPlaying = true;
+        isPlaying = false;
+        if (musicSource != null)
+        {
+            musicSource.Stop();
+            musicSource.time = 0;
+        }
     }
 }

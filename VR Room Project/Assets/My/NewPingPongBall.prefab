@@ -525,13 +525,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c867c3dc0c4bb2946acb2389d02b8c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RhythmBall
-  data:
+  currentNote:
     timeInBeats: 0
     lane: 0
     noteType: 0
   rb: {fileID: 7889751486886826915}
   trail: {fileID: 8459691761854716384}
+  indicatorPrefab: {fileID: 1666055353281932508, guid: 546cf901448697d4996bdafe95cd8002, type: 3}
   ballRenderer: {fileID: 8504330507064627312}
   normalMat: {fileID: 2100000, guid: 2bb57566b0ff4e943ae72b9cf8ef2b20, type: 2}
   forbiddenMat: {fileID: 2100000, guid: b3a5a6a7a5c3c2b4087073c5beca6ac5, type: 2}
   magnusPower: 0.01
+  isForbidden: 0
