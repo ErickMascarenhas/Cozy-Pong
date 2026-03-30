@@ -78,7 +78,7 @@ public class BallGameLogic : MonoBehaviour
         if (speedResult == HitType.Bad || timingResult == HitType.Bad) finalResult = HitType.Bad;
         else if (speedResult == HitType.Ok || timingResult == HitType.Ok) finalResult = HitType.Ok;
         else finalResult = HitType.Perfect;
-        UnityEngine.Debug.Log($"FORÇA: {hitSpeed:0.00} ({speedResult}) | TEMPO: {timeDiff:0.00}s ({timingResult}) -> HIT FINAL: {finalResult}");
+        UnityEngine.Debug.Log($"FORï¿½A: {hitSpeed:0.00} ({speedResult}) | TEMPO: {timeDiff:0.00}s ({timingResult}) -> HIT FINAL: {finalResult}");
         GameScoreManager.Instance.RegisterHit(finalResult);
     }
 
