@@ -402,7 +402,7 @@ AudioSource:
   m_GameObject: {fileID: 2078022550957097246}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3436844698314552206, guid: a8b247e91c442c347856ea2abf62103b, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -502,18 +502,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e8baeb9e0225c449c4871e1d02e946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RacketSoundController
-  hitSounds:
-  - {fileID: 8300000, guid: 5978c1c84e3b2b649b88009a1112de17, type: 3}
-  - {fileID: 8300000, guid: e0f95546469a74540a55cb23edb7795c, type: 3}
-  - {fileID: 8300000, guid: 6768f4c21cbf4104c8152c010dee2e11, type: 3}
-  - {fileID: 8300000, guid: 3e52fd20a25e4714f8d9f5f5bcf24820, type: 3}
-  - {fileID: 8300000, guid: 4da1db583f6b10f45962bb0bff3481b4, type: 3}
-  - {fileID: 8300000, guid: 0de4e9c97a175854288288691f77793d, type: 3}
-  - {fileID: 8300000, guid: 39f2c98aa58e8b44db006321df63a36b, type: 3}
-  - {fileID: 8300000, guid: c8937f5c9f0dac24d9a960418054b73a, type: 3}
-  - {fileID: 8300000, guid: acb500e28ddf8ba498df3eb8e08c386c, type: 3}
+  racketSounds:
+  - {fileID: 8300000, guid: 229e3a6ac42ec3a4cb38e3899b70ce4c, type: 3}
+  bounceSounds:
+  - {fileID: 8300000, guid: b7af8677d1db10042b30b66e3851b23a, type: 3}
+  - {fileID: 8300000, guid: 635d2f66728ee4445ac751f1854d2391, type: 3}
+  - {fileID: 8300000, guid: 79e1f9d5c3602294383d2048bcd9063f, type: 3}
+  - {fileID: 8300000, guid: c16f75d7f579a2449bf8a36dcae2d45a, type: 3}
   minVelocityToPlay: 0.2
   pitchVariation: 0.1
+  floorTag: Floor
 --- !u!114 &1113312535671930834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,6 +542,8 @@ MonoBehaviour:
   racketTag: Racket
   forbiddenTag: Forbidden
   floorTag: Floor
+  hitParticlePrefab: {fileID: 8282113625238195614, guid: f523741cf3bca5a44ad8fa1be12be99a, type: 3}
+  useRacketColor: 1
   velocityHomeRunThreshold: 4
   velocityOkThreshold: 1
   timingPerfectThreshold: 0.2

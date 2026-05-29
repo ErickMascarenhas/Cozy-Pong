@@ -401,7 +401,7 @@ AudioSource:
   m_GameObject: {fileID: 2078022550957097246}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3436844698314552206, guid: a8b247e91c442c347856ea2abf62103b, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -536,4 +536,3 @@ MonoBehaviour:
   normalMat: {fileID: 2100000, guid: 2bb57566b0ff4e943ae72b9cf8ef2b20, type: 2}
   forbiddenMat: {fileID: 2100000, guid: b3a5a6a7a5c3c2b4087073c5beca6ac5, type: 2}
   magnusPower: 0.01
-  isForbidden: 0

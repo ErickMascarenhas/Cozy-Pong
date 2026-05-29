@@ -8,6 +8,9 @@ public class BallGameLogic : MonoBehaviour
     public string forbiddenTag = "Forbidden";
     [Tooltip("Tag para detectar Miss")]
     public string floorTag = "Floor";
+    [Header("Efeitos Visuais")]
+    public GameObject hitParticlePrefab;
+    public bool useRacketColor = true;
     [Header("Parametros")]
     public float velocityHomeRunThreshold = 3.5f;
     public float velocityOkThreshold = 1.5f;
@@ -79,6 +82,36 @@ public class BallGameLogic : MonoBehaviour
         else if (speedResult == HitType.Ok || timingResult == HitType.Ok) finalResult = HitType.Ok;
         else finalResult = HitType.Perfect;
         UnityEngine.Debug.Log($"FOR�A: {hitSpeed:0.00} ({speedResult}) | TEMPO: {timeDiff:0.00}s ({timingResult}) -> HIT FINAL: {finalResult}");
+        if (hitParticlePrefab != null)
+        {
+            Vector3 contactPoint = collision.contacts.Length > 0 ? collision.contacts[0].point : transform.position;
+            GameObject particle = Instantiate(hitParticlePrefab, contactPoint, Quaternion.identity);
+            ParticleSystem ps = particle.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                var main = ps.main;
+                if (useRacketColor)
+                {
+                    RacketColorManager racketColors = collision.gameObject.GetComponent<RacketColorManager>();
+                    if (racketColors == null) racketColors = collision.gameObject.GetComponentInParent<RacketColorManager>();
+                    if (racketColors != null)
+                    {
+                        main.startColor = racketColors.bladeColor;
+                    }
+                    else
+                    {
+                        main.startColor = Color.white;
+                    }
+                }
+                else
+                {
+                    if (finalResult == HitType.Perfect) main.startColor = Color.green;
+                    else if (finalResult == HitType.Ok) main.startColor = Color.yellow;
+                    else main.startColor = new Color(1f, 0.5f, 0f);
+                }
+            }
+            Destroy(particle, 1f);
+        }
         GameScoreManager.Instance.RegisterHit(finalResult);
     }
 

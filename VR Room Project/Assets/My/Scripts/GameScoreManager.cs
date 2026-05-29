@@ -17,6 +17,9 @@ public class GameScoreManager : MonoBehaviour
 {
     public static GameScoreManager Instance;
 
+    [Header("Modo de Jogo")]
+    public bool isImmortal = true;
+
     [Header("Configuracoes de Vida")]
     public float maxHealth = 100f;
     private float currentHealth;
@@ -80,13 +83,13 @@ public class GameScoreManager : MonoBehaviour
         maxCombo = 0;
         currentErrors = 0;
         InitializeHitCounts();
-        if (healthBarFill != null) healthBarFill.gameObject.SetActive(!usingErrorBoxes);
-        if (healthText != null) healthText.gameObject.SetActive(!usingErrorBoxes);
+        if (healthBarFill != null) healthBarFill.gameObject.SetActive(!usingErrorBoxes && !isImmortal);
+        if (healthText != null) healthText.gameObject.SetActive(!usingErrorBoxes && !isImmortal);
         foreach (var box in errorBoxes)
         {
             if (box != null)
             {
-                box.SetActive(usingErrorBoxes);
+                box.SetActive(usingErrorBoxes && !isImmortal);
                 if (usingErrorBoxes)
                 {
                     var img = box.GetComponent<Image>();
@@ -183,14 +186,14 @@ public class GameScoreManager : MonoBehaviour
             }
             currentErrors++;
         }
-        if (currentErrors >= maxErrors) Die();
+        if (currentErrors >= maxErrors && !isImmortal) Die();
     }
 
     private void ChangeHealth(float amount)
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        if (currentHealth <= 0) Die();
+        if (currentHealth <= 0 && !isImmortal) Die();
     }
 
     private void Die()
