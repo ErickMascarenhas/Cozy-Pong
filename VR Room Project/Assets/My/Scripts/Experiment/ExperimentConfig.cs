@@ -11,9 +11,17 @@ public class ExperimentTrack
     public string songObjectName;
 
     /// <summary>
-    /// Quantas notas do beatmap sao ignoradas entre duas bolas servidas.
-    /// Os beatmaps foram escritos com uma nota por batida, entao o intervalo
-    /// entre bolas e (60 / BPM) * beatSkipFactor segundos.
+    /// Uma bola e servida a cada beatSkipFactor notas do arquivo de beatmap.
+    ///
+    /// ATENCAO: a subdivisao dos mapas NAO e uniforme no projeto. A maioria foi
+    /// escrita com uma nota por batida, mas "Helen 2", "METEORITES",
+    /// "Herbal Tea" e "DAYDREAM" tem uma nota a cada DUAS batidas. Por isso o
+    /// fator e definido por faixa, e nao globalmente: e ele que traz cada
+    /// faixa para a banda de densidade pretendida pela condicao.
+    ///
+    /// Ao completar um mapa, preserve o espacamento que ele ja usa. Reescrever
+    /// um mapa de meia subdivisao como uma nota por batida dobra a densidade
+    /// daquela faixa e quebra a parametrizacao da condicao.
     /// </summary>
     public int beatSkipFactor;
 
@@ -153,9 +161,11 @@ public class ExperimentConfig
 /// As configuracoes das condicoes experimentais.
 ///
 /// PLAYLISTS
-/// Todos os beatmaps do projeto foram escritos com uma nota por batida, o que
-/// torna a densidade de bolas uma funcao do andamento: BPM / beatSkipFactor
-/// bolas por minuto. As playlists exploram isso.
+/// A densidade de bolas de uma faixa e 60 / (espacamento das notas no arquivo x
+/// beatSkipFactor). O espacamento varia entre os mapas do projeto, entao o
+/// fator de cada faixa foi escolhido para trazer todas as faixas de uma
+/// condicao para a mesma banda de densidade: 17,7 a 20,0 bolas por minuto em
+/// C1 e 27,5 a 33,2 em C2.
 ///
 /// A ordem das faixas segue o principio iso da musicoterapia: a intervencao
 /// parte de um andamento proximo ao estado provavel do participante logo apos
