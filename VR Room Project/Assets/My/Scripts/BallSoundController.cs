@@ -48,9 +48,10 @@ public class SimpleBallSound : MonoBehaviour
     private void PlayRandomSound(AudioClip[] clips, float force)
     {
         if (clips == null || clips.Length == 0) return;
-        int index = UnityEngine.Random.Range(0, clips.Length);
+        // Semeado no experimento: mesma condicao, mesma sequencia de sons.
+        int index = ExperimentRandom.Range(0, clips.Length);
         AudioClip clip = clips[index];
-        _audioSource.pitch = 1.0f + UnityEngine.Random.Range(-pitchVariation, pitchVariation);
+        _audioSource.pitch = 1.0f + ExperimentRandom.Range(-pitchVariation, pitchVariation);
         float volume = Mathf.Clamp(force / 8.0f, 0.2f, 1.0f);
         _audioSource.PlayOneShot(clip, volume);
     }

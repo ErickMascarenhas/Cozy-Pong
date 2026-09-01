@@ -18,6 +18,18 @@ public class GuidedBall : MonoBehaviour
     public float _currentFlightTime;
     private Collider _col;
 
+    // --- contexto da nota, preenchido pelo ServeManager ao servir ----
+    // Guardado na propria bola porque e ela que sobrevive ate a rebatida.
+    [System.NonSerialized] public ServeManager Origin;
+    [System.NonSerialized] public int NoteIndex = -1;
+    [System.NonSerialized] public int BallType;
+    [System.NonSerialized] public int SpawnIndex = -1;
+    [System.NonSerialized] public int TargetIndex = -1;
+    /// <summary>Instante da batida que originou esta bola, em segundos dentro da faixa.</summary>
+    [System.NonSerialized] public float BeatTimeSeconds;
+    /// <summary>Instante em que a bola foi lancada, em segundos dentro da faixa.</summary>
+    [System.NonSerialized] public float LaunchTimeSeconds;
+
     public void InitializeServe(Transform bounce2, Vector3 airHit, Vector3 returnSpot, float hNet, float hArc, float flightDuration)
     {
         _targetBounce2 = bounce2;

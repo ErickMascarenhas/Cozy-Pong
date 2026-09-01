@@ -27,6 +27,18 @@ public class BallGameLogic : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         _serveManager = FindFirstObjectByType<ServeManager>();
+
+        // No experimento os limiares vem da condicao, e nao do prefab: e o que
+        // permite afirmar no Capitulo 3 que a configuracao animada julga com
+        // mais rigor que a relaxante.
+        if (ExperimentMode.IsActive && ExperimentMode.Config != null)
+        {
+            ExperimentConfig config = ExperimentMode.Config;
+            velocityHomeRunThreshold = config.velocityHomeRunThreshold;
+            velocityOkThreshold = config.velocityOkThreshold;
+            timingPerfectThreshold = config.timingPerfectThreshold;
+            timingOkThreshold = config.timingOkThreshold;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -72,7 +84,19 @@ public class BallGameLogic : MonoBehaviour
         GuidedBall guidedBall = GetComponent<GuidedBall>();
         if (guidedBall != null)
         {
-            timeDiff = Mathf.Abs(guidedBall._currentFlightTime - guidedBall._expectedFlightDuration);
+            // O erro de tempo julgado aqui e o mesmo e_i reportado no TCC
+            // (Equacao 3.1): a distancia entre o instante da rebatida e a
+            // batida mais proxima da musica. Antes o julgamento usava a
+            // diferenca entre tempo de voo e tempo previsto, uma quantidade
+            // parecida mas nao identica a que o texto declara medir.
+            float beatError = -1f;
+            if (guidedBall.Origin != null)
+                beatError = guidedBall.Origin.DistanceToNearestBeat(guidedBall.Origin.TrackTime);
+
+            timeDiff = beatError >= 0f
+                ? beatError
+                : Mathf.Abs(guidedBall._currentFlightTime - guidedBall._expectedFlightDuration);
+
             if (timeDiff <= timingPerfectThreshold) timingResult = HitType.Perfect;
             else if (timeDiff <= timingOkThreshold) timingResult = HitType.Ok;
             else timingResult = HitType.Bad;
@@ -81,7 +105,10 @@ public class BallGameLogic : MonoBehaviour
         if (speedResult == HitType.Bad || timingResult == HitType.Bad) finalResult = HitType.Bad;
         else if (speedResult == HitType.Ok || timingResult == HitType.Ok) finalResult = HitType.Ok;
         else finalResult = HitType.Perfect;
-        UnityEngine.Debug.Log($"FOR�A: {hitSpeed:0.00} ({speedResult}) | TEMPO: {timeDiff:0.00}s ({timingResult}) -> HIT FINAL: {finalResult}");
+        // Durante o experimento o desfecho vai para o arquivo de eventos, e nao
+        // para o console: sao centenas de notas por sessao.
+        if (!ExperimentMode.IsActive)
+            UnityEngine.Debug.Log($"FORCA: {hitSpeed:0.00} ({speedResult}) | TEMPO: {timeDiff:0.00}s ({timingResult}) -> HIT FINAL: {finalResult}");
         if (hitParticlePrefab != null)
         {
             Vector3 contactPoint = collision.contacts.Length > 0 ? collision.contacts[0].point : transform.position;
@@ -113,6 +140,9 @@ public class BallGameLogic : MonoBehaviour
             Destroy(particle, 1f);
         }
         GameScoreManager.Instance.RegisterHit(finalResult);
+
+        if (guidedBall != null && guidedBall.Origin != null)
+            guidedBall.Origin.ReportNoteOutcome(guidedBall, finalResult, hitSpeed, true);
     }
 
     private void ResetHitFlag() => hasBeenHit = false;

@@ -47,8 +47,10 @@ public class ServeManager : MonoBehaviour
     [Tooltip("4 = Pega 1 e ignora proximas 3")]
     public int beatSkipFactor = 4;
     public GameObject indicatorPrefab;
-    private float ballLifeTime = 1.72f; // public?
-    private float arcHeight = 0.25f; // public?
+    [Tooltip("Tempo ate a bola ser destruida e contada como Miss, em segundos")]
+    public float ballLifeTime = 1.72f;
+    [Tooltip("Altura extra do arco. Menor = trajetoria mais reta e bola mais rapida")]
+    public float arcHeight = 0.25f;
     [Tooltip("Se True, preve tempo pra lancar bola, se False lanca no tempo exato do Txt")]
     public bool usePredictiveTiming = true;
 
@@ -82,6 +84,8 @@ public class ServeManager : MonoBehaviour
         public Vector3 Bounce1Pos;
         public Vector3 Bounce2Pos;
         public float FlightDuration;
+        public int SpawnIndex;
+        public int TargetIndex;
     }
 
     private Queue<RawBeat> _rawBeatTimes = new Queue<RawBeat>();
@@ -89,6 +93,68 @@ public class ServeManager : MonoBehaviour
     private float _sessionStartTime;
     private bool _sessionStarted = false;
     private Coroutine _musicMonitorCoroutine;
+
+    // --- experimento -------------------------------------------------
+    // Lista completa das batidas do beatmap, em segundos e ordenada. Serve
+    // para calcular o erro de sincronizacao e_i da Equacao 3.1 do TCC, que e
+    // definido como a menor distancia entre o evento e QUALQUER batida, e nao
+    // apenas a batida que originou aquela bola.
+    private float[] _allBeatTimes = new float[0];
+    private int _servedNoteCounter;
+
+    public AudioSource MusicSource { get { return musicSource; } }
+    public string SongID { get { return songID; } }
+    public bool IsSessionStarted { get { return _sessionStarted; } }
+
+    /// <summary>
+    /// Posicao atual dentro da faixa, em segundos, lida do proprio relogio de
+    /// audio. E o unico relogio confiavel para julgar ritmo: Time.time diverge
+    /// da reproducao ao longo de uma exposicao de vinte minutos, e nao para
+    /// quando a musica e pausada.
+    /// </summary>
+    public double TrackTime
+    {
+        get
+        {
+            if (musicSource != null && musicSource.clip != null && musicSource.clip.frequency > 0)
+                return musicSource.timeSamples / (double)musicSource.clip.frequency;
+            return Time.time - _sessionStartTime - accumulatedPauseTime;
+        }
+    }
+
+    /// <summary>
+    /// Aplica a parametrizacao da condicao antes de a faixa comecar. Precisa
+    /// ser chamado com o objeto da musica ainda desativado, porque OnEnable ja
+    /// usa estes valores para carregar o beatmap.
+    /// </summary>
+    public void ConfigureForExperiment(ExperimentConfig config, ExperimentTrack track)
+    {
+        if (config == null) return;
+        if (track != null && track.beatSkipFactor > 0) beatSkipFactor = track.beatSkipFactor;
+        ballLifeTime = config.ballLifeTime;
+        arcHeight = config.arcHeight;
+        useErrorBoxes = config.useErrorBoxes;
+    }
+
+    /// <summary>Menor distancia entre um instante e alguma batida do beatmap, em segundos.</summary>
+    public float DistanceToNearestBeat(double timeSeconds)
+    {
+        if (_allBeatTimes == null || _allBeatTimes.Length == 0) return -1f;
+
+        float t = (float)timeSeconds;
+        int low = 0;
+        int high = _allBeatTimes.Length - 1;
+        while (low < high)
+        {
+            int mid = (low + high) / 2;
+            if (_allBeatTimes[mid] < t) low = mid + 1;
+            else high = mid;
+        }
+
+        float best = Mathf.Abs(_allBeatTimes[low] - t);
+        if (low > 0) best = Mathf.Min(best, Mathf.Abs(_allBeatTimes[low - 1] - t));
+        return best;
+    }
 
     private void Awake()
     {
@@ -222,37 +288,40 @@ public class ServeManager : MonoBehaviour
     private void LoadBeatMap()
     {
         _rawBeatTimes.Clear();
+        _allBeatTimes = new float[0];
+        _servedNoteCounter = 0;
         if (beatMapFile == null) return;
 
         string[] lines = beatMapFile.text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        //List<float> times = new List<float>();
+        List<float> everyBeat = new List<float>(lines.Length);
         int validBeatCount = 0;
+        int skip = Mathf.Max(1, beatSkipFactor);
 
         foreach (string line in lines)
         {
             string cleanLine = line.Trim();
             if (string.IsNullOrEmpty(cleanLine) || cleanLine.StartsWith("#") || cleanLine.StartsWith("BPM") || cleanLine.StartsWith("NOTAS")) continue;
-            //string[] parts = line.Split(new char[] { ' ', ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
             string[] parts = cleanLine.Split(',');
             if (parts.Length > 0)
             {
                 string timerString = parts[0].Trim();
                 if (float.TryParse(timerString, NumberStyles.Any, CultureInfo.InvariantCulture, out float ms))
                 {
-                    if (validBeatCount % beatSkipFactor == 0)
+                    float hitTime = ms / 1000.0f;
+                    everyBeat.Add(hitTime);
+                    if (validBeatCount % skip == 0)
                     {
-                        float hitTime = ms / 1000.0f;
                         int bType = 0;
                         if (parts.Length > 1 && int.TryParse(parts[1].Trim(), out int parsedType)) bType = Mathf.Clamp(parsedType, 0, 2);
                         _rawBeatTimes.Enqueue(new RawBeat { Time = hitTime, Type = bType });
                     }
-                    //times.Add(timeInSeconds);
                     validBeatCount++;
                 }
             }
         }
-        //times.Sort();
-        //foreach (float t in times) _rawBeatTimes.Enqueue(t);
+
+        everyBeat.Sort();
+        _allBeatTimes = everyBeat.ToArray();
     }
 
     private void SkipPastBalls()
@@ -288,7 +357,8 @@ public class ServeManager : MonoBehaviour
 
         if (_nextServe.HasValue)
         {
-            float timeSinceStart = Time.time - _sessionStartTime - accumulatedPauseTime;
+            // Relogio de audio: a posicao real dentro da faixa. Ver TrackTime.
+            float timeSinceStart = (float)TrackTime + startDelay;
             if (!_hasAimedCurrentServe && cannonVisual != null)
             {
                 bool isTimeToAim = timeSinceStart >= (_nextServe.Value.LaunchTime + globalOffset - 4f); // 4s antes da bola
@@ -311,8 +381,13 @@ public class ServeManager : MonoBehaviour
 
     private ScheduledServe CalculatePhysicsForBeat(RawBeat hitTime)
     {
-        Transform startT = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-        Transform endT = targetAirPoints[UnityEngine.Random.Range(0, targetAirPoints.Length)];
+        // ExperimentRandom: fora do experimento delega para UnityEngine.Random,
+        // dentro dele usa a semente da condicao, para que a sequencia espacial
+        // seja identica entre participantes.
+        int spawnIndex = ExperimentRandom.Range(0, spawnPoints.Length);
+        int targetIndex = ExperimentRandom.Range(0, targetAirPoints.Length);
+        Transform startT = spawnPoints[spawnIndex];
+        Transform endT = targetAirPoints[targetIndex];
         Vector3 startPos = startT.position;
         Vector3 endPos = endT.position;
 
@@ -337,7 +412,9 @@ public class ServeManager : MonoBehaviour
             StartPoint = startT,
             EndPoint = endT,
             Bounce1Pos = bounce1Pos,
-            Bounce2Pos = bounce2Pos
+            Bounce2Pos = bounce2Pos,
+            SpawnIndex = spawnIndex,
+            TargetIndex = targetIndex
         };
     }
 
@@ -358,9 +435,19 @@ public class ServeManager : MonoBehaviour
 
         GuidedBall sb = ball.GetComponent<GuidedBall>();
         if (sb == null) sb = ball.AddComponent<GuidedBall>();
-        
-        Vector3 returnSpot = (UnityEngine.Random.value > 0.5f) ? returnRight.position : returnLeft.position;
+
+        Vector3 returnSpot = (ExperimentRandom.Value > 0.5f) ? returnRight.position : returnLeft.position;
         sb.InitializeServe(b2Obj.transform, serveData.EndPoint.position, returnSpot, arcHeight, arcHeight, serveData.FlightDuration);
+
+        // Contexto da nota, usado depois para calcular o erro de sincronizacao
+        // e para o registro por evento.
+        sb.Origin = this;
+        sb.NoteIndex = _servedNoteCounter++;
+        sb.BallType = serveData.BallType;
+        sb.SpawnIndex = serveData.SpawnIndex;
+        sb.TargetIndex = serveData.TargetIndex;
+        sb.BeatTimeSeconds = serveData.HitTime;
+        sb.LaunchTimeSeconds = (float)TrackTime;
 
         Rigidbody rb = ball.GetComponent<Rigidbody>();
         rb.linearVelocity = CalculateParabolaVelocity(serveData.StartPoint.position, serveData.Bounce1Pos, 0.1f);
@@ -389,9 +476,45 @@ public class ServeManager : MonoBehaviour
         if (ball != null)
         {
             GuidedBall gb = ball.GetComponent<GuidedBall>();
-            if (gb != null && !gb._hasBeenHitByPlayer && GameScoreManager.Instance != null) GameScoreManager.Instance.RegisterHit(HitType.Miss);
+            if (gb != null && !gb._hasBeenHitByPlayer)
+            {
+                if (GameScoreManager.Instance != null) GameScoreManager.Instance.RegisterHit(HitType.Miss);
+                ReportNoteOutcome(gb, HitType.Miss, 0f, false);
+            }
             Destroy(ball);
         }
+    }
+
+    /// <summary>
+    /// Registra o desfecho de uma bola no arquivo de eventos da sessao.
+    /// Chamado por BallGameLogic quando ha rebatida e daqui quando a bola expira.
+    /// </summary>
+    public void ReportNoteOutcome(GuidedBall ball, HitType result, float racketSpeed, bool contacted)
+    {
+        if (!ExperimentMode.IsActive || ball == null) return;
+
+        SessionLogger logger = SessionLogger.Current;
+        if (logger == null || !logger.IsOpen) return;
+
+        double contactTime = double.NaN;
+        double errorToNearestBeatMs = double.NaN;
+        double deltaToTargetBeatMs = double.NaN;
+
+        if (contacted)
+        {
+            contactTime = TrackTime;
+            float distance = DistanceToNearestBeat(contactTime);
+            if (distance >= 0f) errorToNearestBeatMs = distance * 1000.0;
+            deltaToTargetBeatMs = (contactTime - ball.BeatTimeSeconds) * 1000.0;
+        }
+
+        int combo = GameScoreManager.Instance != null ? GameScoreManager.Instance.consecutiveHits : 0;
+
+        logger.LogNote(songID, ball.NoteIndex, ball.BallType,
+                       ball.SpawnIndex, ball.TargetIndex,
+                       ball.BeatTimeSeconds, ball.LaunchTimeSeconds, contactTime,
+                       errorToNearestBeatMs, deltaToTargetBeatMs,
+                       result.ToString(), racketSpeed, combo);
     }
 
     private IEnumerator MonitorMusicEnd()
@@ -400,6 +523,10 @@ public class ServeManager : MonoBehaviour
         while (!musicSource.isPlaying && !isServingPaused) yield return null;
         while (musicSource.isPlaying || isServingPaused) yield return null;
         yield return new WaitForSeconds(timeToWaitAfterMusic);
+        // No experimento quem encadeia as faixas e encerra a exposicao e o
+        // ExperimentSessionManager. Disparar o evento aqui levaria a tela de
+        // vitoria no meio da sessao.
+        if (ExperimentMode.IsActive) yield break;
         if (requiredActiveObject != null && requiredActiveObject.activeSelf) onMusicComplete?.Invoke();
     }
 
