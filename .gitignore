@@ -73,3 +73,28 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.ist
+*.lof
+*.lot
+*.toc
+*.out
+*.synctex.gz
+*.acn
+*.acr
+*.alg
+*.xdy
+
+# Experiment session data (never commit participant data)
+[Ee]xperiment[Dd]ata/
+*.session.json

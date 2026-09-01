@@ -1,0 +1,95 @@
+\chapter{Introdução}\label{cap:introducao}
+
+% =====================================================================
+% Estrutura (espelha o modelo institucional):
+%   opening (motivacao)
+%   1.1 Perguntas de Pesquisa
+%   1.2 Objetivos (1.2.1 Geral, 1.2.2 Especificos)
+%   1.3 Hipoteses
+%   1.4 Relevancia
+% Voz impessoal; paragrafos densos; virgula decimal; SEM em-dash.
+% Enquadramento: intervencao BREVE para regulacao de estresse (nao
+% "prova de eficacia terapeutica"), conforme a revisao metodologica adotada.
+% Citacoes: \citep{...} para referencias ja no .bib; \todo{...} onde a fonte
+% ainda precisa ser inserida pelo autor.
+% =====================================================================
+\glsresetall
+
+O estresse e a ansiedade são respostas comuns às demandas cotidianas e, entre jovens adultos e estudantes universitários, figuram entre as queixas mais frequentes associadas ao sofrimento psíquico e à queda de desempenho. O levantamento internacional conduzido pela Organização Mundial da Saúde junto a estudantes universitários de oito países estimou que cerca de um terço deles preenche critérios para ao menos um transtorno mental comum ao longo da vida, com os quadros de ansiedade entre os mais prevalentes \citep{Auerbach2018}. Embora nem todo estresse seja patológico, episódios recorrentes e mal regulados elevam a ativação autonômica e o desconforto subjetivo, o que motiva a busca por estratégias de regulação emocional breves, acessíveis e agradáveis, capazes de auxiliar a recuperação a curto prazo sem o custo e a barreira de acesso das intervenções clínicas formais.
+
+Nesse cenário, a realidade virtual (\gls{rv}) imersiva desponta como um meio promissor. Ao substituir o ambiente físico por um cenário controlado e envolvente, um dispositivo de \gls{rv} do tipo \gls{hmd} pode induzir uma forte sensação de presença e desviar a atenção de estímulos estressores, um mecanismo já explorado por aplicações de relaxamento e por ambientes virtuais restauradores. Em ensaio controlado randomizado com universitários, uma intervenção de relaxamento em \gls{rv} baseada em cenários naturais reduziu o estresse percebido com tamanho de efeito grande, superando o relaxamento muscular progressivo nesse desfecho \citep{Ahn2025}. A esse efeito da imersão somam-se dois componentes de reconhecido valor afetivo: a prática de atividade física leve, associada à melhora do humor \citep{Marques2023}, e a música, cuja audição modula respostas emocionais e fisiológicas. Em particular, o gênero \textit{lo-fi}, caracterizado por andamentos moderados, texturas suaves e repetição previsível, popularizou-se como trilha de fundo para relaxamento e concentração, e há evidência preliminar de que sua audição reduz a ansiedade de estado em jovens adultos \citep{Dsouza2024}.
+
+A integração desses componentes encontra terreno natural nos jogos de ritmo em \gls{rv}, uma categoria de \textit{exergames} na qual o jogador executa movimentos sincronizados a estímulos musicais. Esses jogos acoplam exercício físico, engajamento lúdico e estrutura rítmica em uma única atividade, e sua jogabilidade guiada pelo ritmo constitui uma hipótese plausível de mecanismo restaurador. Permanece em aberto, contudo, se uma intervenção dessa natureza de fato promove recuperação emocional mensurável e, sobretudo, como o seu efeito se compara ao de alternativas já disponíveis, seja o simples repouso, seja a prática convencional de um esporte. Responder a essa questão exige confrontar a intervenção proposta com atividades de referência, e não apenas verificar se a exposição a ela é seguida de melhora.
+
+Este trabalho apresenta o desenvolvimento do \textit{Cozy Pong}, um jogo de \gls{rv} que une mecânicas de tênis de mesa e de jogos de ritmo, ambientado sob músicas \textit{lo-fi}, e propõe um protocolo experimental para caracterizar seu efeito sobre a regulação do estresse e da ansiedade. Em vez de reivindicar eficácia terapêutica, um objetivo incompatível com um estudo de exposição única em participantes saudáveis, o trabalho posiciona o jogo como uma \emph{intervenção breve para a regulação de estresse} e busca estimar a direção e a magnitude de seu efeito, cruzando medidas psicofisiológicas com instrumentos psicométricos validados de estado, aplicados antes e depois da exposição. Para situar esse efeito, o jogo é comparado a três condições de referência, escolhidas de modo que cada contraste varie um único bloco de fatores: a mesma trilha \textit{lo-fi} ouvida sentado, sem jogar, que mantém a música constante e estima o quanto o jogo acrescenta a ela; o próprio \textit{Cozy Pong} em configuração animada, que isola o efeito da caracterização deliberadamente relaxante; e uma sessão de meditação guiada no mesmo dispositivo de \gls{rv}, que confronta o jogo com a técnica de relaxamento digital hoje mais difundida.
+
+% =====================================================================
+\section{Perguntas de Pesquisa}\label{sec:problemas}
+
+O efeito da intervenção proposta só adquire significado quando confrontado com atividades de referência que o participante poderia realizar no mesmo intervalo de tempo. A partir desse propósito, formulam-se três perguntas de pesquisa:
+
+\textbf{PP1}: Jogar o \textit{Cozy Pong} em sua configuração relaxante promove recuperação psicofisiológica a curto prazo de um estado de estresse induzido experimentalmente maior do que a audição passiva da mesma trilha musical?
+
+\textbf{PP2}: Essa recuperação depende de o jogo ter sido \emph{projetado} para acalmar, com trilha calma e baixa dificuldade, ou é obtida igualmente por uma configuração animada da mesma jogabilidade?
+
+\textbf{PP3}: Como a recuperação obtida pelo \textit{Cozy Pong} se compara, em magnitude, à de uma sessão de meditação guiada realizada no mesmo dispositivo de \gls{rv}?
+
+A primeira pergunta isola o efeito do jogo em relação ao da música que o acompanha, mantida constante. A segunda isola o efeito das escolhas de projeto que caracterizam a experiência como relaxante, mantendo constantes o dispositivo, o cenário e a trilha. A terceira posiciona a intervenção frente a uma técnica de relaxamento já consolidada, entregue pelo mesmo meio, e é a que permite quantificar o quanto a proposta se aproxima ou se distancia do que hoje se utiliza. A convergência entre medidas subjetivas e fisiológicas atravessa as três perguntas e é examinada em conjunto, reconhecendo que a experiência subjetiva, a regulação cardíaca e a ativação eletrodérmica representam componentes relacionados, porém não equivalentes, da resposta ao estresse.
+
+% =====================================================================
+\section{Objetivos}\label{sec:objetivos}
+
+\subsection{Objetivo Geral}\label{subsec:obj-geral}
+
+Desenvolver o \textit{Cozy Pong}, um jogo de \gls{rv} rítmico ambientado sob músicas \textit{lo-fi}, e propor e aplicar um protocolo de validação psicofisiológica que estime seu efeito sobre a regulação do estresse e da ansiedade, comparando-o, sob desenho intra-sujeito randomizado e contrabalanceado, a três condições de referência: a audição da mesma trilha sem jogar, uma configuração animada do próprio jogo e uma sessão de meditação guiada no mesmo dispositivo de \gls{rv}.
+
+\subsection{Objetivos Específicos}\label{subsec:obj-especificos}
+
+\begin{itemize}
+    \item Desenvolver, na \textit{engine} Unity para o dispositivo Meta Quest 3S, a jogabilidade central do \textit{Cozy Pong}, incluindo o sistema de mapas rítmicos (\textit{beatmaps}) sincronizados à música e a retroalimentação visual, sonora e tátil.
+    \item Implementar, no mesmo aplicativo, as duas configurações de jogo empregadas no experimento, a relaxante e a animada, e a cena de meditação guiada em \gls{rv}, de modo que as condições compartilhem dispositivo, cenário e \textit{pipeline} de áudio e registro.
+    \item Especificar um desenho experimental intra-sujeito, randomizado e contrabalanceado por quadrado de Williams, com indução de estresse padronizada e verificação de manipulação, dimensionado por análise de poder \textit{a priori}.
+    \item Selecionar uma bateria de instrumentos psicométricos integralmente composta por escalas de uso livre e com evidências de validade em português brasileiro, adequadas à medição repetida de estado.
+    \item Integrar a aferição psicofisiológica, com a \gls{vfc} obtida por cinta peitoral de eletrodos e a \gls{eda} obtida por sensor de sinal bruto, sincronizada aos marcadores de início e fim de cada condição e, nas condições de jogo, também aos eventos de jogo.
+    \item Analisar os dados por modelo linear de efeitos mistos para medidas repetidas, com contrastes planejados, correção para comparações múltiplas e o esforço físico percebido como covariável dos desfechos fisiológicos.
+\end{itemize}
+
+% =====================================================================
+\section{Hipóteses}\label{sec:hipoteses}
+
+% Hipoteses alinhadas as 4 condicoes (C1..C4) e aos contrastes planejados da
+% Tabela~\ref{tab:contrastes} do Cap03. H1-H3 respondem a PP1-PP3; H4 e a
+% verificacao de manipulacao; H5 e H6 sao secundarias. O veredito de cada uma
+% sera estabelecido no Cap04 (Resultados), apos a coleta.
+\begin{itemize}
+    \item \textbf{H1 --- Ganho sobre a música (PP1)}: a condição C1 produz redução mais acentuada no estado de ansiedade, da medida pós-estressor à pós-intervenção, e maior recuperação vagal, medida pelo $\ln(\mathrm{RMSSD})$, do que a condição C3, em que apenas se ouve a mesma trilha.
+
+    \item \textbf{H2 --- Efeito do projeto relaxante (PP2)}: a condição C1 produz maior recuperação psicológica e fisiológica do que a condição C2, o que indicaria que o pacote de projeto concebido para acalmar, trilha calma somada a baixa dificuldade e ausência de punição, e não o simples ato de jogar, responde pelo efeito.
+
+    \item \textbf{H3 --- Equiparação ao comparador consolidado (PP3)}: a condição C1 não é inferior à condição C4 na recuperação do estado de ansiedade, hipótese formulada como de não inferioridade por não haver base teórica para prever que um jogo supere uma técnica de relaxamento estabelecida.
+
+    \item \textbf{H4 --- Manipulação de demanda}: a condição C2 produz escores de carga de trabalho e de esforço percebido mais altos do que C1, verificação necessária para que o contraste de H2 seja atribuído à demanda, e não a uma diferença acidental entre configurações.
+
+    \item \textbf{H5 --- Recuperação eletrodérmica}: a condição C1 produz redução pós-intervenção maior no nível tônico de condutância da pele do que C2 e C3, com efeito esperado de menor magnitude que o dos desfechos cardíacos, dada a maior sensibilidade da \gls{eda} a movimento e temperatura.
+
+    \item \textbf{H6 --- Evidência convergente}: as reduções no estado de ansiedade associam-se aos indicadores de recuperação fisiológica, ainda que se espere associação apenas moderada, por medidas subjetivas e fisiológicas representarem construtos relacionados, porém distintos.
+\end{itemize}
+
+Duas verificações acompanham essas hipóteses sem constituírem objeto de teste. A primeira confirma que a indução de estresse elevou as medidas de estado em cada sessão, sem a qual não há estado a recuperar. A segunda confirma que a apreciação da trilha musical foi equivalente entre C1 e C3, que compartilham a mesma trilha, condição necessária para atribuir esse contraste ao jogo e não a uma diferença de resposta à música.
+
+% =====================================================================
+\section{Relevância}\label{sec:relevancia}
+
+A contribuição central deste trabalho situa-se na intersecção entre computação e saúde. Do ponto de vista científico, o desenho proposto não se limita a verificar se a exposição ao jogo é seguida de melhora emocional, resultado que a simples passagem do tempo após um estressor poderia produzir. Cada condição de comparação foi construída para variar um único bloco de fatores em relação à intervenção: a trilha musical é mantida constante no contraste que isola o jogo; o dispositivo, o cenário e a trilha são mantidos constantes no contraste que isola a caracterização relaxante; e o meio de entrega é mantido constante no contraste com a meditação guiada. É essa estrutura que permite passar de uma afirmação genérica sobre o jogo a conclusões atribuíveis a fatores identificados.
+
+Duas escolhas reforçam o valor informativo do resultado. Nenhum dos comparadores é um controle neutro: a música \textit{lo-fi} e a meditação guiada possuem efeito relaxante próprio e reconhecido, o que torna o teste deliberadamente conservador, pois uma vantagem da intervenção significaria ganho \emph{sobre} alternativas que já funcionam. E a condição de meditação é implementada dentro do mesmo aplicativo, o que elimina diferenças de plataforma que, de outro modo, se confundiriam com a diferença entre as técnicas.
+
+Do ponto de vista prático, o trabalho oferece uma estimativa quantitativa de como um \textit{exergame} rítmico se posiciona frente à prática de relaxamento digital hoje difundida, informação hoje ausente para esse gênero e diretamente útil ao projeto de futuras aplicações de bem-estar baseadas em jogos.
+
+Convém delimitar, desde já, o alcance dessa estratégia. O contraste com a audição passiva separa o efeito do jogo do efeito da música, mas os componentes internos do jogo, a imersão, a estrutura rítmica, o movimento e o engajamento lúdico, variam em bloco, de modo que uma eventual vantagem é atribuível ao jogo como um todo e não à sincronização rítmica isoladamente. A decomposição desses componentes exigiria uma condição adicional com mapeamento rítmico dessincronizado, indicada como extensão futura.
+
+Do ponto de vista prático, o \textit{Cozy Pong} explora um formato de baixo custo de acesso e alta aceitabilidade, o \textit{exergame} de \gls{rv} em dispositivo autônomo, como veículo para uma atividade de regulação emocional que também é lúdica. A validação psicofisiológica proposta fornece evidência objetiva, e não apenas autorrelatada, sobre a resposta do organismo à intervenção, o que é particularmente relevante para embasar o desenho de futuras aplicações de bem-estar baseadas em jogos.
+
+% PLACEHOLDER (opcional): informar a disponibilidade publica do codigo-fonte do
+% jogo, se aplicavel, em nota de rodape, a exemplo de:
+% \footnote{\url{https://github.com/USUARIO/REPOSITORIO}}

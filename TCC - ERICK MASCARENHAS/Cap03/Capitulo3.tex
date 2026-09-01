@@ -1,0 +1,613 @@
+\chapter{Metodologia}\label{cap:metodologia}
+\glsresetall
+
+% =====================================================================
+% Cap03 embute o DESENVOLVIMENTO DO JOGO e o PROTOCOLO EXPERIMENTAL.
+% Estrutura:
+%   3.1 Visao Geral
+%   3.2 Desenvolvimento do Cozy Pong (plataforma, mecanica, ritmo/beatmaps,
+%       pontuacao/feedback, cenario, configuracao usada no experimento)
+%   3.3 Condicoes Experimentais -- CONSOLIDADO EM 2026-07-30, 4 condicoes:
+%       C1 Cozy Pong Relaxante (intervencao)
+%       C2 Cozy Pong Animado   (isola a caracterizacao relaxante)
+%       C3 Trilha lo-fi sentado (isola a musica; mesma trilha de C1)
+%       C4 Meditacao guiada em RV (comparador do estado da arte, mesmo meio)
+%       A condicao de tenis de mesa real foi REMOVIDA (substituida pelo
+%       conjunto acima). Meditacao presencial ficou como trabalho futuro.
+%   3.4 Desenho Experimental (crossover randomizado e contrabalanceado)
+%   3.5 Participantes
+%   3.6 Instrumentos e Cronograma
+%   3.7 Inducao de Estresse
+%   3.8 Equipamentos de Afericao
+%   3.9 Procedimento da Sessao
+%   3.10 Sincronizacao e Processamento de Sinais
+%   3.11 Desfechos
+%   3.12 Analise Estatistica
+%   3.13 Revisao Sistematica de Literatura (protocolo)
+%   3.14 Consideracoes Eticas
+%   3.15 Limitacoes Metodologicas
+%
+% NOTA DE DESENHO (2026-07): a manipulacao NAO ocorre mais dentro do jogo. Só o
+% Modo Padrao e o Cozy Pong; Desconexo e Competitivo sao atividades externas.
+% Consequencia: o esforco fisico NAO e comparavel entre condicoes, e o estudo
+% nao isola componentes de projeto (ver 3.3 e 3.15).
+% Voz impessoal; virgula decimal; SEM em-dash.
+% IMAGENS: marcadas com "% PLACEHOLDER IMAGEM" e caixas \fbox. Ver tambem o
+% arquivo IMAGENS_NECESSARIAS.md na raiz do projeto.
+% =====================================================================
+
+% =====================================================================
+\section{Visão Geral}\label{sec:visao-geral}
+
+Este capítulo descreve, primeiro, o desenvolvimento do \textit{Cozy Pong}, o jogo de \gls{rv} que constitui a intervenção, e, em seguida, o protocolo experimental proposto para validar seu efeito sobre a regulação do estresse e da ansiedade. O jogo foi desenvolvido na \textit{engine} Unity para o Meta Quest 3S e organiza a jogabilidade em torno de mapas rítmicos sincronizados à música, com retroalimentação visual, sonora e tátil.
+
+A manipulação experimental compreende quatro condições, designadas C1 a C4. C1 é o \textit{Cozy Pong} em sua configuração relaxante, a intervenção avaliada; C2 é o mesmo jogo em configuração animada, que isola o efeito da caracterização relaxante; C3 é a audição da mesma trilha \textit{lo-fi}, sentado e sem jogar, que isola o efeito da música; e C4 é uma sessão de meditação guiada em \gls{rv}, comparador que representa a prática de relaxamento digital hoje consolidada. O estudo estima, assim, tanto o efeito do jogo quanto sua posição relativa a alternativas já em uso.
+
+O protocolo de validação adota um desenho intra-sujeito, randomizado e contrabalanceado, no qual cada participante experimenta as três condições, precedidas de um procedimento padronizado de indução de estresse. O efeito de cada condição é aferido pelo cruzamento de medidas psicofisiológicas, a \gls{vfc} e a \gls{eda}, com instrumentos psicométricos de estado aplicados antes e depois da exposição. O restante do capítulo detalha cada uma dessas partes.
+
+% =====================================================================
+\section{Desenvolvimento do Cozy Pong}\label{sec:desenvolvimento}
+
+\subsection{Plataforma e Ferramentas}\label{subsec:plataforma}
+
+O jogo foi desenvolvido na \textit{engine} Unity, com o \gls{sdk} de interação em \gls{rv} baseado no XR Interaction Toolkit, tendo como alvo o dispositivo autônomo Meta Quest 3S. A escolha do dispositivo justifica-se por seu rastreamento de seis graus de liberdade (\gls{dof}), por dispensar computador externo, o que facilita a logística das sessões experimentais, e por oferecer controles com retorno tátil (vibração), essencial à retroalimentação do jogo. A interação principal ocorre por meio de um controle representando uma raquete de tênis de mesa, cuja posição e orientação são rastreadas em tempo real.
+
+% PLACEHOLDER IMAGEM: visao geral da jogabilidade do Cozy Pong.
+\begin{figure}[H]
+    \centering
+    \caption{Visão geral da jogabilidade do \textit{Cozy Pong}. \todo{inserir a captura de tela descrita abaixo.}}
+    \label{fig:gameplay}
+    \fbox{\begin{minipage}[c][6cm][c]{0.85\textwidth}\centering
+        \textit{[Imagem a inserir: captura de tela in-game mostrando a perspectiva em primeira pessoa do jogador, a raquete na mão, a mesa de tênis de mesa, as bolas se aproximando em suas raias (lanes) e a interface de pontuação/combo.]}
+    \end{minipage}}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor (captura de tela do jogo).}
+\end{figure}
+
+\subsection{Mecânica Central}\label{subsec:mecanica}
+
+A jogabilidade central consiste em rebater, com a raquete, bolas que se aproximam do jogador em sincronia com a música. O espaço de jogo é dividido em cinco raias (\textit{lanes}), numeradas de $0$ a $4$, cada uma com pontos-alvo definidos sobre a mesa do jogador, no ar diante do jogador, sobre a mesa oposta e no ar do lado oposto. A cada nota do mapa rítmico corresponde o lançamento de uma bola por uma das raias.
+
+As bolas de saque seguem uma trajetória determinística. Uma bola de saque é lançada e executa uma sequência de quiques com trajetória parabólica calculada analiticamente a partir dos pontos de origem e destino e de uma altura de pico, de modo que o instante em que a bola chega ao ponto de rebatida seja previsível e alinhado ao ritmo. Um componente de canhão anima o lançamento, mirando na direção da velocidade inicial e aplicando um leve recuo a cada disparo, o que reforça a leitura visual e sonora do evento.
+
+A avaliação de cada rebatida combina dois fatores, a força e o tempo. A força é estimada pela velocidade relativa no contato entre bola e raquete: velocidades muito altas são classificadas como excessivas e velocidades muito baixas como fracas. O tempo é estimado pela diferença entre o tempo de voo efetivo da bola e o tempo de voo esperado, com uma janela estreita para o acerto ideal e uma janela mais larga para o acerto tolerável. O resultado final de cada rebatida é uma de quatro categorias, definidas no tipo \texttt{HitType}: \textit{Perfect} (força e tempo ideais), \textit{Ok} (força fraca ou tempo tolerável), \textit{Bad} (força excessiva ou tempo fora da janela) e \textit{Miss} (bola não rebatida, que atinge o chão, ou bola proibida rebatida). A Tabela~\ref{tab:hittype} sintetiza os limiares adotados na configuração de referência.
+
+\begin{table}[H]
+    \centering
+    \caption{Categorias de rebatida (\texttt{HitType}) e os limiares de força e tempo adotados na configuração de referência do \textit{Cozy Pong}. Os valores são parâmetros ajustáveis. \todo{confirmar os valores finais da configuração empregada no experimento.}}
+    \label{tab:hittype}
+    \small
+    \begin{tabularx}{\textwidth}{p{2.2cm}Xp{3.2cm}}
+        \toprule
+        Categoria & Condição & Efeito na pontuação/vida \\
+        \midrule
+        \textit{Perfect} & Tempo dentro de $0{,}2$~s e força entre os limiares & $+200$ pontos, $+20$ de vida \\
+        \textit{Ok}      & Tempo até $0{,}4$~s ou força abaixo de $1{,}5$ & $+100$ pontos, $+5$ de vida \\
+        \textit{Bad}     & Força acima de $3{,}5$ ou tempo acima de $0{,}4$~s & $+50$ pontos, sem ganho de vida \\
+        \textit{Miss}    & Bola não rebatida ou bola proibida rebatida & $0$ ponto, $-20$ de vida \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor, a partir do código do jogo (\texttt{BallGameLogic}, \texttt{GameScoreManager}).}
+\end{table}
+
+\subsection{Sistema de Ritmo e Beatmaps}\label{subsec:beatmaps}
+
+O elemento que conecta o jogo à música é o mapa rítmico (\textit{beatmap}), que associa cada evento de jogo a um instante da canção. Cada nota é representada por um par ordenado de tempo, em milissegundos a partir do início da faixa, e um tipo inteiro que codifica a variante do evento, por exemplo a raia ou o comportamento da bola. Os mapas são persistidos em arquivos de texto simples, uma linha por nota no formato \texttt{tempo\_ms, tipo}, o que facilita a inspeção e a edição.
+
+A produção dos mapas é feita por um editor próprio, integrado ao projeto, que reproduz a música e permite marcar notas em tempo real por meio do teclado, atribuindo-lhes o tipo selecionado, além de salvar e recarregar mapas. Essa ferramenta viabiliza o mapeamento manual das faixas \textit{lo-fi} e, no contexto experimental, a construção controlada dos mapas empregados na sessão de jogo.
+
+% PLACEHOLDER IMAGEM: editor de beatmaps.
+\begin{figure}[H]
+    \centering
+    \caption{Editor de mapas rítmicos (\textit{beatmaps}) do \textit{Cozy Pong}. \todo{inserir a captura de tela descrita abaixo.}}
+    \label{fig:editor}
+    \fbox{\begin{minipage}[c][5cm][c]{0.85\textwidth}\centering
+        \textit{[Imagem a inserir: captura de tela do editor de beatmaps, mostrando a trilha de notas rolando na vertical, o tempo atual da música, o tipo de nota selecionado e a régua de tempo.]}
+    \end{minipage}}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor (captura de tela do editor).}
+\end{figure}
+
+\subsection{Pontuação, Combo e Retroalimentação}\label{subsec:pontuacao}
+
+O sistema de pontuação recompensa a precisão e a constância. Cada rebatida bem-sucedida acrescenta pontos, multiplicados por um fator de combo que cresce com os acertos consecutivos, assumindo os valores de $1\times$, $2\times$, $4\times$ e $8\times$ à medida que a sequência atinge, respectivamente, dois, seis e quatorze acertos seguidos; erros graves reiniciam o combo. Além da pontuação, o jogo admite três regimes de consequência para o erro, selecionáveis por configuração: um regime de vida, em que acertos e erros somam e subtraem pontos de vida; um regime de caixas de erro, com um número máximo de falhas toleradas; e um regime imortal, sem penalidade de término, adotado na configuração relaxante empregada no experimento.
+
+A retroalimentação é multissensorial. No canal visual, cada rebatida gera partículas coloridas no ponto de contato, e elementos do cenário reagem ao áudio; um indicador textual exibe a categoria da rebatida (\textit{Perfect}, \textit{Ok}, \textit{Bad} ou \textit{Miss}) e o estado de combo. No canal sonoro, sons de colisão e de acerto acompanham os eventos. No canal tátil, o controle-raquete emite vibração (retorno háptico) no impacto. Essa combinação de retornos é um dos objetos de avaliação subjetiva do estudo, por sua contribuição potencial à sensação de acolhimento e à fruição.
+
+% PLACEHOLDER IMAGEM: interface de pontuacao/combo e feedback.
+\begin{figure}[H]
+    \centering
+    \caption{Interface de pontuação, combo e retroalimentação visual do \textit{Cozy Pong}. \todo{inserir a captura de tela descrita abaixo.}}
+    \label{fig:hud}
+    \fbox{\begin{minipage}[c][5cm][c]{0.85\textwidth}\centering
+        \textit{[Imagem a inserir: captura de tela em detalhe da interface (HUD), mostrando o placar, a barra/multiplicador de combo, o indicador de vida ou caixas de erro e o texto de feedback da última rebatida.]}
+    \end{minipage}}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor (captura de tela do jogo).}
+\end{figure}
+
+\subsection{Cenário e Ambientação \textit{Lo-fi}}\label{subsec:cenario}
+
+O cenário busca reforçar, no plano visual, a sensação de calma e acolhimento transmitida pelas músicas \textit{lo-fi}. \todo{descrever com precisao o cenario final (paleta, iluminacao, elementos decorativos, ambiente aconchegante), conforme a versao do jogo usada no experimento.} O menu de seleção permite escolher a faixa musical e o mapa rítmico associado a ela. A ambientação é mantida idêntica em todas as sessões de jogo, de forma que eventuais diferenças entre participantes não sejam atribuíveis a variações do cenário.
+
+% PLACEHOLDER IMAGEM: cenario lo-fi.
+\begin{figure}[H]
+    \centering
+    \caption{Cenário de ambientação \textit{lo-fi} do \textit{Cozy Pong}. \todo{inserir a captura de tela descrita abaixo.}}
+    \label{fig:cenario}
+    \fbox{\begin{minipage}[c][6cm][c]{0.85\textwidth}\centering
+        \textit{[Imagem a inserir: captura de tela ampla do cenário, evidenciando a ambientação aconchegante (iluminação suave, elementos decorativos, paleta de cores quentes) que acompanha a trilha lo-fi.]}
+    \end{minipage}}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor (captura de tela do jogo).}
+\end{figure}
+
+\subsection{Configurações Empregadas no Experimento}\label{subsec:config-experimento}
+
+O \textit{Cozy Pong} é empregado no experimento em duas configurações, que constituem duas das quatro condições descritas na Seção~\ref{sec:condicoes}. A configuração \textbf{relaxante} adota dificuldade baixa, interatividade moderada, densidade de notas reduzida, ritmo previsível com eventos alinhados às batidas ou a subdivisões métricas relevantes de uma trilha \textit{lo-fi}, movimento físico leve e regime imortal, sem penalidade de término, de modo a limitar a pressão de desempenho; a retroalimentação é de apoio, sem elementos de punição. A configuração \textbf{animada} preserva o mesmo cenário e a mesma interação motora básica, mas adota uma \textbf{trilha sonora mais animada}, de andamento mais rápido, e eleva de forma coerente a densidade de notas, a velocidade das bolas e a exigência de precisão, substituindo o regime imortal pelo regime de caixas de erro.
+
+Cabe explicitar o que esse contraste isola. As duas configurações não diferem em um único parâmetro, mas em um \emph{conjunto coerente} de escolhas de projeto: a trilha e a dificuldade variam em conjunto, como variariam em qualquer jogo real, no qual a música acompanha a intensidade pretendida da experiência. O contraste, portanto, não separa o efeito do andamento musical do efeito da dificuldade; ele opõe dois \emph{pacotes de projeto} completos, um concebido para acalmar e outro para energizar. Essa é a pergunta de projeto efetivamente relevante para quem desenvolve jogos de bem-estar, e é assim que a hipótese H2 deve ser lida. A decomposição dos dois fatores exigiria condições adicionais, com trilha animada e dificuldade baixa e vice-versa, indicadas como extensão futura.
+
+\todo{consolidar e documentar a parametrizacao numerica final das duas configuracoes: faixas musicais e seus andamentos em BPM, densidade de notas por minuto, velocidade da bola, limiares de tempo e forca da Tabela~\ref{tab:hittype} e regime de consequencia do erro. Fazer apos o estudo-piloto, garantindo que a configuracao animada eleve a demanda sem tornar a tarefa frustrante.}
+
+\subsection{Condição de Meditação Guiada em Realidade Virtual}\label{subsec:meditacao-vr}
+
+A quarta condição experimental, a meditação guiada em \gls{rv} (Seção~\ref{sec:condicoes}), é implementada como um modo adicional dentro do \emph{mesmo} aplicativo Unity que hospeda o \textit{Cozy Pong}, e não por meio de um aplicativo comercial de terceiros. Essa decisão é metodológica: ao compartilhar o mesmo binário, o mesmo dispositivo, o mesmo \textit{pipeline} de renderização e áudio e o mesmo mecanismo de registro de eventos, a condição de meditação difere da condição de jogo apenas pela atividade proposta, e não pela plataforma de software. Um aplicativo comercial introduziria diferenças não controladas de qualidade gráfica, latência, taxa de quadros, calibração de volume e conteúdo, que se confundiriam com o efeito da técnica de relaxamento.
+
+A condição consiste em um ambiente virtual visualmente sóbrio, sem elementos de jogo, acompanhado de uma narração de meditação guiada padronizada, com foco na respiração, e da mesma trilha \textit{lo-fi} em volume reduzido. O participante permanece sentado, sem interação motora exigida.
+
+\todo{produzir a cena de meditacao guiada no projeto Unity e definir a narracao: gravar audio proprio ou adotar um roteiro de dominio publico traduzido; registrar a fonte e a duracao exata no texto final.}
+
+% =====================================================================
+\section{Condições Experimentais}\label{sec:condicoes}
+
+A manipulação experimental compreende quatro condições, apresentadas a seguir e sintetizadas na Tabela~\ref{tab:condicoes}. Duas delas são configurações do \textit{Cozy Pong}, uma é um controle passivo que isola a trilha musical e a última é um comparador ativo que representa a técnica de relaxamento digital hoje consolidada. Cada participante é exposto às quatro condições.
+
+\begin{description}[style=nextline]
+    \item[\textbf{C1 --- \textit{Cozy Pong} Relaxante (intervenção).}]
+    A condição de interesse. O participante joga o \textit{Cozy Pong} na configuração relaxante da Seção~\ref{subsec:config-experimento}, reunindo em uma única atividade a imersão em \gls{rv}, a música \textit{lo-fi}, a estrutura rítmica, o exercício físico leve e o engajamento lúdico.
+
+    \item[\textbf{C2 --- \textit{Cozy Pong} Animado (controle de projeto).}]
+    O mesmo jogo e o mesmo cenário, na configuração animada: trilha sonora de andamento mais rápido, maior densidade de notas, maior velocidade, maior exigência de precisão e consequência para o erro. Contrasta dois pacotes coerentes de projeto, um concebido para acalmar e outro para energizar, mantendo constantes o dispositivo, o meio e a mecânica.
+
+    \item[\textbf{C3 --- Trilha \textit{lo-fi} sentado, sem jogar (controle passivo).}]
+    O participante permanece sentado ouvindo a mesma trilha \textit{lo-fi}, na mesma ordem e volume e pelo mesmo intervalo, sem \gls{rv} e sem qualquer elemento de jogabilidade. Mantém o estímulo musical constante e, assim, separa o efeito do jogo do efeito da música que o acompanha. Como a música \textit{lo-fi} possui valor relaxante próprio (Seção~\ref{sec:fund-musica}), esta condição é um comparador ativo, e não um controle neutro, o que torna o teste deliberadamente conservador.
+
+    \item[\textbf{C4 --- Meditação guiada em \gls{rv} (comparador de referência).}]
+    O participante realiza, com o mesmo \gls{hmd} e dentro do mesmo aplicativo (Seção~\ref{subsec:meditacao-vr}), uma sessão de meditação guiada com foco na respiração, sentado e sem interação motora. Representa a prática de relaxamento digital hoje mais difundida e permite responder, com números, se o \textit{Cozy Pong} se equipara ou supera aquilo que já se utiliza. Por compartilhar o meio, o dispositivo e o \textit{software} com C1 e C2, o contraste isola a \emph{atividade} sem confundi-la com a plataforma.
+\end{description}
+
+\begin{table}[H]
+    \centering
+    \caption{Atributos das quatro condições experimentais. C1 e C2 opõem dois pacotes de projeto (trilha e dificuldade variam em conjunto); C1 e C3 diferem na presença do jogo, mantida a mesma trilha; C1 e C4 diferem na atividade, mantido o meio.}
+    \label{tab:condicoes}
+    \small
+    \begin{tabularx}{\textwidth}{p{2.5cm}YYYY}
+        \toprule
+        \textbf{Atributo} & \textbf{C1 Relaxante} & \textbf{C2 Animado} & \textbf{C3 Trilha} & \textbf{C4 Meditação} \\
+        \midrule
+        Atividade & jogar & jogar & ouvir & meditar \\
+        Meio & \gls{rv} & \gls{rv} & sentado, sem \gls{rv} & \gls{rv} \\
+        Trilha sonora & \textit{lo-fi} calma & animada, mais rápida & \textit{lo-fi} calma (idêntica a C1) & \textit{lo-fi} calma, volume reduzido \\
+        Estrutura rítmica & sim & sim & não & não \\
+        Demanda/dificuldade & baixa & alta & nenhuma & nenhuma \\
+        Esforço físico & leve & moderado & mínimo & mínimo \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+\end{table}
+
+O conjunto foi construído para que cada contraste com a condição de interesse varie um único bloco de atributos, conforme a Tabela~\ref{tab:contrastes}. Essa estrutura é o que permite passar de uma afirmação genérica sobre o jogo a conclusões atribuíveis a fatores identificados.
+
+\begin{table}[H]
+    \centering
+    \caption{Contrastes planejados a partir da condição de interesse e a pergunta que cada um responde.}
+    \label{tab:contrastes}
+    \small
+    \begin{tabularx}{\textwidth}{p{2.2cm}p{3.6cm}Y}
+        \toprule
+        \textbf{Contraste} & \textbf{O que varia} & \textbf{Pergunta respondida} \\
+        \midrule
+        C1 \textit{vs} C3 & presença do jogo (música constante) & O jogo acrescenta recuperação à obtida pela música sozinha? \\
+        \addlinespace
+        C1 \textit{vs} C2 & pacote de projeto: trilha e dificuldade em conjunto & Projetar a experiência para acalmar importa, ou basta jogar? \\
+        \addlinespace
+        C1 \textit{vs} C4 & atividade (meio constante) & O jogo se equipara ou supera a meditação guiada em \gls{rv}? \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+\end{table}
+
+Três delimitações permanecem. O contraste C1 \textit{vs} C3 controla o estímulo musical, mas os componentes internos do jogo, a imersão, a estrutura rítmica, o movimento e o engajamento lúdico, ainda variam em bloco; isolar a sincronização rítmica exigiria uma variante dessincronizada do próprio jogo, indicada como extensão futura. O contraste C1 \textit{vs} C2, por sua vez, opõe pacotes de projeto completos, nos quais trilha e dificuldade variam juntas, e não permite atribuir uma eventual diferença isoladamente ao andamento musical ou à demanda da tarefa. Além disso, o esforço físico não é comparável entre as condições, sendo maior em C2, intermediário em C1 e mínimo em C3 e C4. Como a \gls{fc} e a \gls{eda} respondem fortemente ao exercício, os desfechos fisiológicos são obtidos em janelas padronizadas de recuperação e interpretados tendo o esforço percebido como covariável (Seções~\ref{sec:processamento} e \ref{sec:analise}).
+
+Uma quinta condição, de meditação convencional fora da \gls{rv}, foi considerada e descartada do desenho principal. Ela acrescentaria uma quinta sessão por participante e, sobretudo, confundiria dois fatores em um único contraste, a técnica de relaxamento e o meio de entrega, ao passo que C4 mantém o meio constante e isola a técnica. A comparação entre meditação em \gls{rv} e presencial fica registrada como trabalho futuro.
+
+% PLACEHOLDER IMAGEM: comparativo das quatro condicoes experimentais.
+\begin{figure}[H]
+    \centering
+    \caption{Contraste esquemático das quatro condições experimentais. \todo{inserir a figura descrita abaixo.}}
+    \label{fig:modos}
+    \fbox{\begin{minipage}[c][5cm][c]{0.85\textwidth}\centering
+        \textit{[Imagem a inserir: figura com quatro painéis: (a) participante com o HMD jogando Cozy Pong relaxante; (b) o mesmo jogo na configuração animada, com mais notas na tela; (c) participante sentado, de fones, apenas ouvindo a trilha; (d) participante com o HMD na cena de meditação guiada.]}
+    \end{minipage}}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+\end{figure}
+
+% =====================================================================
+\section{Desenho Experimental}\label{sec:desenho}
+
+O estudo adota um desenho experimental \textbf{intra-sujeito, randomizado e contrabalanceado} (\textit{crossover}), com as quatro condições da Seção~\ref{sec:condicoes}. Cada participante completa as quatro condições, atuando como seu próprio controle.
+
+\subsection{Justificativa do Desenho Intra-Sujeito}\label{subsec:justificativa-desenho}
+
+A alternativa considerada, um desenho entre-sujeitos com grupos independentes de aproximadamente dez pessoas por condição, foi descartada por insuficiência de poder estatístico. A comparação entre os dois desenhos é direta e decisiva.
+
+Em um desenho entre-sujeitos com cinco grupos de dez participantes ($N = 50$), uma análise de variância de um fator detecta, com poder de $80\%$ e $\alpha = 0{,}05$, apenas efeitos de magnitude $f \gtrsim 0{,}50$. Pelas convenções de \citet{Cohen1988}, $f = 0{,}10$ é um efeito pequeno, $f = 0{,}25$ é médio e $f = 0{,}40$ é grande, de modo que esse arranjo só detectaria efeitos \emph{maiores que grandes}. Efeitos de intervenções breves de relaxamento raramente atingem essa magnitude, e o estudo teria alta probabilidade de não detectar um efeito real, produzindo um resultado nulo não informativo.
+
+No desenho intra-sujeito aqui adotado, com quatro medidas repetidas e correlação intra-participante estimada em $r = 0{,}50$, o mesmo poder de $80\%$ é alcançado para $f \approx 0{,}21$ com $N = 32$ participantes. Para os contrastes pareados de interesse, essa amostra detecta efeitos a partir de $d_z \approx 0{,}52$. O desenho intra-sujeito é, portanto, cerca de duas vezes e meia mais sensível utilizando $36\%$ menos participantes, além de eliminar por construção a influência de diferenças individuais estáveis, como aptidão física, ansiedade de traço, experiência prévia com \gls{rv} e responsividade autonômica, que no desenho entre-sujeitos entrariam integralmente na variância de erro. A Tabela~\ref{tab:poder} resume a comparação.
+
+\begin{table}[H]
+    \centering
+    \caption{Comparação de poder estatístico entre os desenhos considerados, para poder de $80\%$ e $\alpha = 0{,}05$. O efeito mínimo detectável ($f$) é tanto melhor quanto menor.}
+    \label{tab:poder}
+    \small
+    \begin{tabularx}{\textwidth}{p{5.2cm}ccY}
+        \toprule
+        \textbf{Desenho} & \textbf{$N$} & \textbf{$f$ mínimo} & \textbf{Interpretação} \\
+        \midrule
+        Entre-sujeitos, 5 grupos de 10 & 50 & $\approx 0{,}50$ & detecta só efeitos além de grandes \\
+        \addlinespace
+        Intra-sujeito, 4 condições ($r = 0{,}50$) & 32 & $\approx 0{,}21$ & detecta efeitos pequenos a médios \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor, a partir das convenções de \citet{Cohen1988}.}
+\end{table}
+
+Três considerações adicionais reforçam a escolha. A primeira é a natureza dos desfechos fisiológicos: índices de \gls{vfc} em repouso variam enormemente entre indivíduos saudáveis, por influência de idade, condicionamento e genética. Em um desenho entre-sujeitos, essa variabilidade entra integralmente na variância de erro; no desenho intra-sujeito, é removida por construção. Para desfechos como o $\ln(\mathrm{RMSSD})$, a diferença não é de conveniência, mas de viabilidade.
+
+A segunda é a natureza da hipótese H3, formulada como não inferioridade. Testes de não inferioridade exigem amostras maiores que testes de superioridade para a mesma margem, o que torna o arranjo entre-sujeitos com grupos pequenos incapaz de sustentá-la.
+
+A terceira é o alinhamento à literatura. \citet{Kim2021} avaliaram relaxamento em \gls{rv} contra biofeedback em $83$ adultos com estresse elevado sob desenho \textit{crossover} randomizado, e \citet{RubioArias2024} compararam \textit{exergames} imersivos a exercício convencional sob o mesmo arranjo, com $22$ participantes. O desenho intra-sujeito é o predominante nesse corpo metodológico.
+
+\subsection{Custos do Desenho Intra-Sujeito e sua Mitigação}\label{subsec:custos-desenho}
+
+O desenho escolhido tem dois custos reconhecidos, ambos endereçados pelo protocolo.
+
+O primeiro, e mais relevante, é a \textbf{habituação ao estressor}. A literatura sobre estressores laboratoriais documenta atenuação da resposta neuroendócrina à exposição repetida, particularmente acentuada quando as sessões se sucedem em intervalos curtos. Três providências limitam essa ameaça. Primeiro, o contrabalanceamento por quadrado de Williams torna a habituação \emph{ortogonal} à condição: como cada condição ocupa cada posição na ordem o mesmo número de vezes, a atenuação afeta igualmente todas as condições e não se confunde com o efeito de interesse, sendo ainda estimada explicitamente pelo termo de sessão da Equação~\ref{eq:lmm}. Segundo, os parâmetros numéricos da tarefa variam entre sessões e o intervalo mínimo entre elas é de $24$ horas, preferencialmente de $48$ a $72$. Terceiro, e decisivo, os desfechos primários deste estudo são cardiovasculares e autonômicos, não neuroendócrinos: a habituação documentada refere-se sobretudo ao eixo hipotálamo-hipófise-adrenal, medido por cortisol, que este protocolo não emprega. Ainda assim, a verificação de manipulação é conduzida \emph{por sessão}, e a constatação de falha de indução em sessões tardias condiciona a interpretação de todos os desfechos.
+
+O segundo custo são as \textbf{características de demanda}: ao experimentar todas as condições, o participante pode inferir a hipótese do estudo. A mitigação é a descrição neutra do experimento, apresentado como investigação de respostas a diferentes atividades, sem indicação de qual condição se espera favorecer, e a coleta de expectativa antes da exposição, tratada como covariável exploratória.
+
+Um desenho entre-sujeitos eliminaria ambos os custos, mas ao preço documentado na Tabela~\ref{tab:poder}, incompatível com os efeitos esperados para intervenções breves de relaxamento. A perda de sensibilidade seria maior que o ganho em controle.
+
+\subsection{Sessões, Ordem e Contrabalanceamento}\label{subsec:sessoes}
+
+Cada participante realiza uma sessão de orientação e quatro sessões experimentais, uma por condição, em dias distintos, com intervalo mínimo de $24$ horas e preferencialmente de $48$ a $72$ horas. O intervalo reduz fadiga, habituação, arrastamento entre condições e efeitos de aplicação repetida dos questionários. As sessões de um mesmo participante ocorrem, sempre que possível, no mesmo horário do dia, para reduzir a variação circadiana da atividade autonômica \citep{Laborde2017}.
+
+A ordem das condições é atribuída por um \textbf{quadrado latino de Williams} para quatro tratamentos, que produz quatro sequências balanceadas quanto a efeitos de arrastamento de primeira ordem, isto é, cada condição precede e sucede cada uma das demais o mesmo número de vezes. Os participantes são alocados às sequências por randomização em blocos, com oito participantes por sequência, o que motiva a fixação da amostra em $N = 32$ completadores.
+
+A duração da exposição é idêntica nas quatro condições, de forma que diferenças de recuperação não sejam atribuíveis ao tempo decorrido. Como as condições são manifestamente distintas para quem participa, a alocação não pode ser mascarada nem para o participante nem para o pesquisador, o que mantém as características de demanda como ameaça a ser considerada na interpretação (Seção~\ref{sec:limitacoes}).
+
+% =====================================================================
+\section{Participantes}\label{sec:participantes}
+
+A amostra é composta por jovens adultos e universitários saudáveis, com idade igual ou superior a $18$ anos. Os critérios de inclusão e exclusão, sintetizados na Tabela~\ref{tab:criterios}, visam à segurança e à validade da medição fisiológica.
+
+\begin{table}[H]
+    \centering
+    \caption{Critérios de inclusão e de exclusão dos participantes.}
+    \label{tab:criterios}
+    \small
+    \begin{tabularx}{\textwidth}{p{3.2cm}X}
+        \toprule
+        \textbf{Inclusão} & idade $\geq 18$ anos; compreensão do termo de consentimento e das instruções; visão normal ou corrigida; audição dos estímulos musicais; capacidade de realizar movimentos leves de membros superiores e de participar de uma partida de tênis de mesa; disposição para usar \gls{hmd} e sensores fisiológicos. \\
+        \addlinespace
+        \textbf{Exclusão} & condições cardiovasculares, neurológicas, vestibulares ou musculoesqueléticas que tornem a participação insegura; histórico de epilepsia fotossensível; histórico severo de enjoo de movimento ou \textit{cybersickness}; doença aguda atual; lesão recente que limite o movimento; intoxicação atual; medicação ou condições que afetem substancialmente as respostas cardíaca ou sudomotora quando não controláveis; sintomas psiquiátricos graves atuais identificados na triagem; impossibilidade de obter sinal fisiológico adequado. \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor, a partir da revisão metodológica adotada.}
+\end{table}
+
+Participantes não são excluídos apenas por relatarem ansiedade ou estresse leves, variáveis que podem ser medidas e analisadas como moderadoras.
+
+\subsection{Tamanho da Amostra}\label{subsec:amostra}
+
+O tamanho da amostra é fixado em $N = 32$ participantes completadores, oito por sequência do quadrado de Williams (Seção~\ref{subsec:sessoes}). Essa amostra oferece poder de $80\%$, com $\alpha = 0{,}05$, para detectar efeitos de $f \approx 0{,}21$ no teste de condição por tempo e de $d_z \approx 0{,}52$ nos contrastes pareados planejados, sob correlação intra-participante estimada em $r = 0{,}50$ (Seção~\ref{subsec:justificativa-desenho}).
+
+Prevendo perda amostral por desistência, falha de sensor, artefato excessivo e interrupção por \textit{cybersickness}, estimada conservadoramente em $20\%$, a meta de recrutamento é de $40$ participantes. Uma vez que os participantes começam a ser alocados às sequências, a substituição de desistentes preserva o balanceamento ao alocar o substituto à mesma sequência do participante perdido.
+
+Cabe registrar que $N = 32$ dimensiona o estudo para os desfechos primários declarados na Seção~\ref{sec:desfechos}. As análises de moderação, por dependerem de termos de interação, têm poder substancialmente menor e são declaradas exploratórias desde o desenho.
+
+% =====================================================================
+\section{Instrumentos e Cronograma de Aplicação}\label{sec:instrumentos-crono}
+
+A bateria de instrumentos, cujos construtos foram descritos na Seção~\ref{sec:fund-instrumentos}, obedece a três critérios de seleção fixados antes da coleta: cada instrumento deve possuir evidências de validade publicadas, dispor de versão em português brasileiro quando aplicado a participantes brasileiros e ser de uso livre para pesquisa, sem restrição de licenciamento ou de habilitação profissional para aplicação.
+
+\subsection{Bateria Adotada}\label{subsec:bateria}
+
+O desfecho subjetivo primário é a escala visual analógica de ansiedade. Três propriedades sustentam essa escolha. A primeira é a validade: escalas visuais analógicas de estado apresentam validade convergente com a escala de estado do \gls{stai}, instrumento de referência da área, com correlações da ordem de $r = 0{,}60$ \citep{Facco2011}. A segunda é a adequação ao desenho: foram concebidas para aplicação repetida e são sensíveis a variações de curto prazo, ao contrário de instrumentos de rastreamento, que avaliam períodos de semanas. A terceira é o precedente direto: \citet{Kim2021}, no estudo metodologicamente mais próximo deste, empregaram escala numérica de $0$ a $100$ e observaram padrão de resposta equivalente ao de instrumentos mais extensos.
+
+A Tabela~\ref{tab:bateria} apresenta a bateria adotada, com a justificativa de cada instrumento. Todos são de uso livre para pesquisa e, quando aplicáveis a medidas de estado, admitem aplicação repetida sem prejuízo de validade.
+
+\begin{table}[H]
+    \centering
+    \caption{Bateria definitiva de instrumentos, com a função de cada um no protocolo e a evidência que sustenta sua adoção.}
+    \label{tab:bateria}
+    \small
+    \begin{tabularx}{\textwidth}{p{2.7cm}p{3.1cm}Y}
+        \toprule
+        \textbf{Instrumento} & \textbf{Função} & \textbf{Justificativa da escolha} \\
+        \midrule
+        \gls{vas} $0$--$100$ (ansiedade, estresse, calma) & Desfecho subjetivo primário, repetido & Uso livre; validade convergente com a escala de estado do \gls{stai} ($r \approx 0{,}60$); concebida para medidas repetidas e sensível a variação de curto prazo \citep{Facco2011} \\
+        \addlinespace
+        \gls{sam} & Desfecho subjetivo secundário, repetido & Uso livre; pictórico e não verbal, dispensa tradução; cobre valência e ativação, dimensões distintas que a redução de estresse pode afetar separadamente \citep{BradleyLang1994} \\
+        \addlinespace
+        BRUMS, subescala Tensão & Estado de humor, repetido & Validado no Brasil e concebido para aplicação repetida em contexto de exercício físico, o que o torna adequado a um \textit{exergame} \citep{Rohlfs2008} \\
+        \addlinespace
+        \gls{pss} & Caracterização basal & Versão brasileira validada \citep{Luft2007}; mede estresse percebido recente, usado como covariável e critério de caracterização \\
+        \addlinespace
+        \gls{gad} & Caracterização basal & Versão brasileira validada, com estrutura unidimensional e boa fidedignidade \citep{Moreno2016}; uso livre \\
+        \addlinespace
+        \gls{tlx} & Carga de trabalho, pós-condição & Instrumento consagrado e de uso livre; verifica a manipulação de demanda entre as configurações \citep{HartStaveland1988} \\
+        \addlinespace
+        Borg CR10 & Esforço físico, pós-condição & Indispensável neste desenho, em que o esforço difere entre condições e confunde os desfechos fisiológicos \citep{Borg1982} \\
+        \addlinespace
+        \gls{ipq}$^{\dagger}$ & Presença, pós-condição & Uso livre; presença pode moderar a eficácia da intervenção \citep{Schubert2001} \\
+        \addlinespace
+        \gls{ssq}$^{\dagger}$ & \textit{Cybersickness}, pós-condição & Adaptação validada para o português \citep{Goncalves2024}; sustenta o critério de interrupção \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor. $^{\dagger}$ Aplicável apenas às condições realizadas em \gls{rv} (C1, C2 e C4).}
+\end{table}
+
+A bateria foi mantida deliberadamente enxuta. Instrumentos de rastreamento de sintomas depressivos não integram o protocolo, por avaliarem construto não central ao objeto do estudo e por demandarem procedimento específico de resposta a itens de risco, encargo ético desproporcional ao ganho informativo neste desenho.
+
+\subsection{Cronograma de Aplicação}\label{subsec:cronograma-aplic}
+
+Os instrumentos de caracterização são aplicados uma única vez, na sessão de orientação. Os instrumentos de estado são aplicados em quatro momentos de cada sessão experimental, e os de controle imediatamente após a exposição, conforme a Tabela~\ref{tab:cronograma}.
+
+\begin{table}[H]
+    \centering
+    \caption{Cronograma de aplicação dos instrumentos por momento da sessão. Os instrumentos assinalados com $\dagger$ aplicam-se somente às condições realizadas em \gls{rv}; os assinalados com $\ddagger$, somente às condições de jogo.}
+    \label{tab:cronograma}
+    \small
+    \begin{tabularx}{\textwidth}{p{4.1cm}YYYY}
+        \toprule
+        \textbf{Instrumento} & \textbf{Ingresso} & \textbf{Pré-estressor} & \textbf{Pós-estressor} & \textbf{Pós-interv./recup.} \\
+        \midrule
+        Demografia e triagem de saúde & Sim & Não & Não & Não \\
+        \gls{pss} & Sim & Não & Não & Não \\
+        \gls{gad} & Sim & Não & Não & Não \\
+        Experiência prévia e preferências & Sim & Não & Não & Não \\
+        \gls{vas} ansiedade/estresse/calma & Não & Sim & Sim & Sim \\
+        \gls{sam} & Não & Sim & Sim & Sim \\
+        BRUMS (Tensão) & Não & Sim & Não & Sim \\
+        \gls{tlx} & Não & Não & Não & Sim \\
+        Borg CR10 & Não & Não & Não & Sim \\
+        \gls{ipq}$^{\dagger}$ & Não & Não & Não & Sim \\
+        \gls{ssq}$^{\dagger}$ & Basal & Opcional & Não & Sim \\
+        Sincronização percebida$^{\ddagger}$ & Não & Não & Não & Sim \\
+        Fruição da atividade & Não & Não & Não & Sim \\
+        Apreciação da trilha musical & Basal & Não & Não & Sim \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+\end{table}
+
+O questionário utilizado no \textit{playtest} do jogo, elaborado antes desta consolidação e inspirado em itens do \gls{stai} e do \gls{gad}, é substituído pela bateria acima nas sessões experimentais. Suas questões abertas sobre satisfação, frustração e sugestões são preservadas, por fornecerem dados qualitativos úteis ao aprimoramento do jogo, e passam a compor o bloco pós-condição das condições de jogo.
+
+% =====================================================================
+\section{Indução de Estresse}\label{sec:inducao}
+
+Uma intervenção de relaxamento não pode demonstrar recuperação se os participantes iniciam a sessão com estresse mínimo ou inconsistente. Por isso, o protocolo inclui um procedimento padronizado e eticamente aceitável de indução de estresse, seguido de uma verificação de manipulação, e a intervenção é avaliada pelo grau de recuperação a partir do estado induzido.
+
+Três procedimentos foram considerados. O \gls{tsst} \citep{Kirschbaum1993} é o padrão de referência da área e produz a resposta de cortisol mais robusta da literatura, mas exige banca avaliadora treinada, sala com câmera e discurso público, sendo desproporcionalmente oneroso e eticamente mais delicado para aplicação repetida em quatro sessões. O repouso sem estressor foi descartado porque participantes que chegam relaxados produzem efeito de piso, situação em que nenhuma intervenção pode demonstrar recuperação. Adota-se, portanto, a alternativa intermediária: uma \textbf{tarefa computadorizada de aritmética mental sob pressão de tempo}, derivada dos princípios da \gls{mist} \citep{Dedovic2005} e equivalente à subtração seriada empregada por \citet{Kim2021} no estudo que serve de referência direta a este protocolo.
+
+A tarefa tem duração de cinco minutos e compreende um bloco de prática, seguido de subtrações seriadas encadeadas sob limite de tempo por item, com dificuldade e pressão temporal ajustadas para manter a taxa de acerto abaixo do desempenho confortável, e retroalimentação visível de acertos e erros. A retroalimentação é branda, padronizada e não personalizada, sem comparação com outros participantes e sem qualquer sugestão de consequência para o desempenho, e todas as sessões encerram com \textit{debriefing} explicando que a dificuldade foi calibrada para ser alta.
+
+A indução é repetida antes de cada uma das quatro condições, o que exige atenção à habituação: a resposta a estressores laboratoriais tende a atenuar-se com a repetição. Duas providências a controlam. Os parâmetros numéricos da tarefa variam entre sessões, preservando a dificuldade, e o número da sessão entra como covariável no modelo estatístico (Seção~\ref{sec:analise}), permitindo estimar e descontar a atenuação.
+
+A manipulação é considerada bem-sucedida quando a medida pós-estressor apresenta, em média, aumento significativo nas \gls{vas} de estresse e ansiedade, aumento da ativação no \gls{sam} e elevação da \gls{fc} em relação à linha de base. O critério é verificado por sessão e reportado antes de qualquer teste de hipótese.
+
+% =====================================================================
+\section{Equipamentos de Aferição}\label{sec:equipamentos}
+
+A aferição fisiológica emprega dois canais complementares, o cardiovascular e o eletrodérmico, sintetizados na Tabela~\ref{tab:equipamentos}. As escolhas abaixo são definitivas e acompanhadas do critério técnico que as sustenta.
+
+\subsection{Aferição Cardiovascular}\label{subsec:equip-cardio}
+
+Adota-se a \textbf{cinta peitoral Polar H10}. O requisito determinante é a exportação dos \emph{intervalos \gls{rr} individuais}, e não apenas da \gls{fc} média: sem a série de intervalos batimento a batimento, nenhum índice de \gls{vfc} pode ser calculado, o que descarta de imediato pulseiras e relógios que entregam somente frequência agregada.
+
+Entre os dispositivos que atendem a esse requisito, a Polar H10 é o mais extensamente validado contra eletrocardiografia de referência. \citet{Schaffarczyk2022} reportam correlações superiores a $0{,}93$ e viés inferior a $1$~ms nos intervalos \gls{rr}, tanto em repouso quanto em exercício incremental, faixa que cobre integralmente as condições deste estudo. Por ser baseada em eletrodos, e não em fotopletismografia, a cinta é substancialmente menos suscetível a artefato de movimento do que sensores ópticos de pulso, propriedade decisiva nas condições de jogo e, sobretudo, na configuração animada.
+
+\subsection{Aferição Eletrodérmica}\label{subsec:equip-eda}
+
+Para a \gls{eda}, fixam-se três requisitos derivados das recomendações de publicação da área \citep{Boucsein2012}: acesso ao sinal bruto, sem processamento proprietário opaco; frequência de amostragem de ao menos $16$~Hz, suficiente para resolver respostas fásicas; e eletrodos com meio de contato conhecido e documentável. O dispositivo eleito é o \textbf{Shimmer3 GSR+}, que satisfaz os três critérios, com amostragem de $64$~Hz e exportação de dados brutos. Caso sua aquisição se mostre inviável, a alternativa documentada é o \textbf{BITalino (PLUX)}, que preserva o acesso ao sinal bruto e possui uso em pesquisa revisada por pares; nesse caso, a substituição e seus parâmetros devem ser explicitamente reportados. Dispositivos de pulso com amostragem da ordem de $4$~Hz e sinal processado internamente não atendem aos critérios e são descartados como instrumento primário.
+
+A colocação dos eletrodos é \textbf{palmar ou nas falanges intermediárias dos dedos indicador e médio da mão não dominante}. Essa posição, de maior amplitude de resposta, é viável neste protocolo porque todas as quatro condições deixam a mão não dominante livre: o \textit{Cozy Pong} é jogado com a raquete em uma única mão, assim como o tênis de mesa, e as condições de audição e de meditação não exigem interação manual. Trata-se de uma vantagem do desenho, a ser confirmada em piloto, verificando que o menu de pulso do jogo não exija a mão instrumentada durante a sessão.
+
+\begin{table}[H]
+    \centering
+    \caption{Equipamentos de aferição psicofisiológica, com a grandeza medida, o requisito técnico determinante e a decisão adotada.}
+    \label{tab:equipamentos}
+    \small
+    \begin{tabularx}{\textwidth}{p{2.6cm}p{3.0cm}Y}
+        \toprule
+        \textbf{Canal} & \textbf{Grandeza} & \textbf{Decisão e requisito} \\
+        \midrule
+        Cardiovascular & \gls{fc} e \gls{vfc} (série de intervalos \gls{rr}) & \textbf{Polar H10}. Exige exportação de intervalos \gls{rr} individuais e eletrodos, para robustez a movimento; validada contra \gls{ecg} \citep{Schaffarczyk2022} \\
+        \addlinespace
+        Eletrodérmico & \gls{eda} (condutância da pele) & \textbf{Shimmer3 GSR+} ($64$~Hz, sinal bruto); alternativa documentada: BITalino. Exige sinal bruto, $\geq 16$~Hz e eletrodos documentados \citep{Boucsein2012} \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+\end{table}
+
+Relatam-se obrigatoriamente, no capítulo de resultados, o modelo e a versão de \textit{firmware} de cada dispositivo, a frequência de amostragem, o tipo de eletrodo e o meio de contato, a temperatura e a umidade da sala e o percentual de dados descartados por artefato \citep{Boucsein2012,Laborde2017}.
+
+Duas medidas adicionais foram consideradas e ficam fora do escopo. O cortisol salivar exigiria armazenamento refrigerado e análise laboratorial terceirizada, com custo incompatível com o trabalho. A cinta de respiração, embora desejável por a respiração influenciar a \gls{vfc} de alta frequência, é dispensada pela decisão, adotada na Seção~\ref{sec:processamento}, de não empregar índices espectrais como desfechos primários.
+
+% PLACEHOLDER IMAGEM: montagem dos sensores no participante.
+\begin{figure}[H]
+    \centering
+    \caption{Montagem dos equipamentos de aferição no participante. \todo{inserir a foto ou esquema descrito abaixo.}}
+    \label{fig:setup}
+    \fbox{\begin{minipage}[c][5cm][c]{0.85\textwidth}\centering
+        \textit{[Imagem a inserir: foto ou esquema do participante equipado, mostrando o posicionamento da cinta peitoral, do sensor GSR e do HMD Meta Quest 3S, com os controles nas mãos.]}
+    \end{minipage}}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+\end{figure}
+
+% =====================================================================
+\section{Procedimento da Sessão}\label{sec:procedimento}
+
+Cada participante completa uma sessão de orientação e as sessões experimentais. A sessão de orientação inclui o consentimento informado, a avaliação de elegibilidade, os questionários demográfico e de saúde, os instrumentos psicológicos basais, a explicação dos sensores e dos procedimentos de segurança, o ajuste do \gls{hmd}, uma tarefa neutra e curta de familiarização com a \gls{rv} (que não reproduz a jogabilidade do \textit{Cozy Pong}), a determinação do volume de áudio confortável e a avaliação de sintomas iniciais de \textit{cybersickness}. A Tabela~\ref{tab:timeline} apresenta o cronograma sugerido de uma sessão experimental, cujas etapas $7$ a $9$ variam conforme a condição designada.
+
+\begin{table}[H]
+    \centering
+    \caption{Cronograma sugerido de uma sessão experimental.}
+    \label{tab:timeline}
+    \small
+    \begin{tabularx}{\textwidth}{p{0.8cm}p{2.7cm}Y}
+        \toprule
+        \textbf{Etapa} & \textbf{Duração aprox.} & \textbf{Procedimento} \\
+        \midrule
+        1 & 5 min & Chegada, verificação de conformidade e de eventos adversos, confirmação de elegibilidade para a sessão. \\
+        2 & 5 min & Colocação e verificação dos sensores cardíaco e de \gls{eda}; sincronização e inspeção da qualidade do sinal. \\
+        3 & 10 min & Linha de base em repouso sentado. Os $5$ min finais, livres de artefato, servem à análise primária de \gls{vfc} basal. \\
+        4 & 3--5 min & \gls{vas} de ansiedade/estresse/calma, \gls{sam}, BRUMS e avaliação de sintomas pré-exposição. \\
+        5 & 5 min & Tarefa padronizada de indução de estresse por aritmética mental. \\
+        6 & 2--3 min & \gls{vas} e \gls{sam} pós-estressor (verificação de manipulação). \\
+        7 & 2--3 min & Preparação da condição designada e instruções padronizadas. Em C1, C2 e C4, colocação e ajuste do \gls{hmd}; em C3, acomodação sentada e colocação dos fones. \\
+        8 & 15 min & Exposição à condição designada, de duração idêntica nas quatro. Dados fisiológicos registrados continuamente e, em C1 e C2, também a telemetria do jogo. \\
+        9 & 5--8 min & \gls{vas}, \gls{sam}, BRUMS, \gls{tlx}, Borg CR10 e itens de fruição, imediatamente após a exposição. Em C1, C2 e C4, acrescentam-se \gls{ipq} e \gls{ssq}; em C1 e C2, os itens de sincronização percebida. \\
+        10 & 10 min & Recuperação sentado com registro fisiológico contínuo. Os $5$ min finais, livres de artefato, servem à análise primária de \gls{vfc} de recuperação. \\
+        11 & 2--3 min & \gls{vas} e \gls{sam} finais, verificação de eventos adversos e formulário de conclusão. \\
+        12 & 3--5 min & Remoção dos equipamentos, \textit{debriefing} e confirmação de bem-estar antes da saída. \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor, a partir da revisão metodológica adotada.}
+\end{table}
+
+O laboratório mantém condições estáveis de temperatura, iluminação, ruído de fundo, posição do participante, colocação dos sensores, configuração do \gls{hmd}, versão do aplicativo, volume da música e instruções do pesquisador, que segue um roteiro escrito. A trilha \textit{lo-fi} calma, sua ordem de faixas e seu volume são idênticos em C1 e C3, e reproduzidos em volume reduzido e padronizado em C4; C2 emprega sua própria trilha, mais animada, igualmente padronizada em ordem e volume entre participantes. Em C3, padronizam-se ainda a postura sentada, o uso de fones e a instrução verbal. Os participantes recebem instruções de padronização pré-sessão, como evitar exercício vigoroso, álcool, cafeína, nicotina e refeição pesada nas janelas de tempo apropriadas antes da sessão, e a conformidade é verificada na etapa~1 \citep{Laborde2017}.
+
+% =====================================================================
+\section{Sincronização e Processamento de Sinais}\label{sec:processamento}
+
+Todos os sistemas são sincronizados por um mecanismo comum de marcação temporal, como o \gls{lsl}, um computador de aquisição compartilhado ou relógios sincronizados com marcadores explícitos de eventos. No mínimo, marcam-se o início e o fim da linha de base, do estressor, dos pontos de questionário, do início e do fim da exposição e da recuperação. Em C1, C2 e C4, o próprio aplicativo Unity emite os marcadores, o que garante precisão idêntica nas três; em C3, os marcadores de início e fim são registrados por procedimento padronizado do pesquisador. A precisão da sincronização é verificada em piloto antes do recrutamento.
+
+O processamento cardíaco segue as recomendações de \citet{Laborde2017}. Parte-se da série de intervalos \gls{rr}, removem-se intervalos fisiologicamente implausíveis, identificam-se e corrigem-se de forma documentada batimentos ausentes, detecções extras e artefatos de movimento, e relata-se a proporção de intervalos corrigidos, com rejeição de janelas que excedam limiar de artefato definido antes da análise. Calculam-se, em janelas padronizadas de cinco minutos de repouso e de recuperação, a \gls{fc} média, a \gls{rmssd}, o $\ln(\mathrm{RMSSD})$ e a \gls{sdnn}.
+
+Adota-se o $\ln(\mathrm{RMSSD})$ como índice vagal de referência por três razões convergentes: é o indicador de modulação parassimpática de curto prazo mais estável em registros breves, é menos sensível à duração do registro do que a \gls{sdnn} e sua transformação logarítmica corrige a assimetria típica da distribuição. Índices espectrais, em especial a razão \gls{lf}/\gls{hf}, são deliberadamente excluídos dos desfechos primários, por dependerem da respiração, não medida neste protocolo, e por sua interpretação como equilíbrio simpatovagal carecer de sustentação fisiológica \citep{Billman2013}.
+
+A comparação primária de \gls{vfc} envolve exclusivamente as janelas de baixo movimento; as medidas obtidas durante a exposição são reportadas de forma descritiva, ressalva especialmente importante em C2, cuja intensidade física é maior. O processamento eletrodérmico segue as recomendações de \citet{Boucsein2012}: inspeção do sinal bruto quanto a desconexão de eletrodo e descontinuidades, filtragem passa-baixas com parâmetros predefinidos, separação dos componentes tônico e fásico por método documentado, e cálculo do \gls{scl} médio, de sua variação em relação à linha de base e da taxa de \gls{scr} não específicas, com anotação ou exclusão de segmentos contaminados por movimento.
+
+A telemetria do jogo, disponível em C1 e C2, documenta objetivamente a qualidade rítmica da intervenção por meio do erro de sincronização entre eventos e batidas, definido para o $i$-ésimo evento como
+\begin{equation}
+    e_i = \min_j \left| t_i^{\mathrm{evento}} - t_j^{\mathrm{batida}} \right|,
+    \label{eq:sinc}
+\end{equation}
+\noindent cujo valor médio, $\overline{e} = \frac{1}{N}\sum_{i=1}^{N} e_i$, deve permanecer baixo, comprovando que os eventos do jogo estiveram de fato alinhados à música. Como C3 e C4 não possuem mapeamento rítmico, essa métrica caracteriza as condições de jogo, mas não constitui contraste entre todas as condições.
+
+% =====================================================================
+\section{Desfechos}\label{sec:desfechos}
+
+Para limitar o risco de achados falso-positivos, o protocolo declara \emph{um} desfecho psicológico primário e \emph{um} desfecho fisiológico primário, fixados antes da coleta; todas as demais medidas são secundárias ou exploratórias. A Tabela~\ref{tab:desfechos} sintetiza a hierarquia.
+
+\begin{table}[H]
+    \centering
+    \caption{Hierarquia de desfechos declarada antes da coleta.}
+    \label{tab:desfechos}
+    \small
+    \begin{tabularx}{\textwidth}{p{2.4cm}p{4.4cm}Y}
+        \toprule
+        \textbf{Nível} & \textbf{Desfecho} & \textbf{Definição operacional} \\
+        \midrule
+        Primário psicológico & $\Delta$ \gls{vas}-Ansiedade & Diferença entre a medida pós-intervenção e a medida pós-estressor, por condição \\
+        \addlinespace
+        Primário fisiológico & $\Delta \ln(\mathrm{RMSSD})$ & Diferença entre a janela de recuperação e a de linha de base, ambas de cinco minutos \\
+        \addlinespace
+        Secundários & \gls{vas}-Estresse, \gls{vas}-Calma, \gls{sam}, BRUMS-Tensão, $\Delta$\gls{scl}, \gls{fc} média, \gls{sdnn}, taxa de \gls{scr}, \gls{tlx}, Borg CR10, fruição & Mesma lógica de contraste, corrigidos por família \\
+        \addlinespace
+        Descritivos & \gls{ipq}, \gls{ssq}, sincronização percebida, desempenho, $\overline{e}$ da Equação~\ref{eq:sinc} & Caracterizam as condições em que se aplicam; não sustentam contraste entre todas \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+\end{table}
+
+A escolha da \gls{vas}-Ansiedade como desfecho primário, e não de um escore composto, evita a ambiguidade interpretativa de agregados e preserva a comparabilidade com a literatura, que reporta ansiedade de estado como desfecho central. A escolha do $\Delta \ln(\mathrm{RMSSD})$ entre linha de base e recuperação, e não durante a exposição, decorre diretamente da contaminação por movimento discutida na Seção~\ref{sec:processamento}.
+
+% =====================================================================
+\section{Análise Estatística}\label{sec:analise}
+
+O plano de análise é redigido e pré-registrado antes da inspeção do conjunto final de dados. Antes de testar as hipóteses principais, verificam-se quatro manipulações: se o estressor elevou o estresse e a ansiedade nas medidas de estado, em cada sessão; se a carga de trabalho do \gls{tlx} foi maior em C2 do que em C1, confirmando a manipulação de dificuldade; se o esforço percebido se ordenou conforme o previsto, sendo maior em C2, intermediário em C1 e mínimo em C3 e C4; e se a apreciação da trilha musical foi equivalente entre C1 e C3, condição necessária para atribuir esse contraste ao jogo e não a uma diferença de resposta à música. Verifica-se ainda, em C1 e C2, se o erro objetivo de sincronização permaneceu baixo, e registra-se a apreciação da trilha animada de C2, que, por ser distinta, entra na interpretação do contraste C1 \textit{vs} C2 como possível fator concorrente.
+
+O efeito de condição por tempo é testado por um modelo linear de efeitos mistos, ajustado por máxima verossimilhança restrita, na forma
+\begin{equation}
+    Y_{ict} = \beta_0 + \beta_1 \mathrm{Condição}_c + \beta_2 \mathrm{Tempo}_t + \beta_3 (\mathrm{Condição}_c \times \mathrm{Tempo}_t) + \beta_4 \mathrm{Ordem}_i + \beta_5 \mathrm{Sessão}_i + u_{0i} + \varepsilon_{ict},
+    \label{eq:lmm}
+\end{equation}
+\noindent em que $Y_{ict}$ é o desfecho do participante $i$ na condição $c$ e no momento $t$, $u_{0i}$ é o intercepto aleatório por participante e os termos $\beta_4$ e $\beta_5$ controlam, respectivamente, a sequência de alocação e a habituação ao longo das sessões. O teste principal é a interação condição por tempo.
+
+Os contrastes planejados são os três da Tabela~\ref{tab:contrastes}, todos tomando C1 como referência, com correção de Holm aplicada dentro da família de contrastes de cada desfecho primário. Nos modelos dos desfechos fisiológicos, o esforço percebido entra como covariável, uma vez que varia sistematicamente entre condições, e reportam-se análises de sensibilidade com e sem esse ajuste. Modelos de efeitos mistos acomodam observações parcialmente ausentes sob suposições apropriadas, o que dispensa imputação simples pela média.
+
+Reportam-se estimativas de efeito com intervalos de confiança de $95\%$, tamanhos de efeito padronizados ($d_z$ para contrastes pareados e $\eta^2_p$ para efeitos do modelo), quantidade e motivo de dados faltantes, exclusões e estatísticas de qualidade de sinal. A significância estatística não determina isoladamente as conclusões, que consideram magnitude, direção, precisão e consistência entre os canais de evidência. A análise é conduzida em R, com os pacotes \texttt{lme4}, \texttt{lmerTest} e \texttt{emmeans}, e o processamento de \gls{vfc} em Kubios ou \texttt{NeuroKit2}, com o \textit{script} e os dados desidentificados disponibilizados publicamente.
+
+% =====================================================================
+\section{Protocolo de Revisão Sistemática de Literatura}\label{sec:rsl}
+
+A fundamentação dos trabalhos relacionados (Seção~\ref{sec:trabalhos-relacionados}) apoia-se em uma revisão de literatura cujo protocolo foi definido antes da seleção e cuja estratégia de busca, critérios de elegibilidade e extração de dados seguem, no que é aplicável a um trabalho individual, as recomendações de relato do PRISMA 2020 \citep{Page2021}. A Seção~\ref{subsec:alcance-revisao} delimita com precisão o alcance efetivo do que foi executado. A estrutura PICOS é resumida na Tabela~\ref{tab:picos}, e a busca emprega bases que cobrem computação, interação humano-computador, psicologia e saúde (Scopus, Web of Science, PubMed/MEDLINE, APA PsycINFO, IEEE Xplore e ACM Digital Library), com \textit{snowballing} posterior.
+
+\begin{table}[H]
+\centering
+\caption{Estrutura PICOS da revisão sistemática de literatura.}
+\label{tab:picos}
+\small
+\begin{tabularx}{\textwidth}{p{2.4cm}X}
+\toprule
+\textbf{Componente} & \textbf{Definição} \\
+\midrule
+População & Adultos com $18$ anos ou mais, em especial jovens adultos saudáveis, universitários ou adultos com estresse/ansiedade não clínicos leves a moderados. \\
+Intervenção & \gls{rv} imersiva por \gls{hmd}, incluindo relaxamento em \gls{rv}, jogos de \gls{rv}, jogos de ritmo, experiências musicais em \gls{rv} ou \textit{exergames} de \gls{rv}. \\
+Comparador & Linha de base, intervenções não-\gls{rv}, controles passivos ou de lista de espera, relaxamento convencional, exercício físico ou esporte convencional, \gls{rv} assíncrona ou não rítmica, ambientes alternativos ou diferentes níveis de dificuldade e demanda cognitiva. \\
+Desfechos & Ansiedade de estado, estresse percebido, afeto, humor, relaxamento, \gls{fc}, \gls{vfc}, \gls{eda}, respiração, cortisol, presença, carga de trabalho, esforço físico e \textit{cybersickness}. \\
+Desenho & Ensaios controlados randomizados, experimentos \textit{crossover}, experimentos laboratoriais controlados, estudos quase-experimentais e estudos pré-pós de grupo único com desfechos quantitativos. \\
+\bottomrule
+\end{tabularx}\\[2pt]
+{\footnotesize Fonte: Elaborada pelo autor, a partir da revisão metodológica adotada.}
+\end{table}
+
+A \textit{string} mestra de busca, deliberadamente ampla, combina blocos de \gls{rv}, de estresse/ansiedade, de música/ritmo/exercício e de medidas fisiológicas/psicométricas:
+
+\begin{quote}\small\ttfamily
+("virtual reality" OR "immersive virtual reality" OR "head-mounted display" OR HMD OR "VR game*" OR exergam*) AND (stress OR anxiety OR "state anxiety" OR relaxation OR wellbeing OR affect OR mood) AND (music* OR rhythm* OR beat OR synchron* OR asynchronous OR exercise OR movement OR game* OR intervention*) AND (physiolog* OR "heart rate" OR HRV OR electrodermal OR EDA OR GSR OR "skin conductance" OR questionnaire* OR psychometric*)
+\end{quote}
+
+A seleção segue critérios de inclusão (participantes adultos; \gls{rv} imersiva por \gls{hmd}; desfecho emocional relacionado a estresse, ansiedade ou afeto; comparação pré-pós ou entre condições; ao menos uma medida psicométrica, fisiológica ou de telemetria; artigo revisado por pares) e de exclusão (apenas telas não imersivas ou \gls{rv} não separável; apenas menores de $18$ anos; sem desfecho emocional; apenas usabilidade ou desempenho; estudos puramente qualitativos; revisões e resumos como evidência primária).
+
+\subsection{Alcance e Limitações da Revisão Conduzida}\label{subsec:alcance-revisao}
+
+Cabe delimitar com precisão o que foi executado, para que a Seção~\ref{sec:trabalhos-relacionados} seja lida no registro adequado. As buscas foram realizadas segundo a estratégia acima, e os estudos recuperados foram triados, lidos na íntegra e sintetizados narrativamente, com extração estruturada de população, desenho, intervenção, comparador, instrumentos e resultados quantitativos. O produto é uma \textbf{revisão estruturada de literatura}, com estratégia de busca documentada e critérios explícitos, e não uma revisão sistemática no sentido pleno do PRISMA \citep{Page2021}.
+
+Duas condições do PRISMA não foram satisfeitas e são declaradas abertamente. A triagem foi conduzida por um único revisor, o autor, ao passo que o padrão exige dois revisores independentes com resolução de divergências por terceiro, procedimento inviável em um trabalho individual de graduação. E o protocolo não foi registrado previamente em PROSPERO ou repositório equivalente. Em consequência, a revisão está sujeita a viés de seleção do revisor único e não permite reivindicar exaustividade da cobertura.
+
+Essa delimitação não compromete a função da revisão neste trabalho, que é situar a proposta e identificar a lacuna que ela ocupa, e não estimar um efeito agregado da literatura. Uma revisão sistemática plena, com dupla triagem independente e protocolo registrado, fica indicada como extensão.
+
+% =====================================================================
+\section{Considerações Éticas}\label{sec:etica}
+
+O estudo deve ser aprovado pelo \gls{cep} competente antes do recrutamento. Os participantes fornecem consentimento por meio de \gls{tcle} e são informados de que podem interromper o experimento a qualquer momento, sem penalidade. O protocolo prevê confidencialidade e anonimização dos dados, armazenamento seguro dos dados de questionário, biométricos e de telemetria, procedimentos para escores elevados na triagem psicológica basal, critérios de interrupção por \textit{cybersickness}, critérios de segurança cardiovascular e física, procedimentos de higienização do \gls{hmd}, das cintas e dos eletrodos, treinamento do pesquisador para eventos adversos e informação de encaminhamento para apoio psicológico quando apropriado.
+
+Dois pontos merecem tratamento específico. O primeiro é a indução de estresse, repetida em quatro sessões: por ser um desconforto deliberadamente provocado, exige menção explícita no \gls{tcle}, retroalimentação não humilhante e \textit{debriefing} ao fim de cada sessão, esclarecendo que a dificuldade da tarefa foi calibrada para exceder o desempenho confortável e que o resultado individual não é objeto de avaliação. O segundo é a natureza dos instrumentos: a bateria adotada (Seção~\ref{subsec:bateria}) é composta exclusivamente por escalas de uso livre para pesquisa, o que mantém o procedimento dentro das atribuições de uma pesquisa conduzida na Ciência da Computação, sem caracterizar avaliação psicológica.
+
+O jogo não deve ser descrito aos participantes como tratamento comprovado; uma descrição neutra, como uma investigação de respostas emocionais e fisiológicas a diferentes atividades, reduz o viés de expectativa. \todo{submeter o projeto ao CEP e anexar o parecer; anexar o TCLE aprovado.}
+
+% =====================================================================
+\section{Limitações Metodológicas}\label{sec:limitacoes}
+
+O desenho impõe limitações que circunscrevem o alcance das conclusões.
+
+A limitação mais importante diz respeito ao grau de decomposição que o desenho permite. O contraste C1 \textit{vs} C3 controla o estímulo musical e, por isso, separa o efeito do jogo do efeito da música, mas os componentes internos do jogo, a imersão em \gls{rv}, a estrutura rítmica, o movimento físico e o engajamento lúdico, variam em bloco. Uma eventual vantagem de C1 é, portanto, atribuível ao jogo como um todo, e não à sincronização rítmica isoladamente, cuja separação exigiria uma variante dessincronizada do próprio jogo, indicada como trabalho futuro.
+
+Nem C3 nem C4 são controles neutros, e isso é deliberado. C3 emprega a mesma trilha \textit{lo-fi}, cujo efeito relaxante é reconhecido, e C4 é uma técnica de relaxamento consolidada. Ambos funcionam, portanto, como comparadores ativos, o que torna o teste conservador: uma diferença em favor de C1 indica ganho \emph{sobre} atividades que já relaxam, mas a ausência de diferença não permite concluir que a intervenção seja ineficaz, apenas que não supera essas alternativas. C3 está ainda sujeita a sonolência e a tédio ao longo do intervalo, fatores que devem ser registrados e considerados na interpretação.
+
+O esforço físico não é comparável entre as condições, sendo maior em C2 e mínimo em C3 e C4. Como a \gls{fc} e a \gls{eda} respondem fortemente ao exercício, parte das diferenças fisiológicas pode refletir intensidade de atividade, e não regulação emocional. O protocolo mitiga esse risco ao restringir os desfechos primários a janelas de recuperação de baixo movimento e ao incluir o esforço percebido como covariável, mas não o elimina.
+
+Uma terceira limitação é a impossibilidade de mascaramento. Os participantes percebem imediatamente qual condição realizam, o que expõe o estudo a características de demanda e a efeitos de expectativa, atenuados por uma descrição neutra, mas não controlados. Soma-se a exposição repetida ao estressor, cuja resposta tende a atenuar-se ao longo das quatro sessões; o efeito é estimado pelo termo de sessão da Equação~\ref{eq:lmm}, mas não anulado.
+
+Quanto à validade externa, os resultados de um estudo de exposição única em participantes saudáveis não autorizam alegações de eficácia terapêutica, e a amostra de conveniência de universitários limita a generalização. A experiência prévia com meditação é medida e tratada como possível moderadora do desempenho em C4, uma vez que participantes praticantes podem responder de modo distinto a essa condição. Por fim, o desenho exige quatro sessões por participante, e a carga resultante é a principal ameaça à viabilidade e à retenção amostral.

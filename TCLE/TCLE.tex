@@ -1,0 +1,454 @@
+% =====================================================================
+% TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO (TCLE)
+% Projeto guarda-chuva -- Cozy Pong / UFAL
+%
+% COMO COMPILAR:  latexmk -pdf TCLE.tex     (depois: latexmk -c)
+%
+% ANTES DE SUBMETER AO CEP: preencher todos os campos marcados em
+% vermelho com a macro \pre{...}. Localize-os com:
+%     grep -n "pre{" TCLE.tex
+% =====================================================================
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage[margin=2.4cm,bottom=3.0cm,top=2.4cm]{geometry}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+
+% ---- campo a preencher: aparece em vermelho, impossivel de passar batido
+\newcommand{\pre}[1]{\textcolor{red}{\textbf{[#1]}}}
+
+% ---- linha de assinatura
+\newcommand{\linha}[1]{\rule{#1}{0.4pt}}
+
+% ---- caixa de marcacao
+\newcommand{\cx}{$\square$~}
+
+% ---- rodape com rubricas e paginacao (exigencia usual de CEP)
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize Rubrica do participante: \linha{2.2cm} \quad
+              Rubrica do pesquisador: \linha{2.2cm}}
+\fancyfoot[R]{\footnotesize Página \thepage\ de \pageref{LastPage}}
+
+\setlist[itemize]{leftmargin=1.4em,itemsep=2pt,topsep=3pt}
+
+\begin{document}
+
+% =====================================================================
+\begin{center}
+{\large\bfseries TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO (TCLE)}\\[4pt]
+{\footnotesize Universidade Federal de Alagoas --- Instituto de Computação}\\[2pt]
+{\footnotesize Versão \pre{1.0} --- \pre{data da versão}}
+\end{center}
+
+\vspace{4pt}
+\hrule
+\vspace{10pt}
+
+% =====================================================================
+\section*{1. Identificação}
+
+\noindent\textbf{Título da pesquisa:} \pre{inserir o título aprovado}
+
+\noindent\textbf{Pesquisador responsável:} Erick de Lima Mascarenhas\\
+Curso de Ciência da Computação --- Instituto de Computação --- Universidade
+Federal de Alagoas\\
+Telefone: \pre{telefone com DDD} \quad E-mail: \pre{e-mail}
+
+\noindent\textbf{Orientador(a):} \pre{nome completo e titulação}\\
+Telefone: \pre{telefone} \quad E-mail: \pre{e-mail}
+
+\noindent\textbf{Instituição proponente:} Universidade Federal de Alagoas (UFAL)
+
+\noindent\textbf{Local de realização:} \pre{nome e endereço do laboratório ou sala}
+
+% =====================================================================
+\section*{2. Convite}
+
+Você está sendo convidado(a) a participar, como voluntário(a), de uma pesquisa
+acadêmica. Este documento explica por que a pesquisa está sendo feita, o que
+você fará se aceitar participar, quais são os riscos e os benefícios, e quais
+são os seus direitos.
+
+\textbf{Leia com calma.} Pergunte tudo o que quiser, quantas vezes quiser, antes
+de decidir. Você pode levar este documento para casa, conversar com quem quiser
+e responder depois. Sua decisão de participar ou não \textbf{não traz nenhum
+prejuízo} para você, e não afeta de nenhuma forma sua vida acadêmica, suas notas
+ou sua relação com a universidade.
+
+Se aceitar, você assinará \textbf{duas vias} deste termo, ambas rubricadas em
+todas as páginas. Uma via fica com você; a outra, com o pesquisador.
+
+% =====================================================================
+\section*{3. Por que esta pesquisa está sendo feita}
+
+Estresse e ansiedade são queixas comuns entre estudantes universitários. Existem
+várias formas de tentar relaxar depois de um momento tenso: ouvir música,
+meditar, praticar um esporte, jogar. O que ainda não se sabe bem é \textbf{quanto
+cada uma dessas atividades ajuda}, e se uma ajuda mais que a outra.
+
+Esta pesquisa desenvolveu um jogo de realidade virtual, chamado \textit{Cozy
+Pong}, que mistura tênis de mesa com jogo de ritmo e foi projetado para ser
+relaxante. O objetivo é medir se jogá-lo ajuda uma pessoa a se recuperar de um
+momento de tensão, e comparar esse efeito com o de outras atividades.
+
+Para que a comparação faça sentido, a pesquisa mede tanto \textbf{o que você
+relata sentir} quanto \textbf{sinais do seu corpo}, como os batimentos cardíacos.
+
+% =====================================================================
+\section*{4. O que você fará se aceitar participar}
+
+\subsection*{4.1 Quantas vezes}
+
+Você participará de \textbf{1 a 6 encontros}, dependendo do estudo específico
+para o qual for convidado(a). Cada encontro dura entre \textbf{30 e 120
+minutos}. Quando houver mais de um encontro, eles serão em dias diferentes, com
+pelo menos 24 horas de intervalo, em horários combinados com você.
+
+Você será informado(a), antes de aceitar, de quantos encontros são no seu caso.
+
+\subsection*{4.2 As atividades}
+
+Em cada encontro, você fará \textbf{uma ou mais} das atividades abaixo. Nem todo
+participante faz todas: quais você fará será informado no convite e novamente no
+dia. Todas são atividades comuns de lazer, relaxamento ou esporte recreativo.
+
+\textbf{Atividades em realidade virtual} (usando óculos de realidade virtual,
+sentado ou em pé, em espaço livre de obstáculos):
+
+\begin{itemize}
+  \item[\textbf{a)}] Jogar o \textit{Cozy Pong} em versão calma, com música tranquila, ritmo lento e sem possibilidade de perder.
+  \item[\textbf{b)}] Jogar o \textit{Cozy Pong} em versão mais movimentada, com música mais rápida, ritmo mais intenso e possibilidade de encerrar a partida por erros.
+  \item[\textbf{c)}] Participar de uma sessão de meditação ou relaxamento guiado por áudio, sentado, em ambiente virtual tranquilo.
+  \item[\textbf{d)}] Assistir passivamente a um ambiente ou vídeo em realidade virtual, sem interação.
+  \item[\textbf{e)}] Jogar outro jogo de realidade virtual, usado para comparação.
+\end{itemize}
+
+\textbf{Atividades sem realidade virtual:}
+
+\begin{itemize}
+  \item[\textbf{f)}] Ouvir música sentado(a), com ou sem fones, sem nenhuma tarefa.
+  \item[\textbf{g)}] Participar de uma sessão de meditação ou relaxamento guiado por áudio, sentado, sem óculos.
+  \item[\textbf{h)}] Permanecer em repouso sentado(a), sem tarefa, por um período determinado.
+  \item[\textbf{i)}] Jogar uma partida ou peloteio de \textbf{tênis de mesa real}, com raquete e bola convencionais, contra o pesquisador ou contra outro participante, em ritmo recreativo.
+  \item[\textbf{j)}] Realizar atividade física leve, como caminhada em ritmo confortável ou alongamento.
+  \item[\textbf{k)}] Jogar um jogo digital em tela comum, usado para comparação.
+\end{itemize}
+
+\textbf{Tarefa de tensão (importante que você leia com atenção):}
+
+\begin{itemize}
+  \item[\textbf{l)}] Realizar uma \textbf{tarefa de cálculo mental com tempo curto}, por cerca de 5 minutos, no computador.
+\end{itemize}
+
+Sobre esta tarefa, queremos ser completamente transparentes: \textbf{ela é
+difícil de propósito}. O tempo é curto de propósito. É esperado que praticamente
+todas as pessoas errem boa parte das contas, independentemente de habilidade com
+matemática. Isso não é uma avaliação da sua capacidade.
+
+O objetivo dela é gerar, por alguns minutos, aquela sensação de pressão que se
+sente no dia a dia, para que possamos medir como as atividades ajudam na
+recuperação depois. \textbf{Seu desempenho não será analisado individualmente
+nem mostrado a ninguém.} Ao final de cada encontro, isso será explicado
+novamente.
+
+Você pode pedir para interromper esta tarefa a qualquer momento.
+
+\subsection*{4.3 O que será medido}
+
+\textbf{Questionários.} Você responderá questionários curtos, em papel ou no
+computador, sobre como está se sentindo naquele momento, sobre como foi a
+atividade e sobre alguns aspectos gerais do seu bem-estar recente. Não há
+resposta certa ou errada. \textbf{Você pode deixar de responder qualquer
+pergunta que não queira responder}, sem precisar justificar.
+
+\textbf{Sinais do corpo.} Durante os encontros, poderão ser usados:
+
+\begin{itemize}
+  \item uma \textbf{cinta elástica no tórax} com sensores, que registra os batimentos do coração;
+  \item \textbf{eletrodos nos dedos ou no punho}, que registram pequenas variações da pele relacionadas ao estado de ativação do corpo;
+  \item uma \textbf{cinta elástica no abdômen ou tórax} para registrar a respiração;
+  \item um sensor de \textbf{temperatura da pele};
+  \item medida de \textbf{pressão arterial} com aparelho de braço, antes e depois da atividade.
+\end{itemize}
+
+\textbf{Nenhum desses sensores emite corrente elétrica, radiação ou qualquer
+estímulo no seu corpo. Todos apenas registram.} Nenhum deles fura, corta ou
+penetra a pele.
+
+\textbf{Registro da atividade.} O jogo registra automaticamente informações da
+partida, como acertos e tempo de reação. Os movimentos dos controles também
+podem ser registrados.
+
+\textbf{Gravação.} Os encontros poderão ser \textbf{gravados em áudio e/ou
+vídeo}, apenas para conferir se os procedimentos foram seguidos corretamente e
+para registrar observações. Você pode participar \textbf{recusando a gravação}, e
+isso não impede sua participação. Marque sua escolha ao final deste termo.
+
+% =====================================================================
+\section*{5. Riscos e desconfortos}
+
+Toda pesquisa com seres humanos envolve algum risco. Os riscos aqui são
+considerados \textbf{baixos}, semelhantes aos de jogar um videogame, ouvir
+música ou praticar um esporte recreativo. Ainda assim, listamos todos os que
+identificamos, inclusive os pouco prováveis.
+
+\textbf{Relacionados à realidade virtual:}
+\begin{itemize}
+  \item Enjoo, tontura, náusea, dor de cabeça, suor frio ou desorientação (chamados de \textit{cybersickness}), geralmente leves e passageiros
+  \item Cansaço visual
+  \item Desconforto pelo peso ou ajuste do óculos
+  \item Risco de tropeço, colisão com móveis ou queda durante o uso
+  \item Em pessoas com epilepsia fotossensível, risco de crise desencadeada por estímulos visuais (por isso essa condição é critério de não participação)
+\end{itemize}
+
+\textbf{Relacionados à atividade física (jogo em pé, tênis de mesa, caminhada):}
+\begin{itemize}
+  \item Cansaço, falta de ar, aumento dos batimentos
+  \item Dor muscular durante ou nos dias seguintes
+  \item Torção, distensão, queda ou impacto com a bola
+  \item Em pessoas com problemas cardíacos não diagnosticados, risco de intercorrência cardiovascular durante o esforço (por isso há triagem de saúde antes)
+\end{itemize}
+
+\textbf{Relacionados à tarefa de cálculo mental:}
+\begin{itemize}
+  \item Sensação de pressão, frustração, irritação, nervosismo ou ansiedade durante os minutos da tarefa
+  \item Desconforto por não conseguir acompanhar o ritmo da tarefa
+\end{itemize}
+
+\textbf{Relacionados aos questionários:}
+\begin{itemize}
+  \item Constrangimento, tristeza ou desconforto ao refletir sobre o próprio estado emocional
+  \item Cansaço por responder perguntas repetidas
+\end{itemize}
+
+\textbf{Relacionados aos sensores:}
+\begin{itemize}
+  \item Desconforto, coceira ou vermelhidão na pele em contato com a cinta ou os eletrodos
+  \item Constrangimento ao colocar a cinta torácica
+\end{itemize}
+
+\textbf{Relacionados aos dados:}
+\begin{itemize}
+  \item Risco de quebra de sigilo, ou seja, de alguém não autorizado ter acesso às suas respostas. Este risco é considerado baixo pelas medidas descritas na Seção 8, mas não pode ser eliminado por completo.
+\end{itemize}
+
+% =====================================================================
+\section*{6. Como esses riscos serão reduzidos}
+
+\begin{itemize}
+  \item \textbf{Triagem antes de participar.} Pessoas com condições que tornem a participação insegura não serão incluídas, e isso será conversado com você.
+  \item \textbf{Ambiente preparado.} O espaço de uso da realidade virtual será livre de obstáculos, com o pesquisador \textbf{presente e por perto durante toda a atividade}, atento a sinais de desequilíbrio.
+  \item \textbf{Interrupção imediata.} A atividade é interrompida na hora se você pedir, por qualquer motivo e \textbf{sem precisar dar explicação}, ou se o pesquisador perceber qualquer sinal de mal-estar.
+  \item \textbf{Pausa e retomada.} Você pode pedir pausas quando quiser.
+  \item \textbf{Aquecimento e espaço adequado} antes das atividades físicas, com água disponível.
+  \item \textbf{Higienização} do óculos, das cintas e dos sensores entre participantes. Eletrodos descartáveis ou higienizados conforme protocolo.
+  \item \textbf{Explicação ao final} de cada encontro sobre a tarefa de cálculo, deixando claro que a dificuldade era proposital e que o desempenho não é avaliado.
+  \item \textbf{Direito de não responder} qualquer pergunta.
+  \item \textbf{Nenhuma pergunta ou atividade} de caráter íntimo, sexual, religioso, político ou sobre uso de substâncias ilícitas.
+\end{itemize}
+
+% =====================================================================
+\section*{7. Assistência, acompanhamento e indenização}
+
+Esta seção descreve garantias que você tem por lei.
+
+\textbf{Assistência imediata.} Se você sentir qualquer mal-estar, desconforto
+físico ou emocional durante ou logo após a participação, \textbf{o pesquisador
+prestará assistência imediata}, interrompendo a atividade, acompanhando você e,
+se necessário, acionando atendimento de saúde. Você não será liberado(a)
+enquanto não estiver bem.
+
+\textbf{Assistência integral e gratuita.} Você tem direito a \textbf{assistência
+integral e gratuita} por qualquer dano decorrente da sua participação, pelo tempo
+que for necessário, \textbf{imediato ou tardio}. Isso inclui encaminhamento e
+acompanhamento para atendimento médico, fisioterapêutico ou psicológico,
+conforme o caso, sem qualquer custo para você.
+
+\textbf{Como acionar.} Se perceber qualquer problema que você atribua à
+participação, mesmo dias ou semanas depois, entre em contato pelos telefones da
+Seção 11. O pesquisador responsável se compromete a atender e providenciar o
+encaminhamento.
+
+\textbf{Encaminhamento em saúde mental.} Se, ao longo da participação, você
+manifestar ou relatar sofrimento psíquico significativo, ou se suas respostas aos
+questionários indicarem essa possibilidade, você será informado(a)
+reservadamente e receberá informação sobre serviços de apoio psicológico
+disponíveis, incluindo os serviços da própria universidade e a rede pública de
+saúde. \textbf{Isso não é diagnóstico}, e os questionários desta pesquisa não
+servem para diagnosticar nada.
+
+\textbf{Indenização.} Você tem direito a \textbf{buscar indenização} por
+eventuais danos decorrentes da sua participação nesta pesquisa, conforme a
+legislação vigente. A assinatura deste termo \textbf{não implica renúncia a
+nenhum direito seu}, inclusive o de recorrer judicialmente.
+
+\textbf{Ressarcimento de despesas.} Sua participação \textbf{não terá nenhum
+custo para você}. Despesas que você tiver exclusivamente por causa da pesquisa,
+como transporte até o local ou alimentação em razão do tempo de permanência,
+serão \textbf{ressarcidas} mediante comprovação. Combine isso com o pesquisador
+antes.
+
+\textbf{Sem pagamento.} Você \textbf{não receberá pagamento} pela participação,
+pois a legislação brasileira não permite remuneração de voluntários em pesquisa.
+O ressarcimento acima não é pagamento: é apenas devolução de despesa.
+
+% =====================================================================
+\section*{8. Sigilo, privacidade e uso dos dados}
+
+\textbf{Anonimização.} Seus dados serão identificados apenas por um
+\textbf{código} (por exemplo, P01). Seu nome não aparecerá em nenhum arquivo de
+dados, em nenhuma apresentação e em nenhuma publicação.
+
+\textbf{Guarda.} O documento que liga seu nome ao código ficará guardado
+separadamente dos dados, em local de acesso restrito ao pesquisador responsável e
+ao orientador. Arquivos digitais ficarão em dispositivo protegido por senha.
+
+\textbf{Divulgação.} Os resultados serão divulgados de forma \textbf{agregada},
+ou seja, como médias e comparações entre grupos, nunca de forma individual. Nada
+publicado permitirá identificar você.
+
+\textbf{Compartilhamento.} Dados \textbf{anonimizados} poderão ser
+compartilhados com outros pesquisadores ou disponibilizados publicamente em
+repositórios científicos, prática que aumenta a transparência da ciência. Nesse
+caso, o compartilhamento inclui apenas os dados já sem qualquer identificação.
+
+\textbf{Guarda e descarte.} Os dados serão guardados por no mínimo
+\textbf{5 anos} após o término da pesquisa e depois descartados de forma segura.
+As gravações de áudio e vídeo, quando houver, serão apagadas após a análise, em
+prazo não superior a \textbf{5 anos}.
+
+\textbf{Usos futuros.} Os dados anonimizados poderão ser usados em análises
+posteriores relacionadas ao mesmo tema, sempre no escopo desta pesquisa. Novos
+estudos com objetivos diferentes exigirão novo consentimento.
+
+% =====================================================================
+\section*{9. Benefícios}
+
+\textbf{Benefício direto.} Não há garantia de benefício direto para você. É
+possível que você se sinta mais relaxado(a) após algumas das atividades, mas isso
+é justamente o que a pesquisa investiga e não pode ser prometido.
+
+\textbf{Benefícios indiretos.} Ao participar, você contribui para que se entenda
+melhor se e como jogos e atividades de relaxamento ajudam pessoas a lidar com
+momentos de tensão. Isso pode orientar o desenvolvimento de ferramentas de
+bem-estar mais acessíveis no futuro.
+
+Você também poderá conhecer uma tecnologia de realidade virtual e, se tiver
+interesse, receberá os resultados gerais da pesquisa quando concluída.
+
+% =====================================================================
+\section*{10. Sua liberdade de decidir}
+
+Sua participação é \textbf{totalmente voluntária}.
+
+\begin{itemize}
+  \item Você pode \textbf{recusar} participar, sem precisar justificar.
+  \item Você pode \textbf{desistir a qualquer momento}, inclusive no meio de uma atividade, sem precisar justificar.
+  \item Você pode pedir que \textbf{seus dados sejam excluídos} da pesquisa, mesmo depois de participar, desde que os resultados ainda não tenham sido publicados.
+  \item Nada disso trará \textbf{qualquer prejuízo} para você: não afeta notas, avaliações, estágios, relação com professores ou qualquer aspecto da sua vida acadêmica.
+\end{itemize}
+
+Você pode fazer perguntas ao pesquisador antes, durante e depois da participação,
+e tem direito a receber resposta.
+
+% =====================================================================
+\section*{11. Contatos}
+
+\textbf{Em caso de dúvidas sobre a pesquisa, mal-estar ou para acionar
+assistência:}
+
+\noindent Erick de Lima Mascarenhas --- pesquisador responsável\\
+Telefone: \pre{telefone} \quad E-mail: \pre{e-mail}
+
+\noindent \pre{nome do(a) orientador(a)} --- orientador(a)\\
+Telefone: \pre{telefone} \quad E-mail: \pre{e-mail}
+
+\textbf{Em caso de dúvidas sobre seus direitos como participante, ou para
+denunciar qualquer irregularidade:}
+
+\noindent Comitê de Ética em Pesquisa da Universidade Federal de Alagoas
+(CEP/UFAL)\\
+Endereço: \pre{endereço completo}\\
+Telefone: \pre{telefone} \quad E-mail: \pre{e-mail}\\
+Horário de atendimento: \pre{horário}
+
+\begin{quote}
+\small O Comitê de Ética em Pesquisa é um colegiado independente, criado para
+defender os interesses dos participantes de pesquisa, respeitando sua dignidade,
+seus direitos e seu bem-estar. Você pode procurá-lo a qualquer momento, sem
+passar pelo pesquisador.
+\end{quote}
+
+% =====================================================================
+\section*{12. Consentimento}
+
+Eu, abaixo assinado(a), declaro que:
+
+\begin{itemize}
+  \item li ou tive lido para mim este documento, por inteiro;
+  \item tive oportunidade de fazer perguntas e todas foram respondidas de forma satisfatória;
+  \item entendi em que consiste a pesquisa, o que farei, quais são os riscos e os benefícios;
+  \item entendi que minha participação é voluntária e que posso desistir a qualquer momento sem prejuízo;
+  \item entendi que não receberei pagamento e que terei despesas ressarcidas;
+  \item entendi que tenho direito a assistência e a buscar indenização por eventuais danos;
+  \item recebi uma via deste documento, assinada e rubricada.
+\end{itemize}
+
+\textbf{Concordo em participar desta pesquisa.}
+
+\vspace{6pt}
+\noindent Sobre a gravação de áudio e vídeo dos encontros:
+
+\noindent\cx \textbf{Autorizo} a gravação \hspace{2cm} \cx \textbf{Não autorizo} a gravação
+
+\vspace{6pt}
+\noindent Sobre o compartilhamento dos meus dados anonimizados com outros
+pesquisadores:
+
+\noindent\cx \textbf{Autorizo} \hspace{2cm} \cx \textbf{Não autorizo}
+
+\vspace{16pt}
+
+\noindent Local e data: \linha{6cm}, \linha{1.2cm} / \linha{1.2cm} / \linha{2cm}
+
+\vspace{18pt}
+
+\noindent Nome do participante (legível): \linha{9cm}
+
+\vspace{14pt}
+
+\noindent Documento de identidade: \linha{6cm}
+
+\vspace{22pt}
+
+\noindent Assinatura do participante: \linha{9cm}
+
+\vspace{26pt}
+
+\noindent Nome do pesquisador: Erick de Lima Mascarenhas
+
+\vspace{22pt}
+
+\noindent Assinatura do pesquisador: \linha{9cm}
+
+\vspace{16pt}
+
+\begin{center}
+\small\textit{Este documento é emitido em duas vias, ambas rubricadas em todas as
+páginas. Uma via permanece com o participante e a outra com o pesquisador
+responsável.}
+\end{center}
+
+\end{document}

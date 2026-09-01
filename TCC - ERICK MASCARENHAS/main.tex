@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper,oneside]{JITH}
+%\documentclass[12pt,a4paper,twoside]{JITH}
+
+% =====================================================================
+% Preambulo enxuto (otimizado para tempo de compilacao).
+% Removidos por serem pesados/desnecessarios: svg (shell-escape/Inkscape),
+% todonotes+tikz, easyReview, lipsum, pdfpages, subfig, bm, mathtools.
+% As notas de pendencia usam a macro leve \todo{...} definida em macros.tex
+% (texto vermelho inline, SEM tikz).
+% =====================================================================
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb} % simbolos como \gtrsim, usados na analise de poder
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{hyperref}
+% glossaries DEVE vir depois de hyperref (per documentacao).
+% Compile com: pdflatex; makeglossaries main; bibtex main; pdflatex; pdflatex.
+\usepackage[acronym, toc, nonumberlist, nogroupskip, nopostdot]{glossaries}
+\makeglossaries
+\loadglsentries{Cap00/Glossario}
+\usepackage{natbib}
+
+\input{macros}
+
+% Tipo de coluna Y: X alinhada a esquerda (usada nas tabelas com tabularx).
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+%% % % % % % %
+\onehalfspacing
+\begin{document}
+\sloppy
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\include{Identificacao}	% % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\capa
+\folhaDeRosto
+% \includepdf{Cap00/Ficha Catalografica.pdf}
+% \folhaDeAprovacao
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+% Opcionais % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\agradecimentos %opcional
+%\epigrafe %opcional
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+% Obrigatorios  % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\resumo
+\abstract
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\listoffigures
+\cleardoublepage
+% % % % % % % % % % % % % % % % %
+\listoftables
+\cleardoublepage
+\simbolos
+\cleardoublepage
+\abreviaturas
+\cleardoublepage
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\tableofcontents
+\cleardoublepage
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\pagenumbering{arabic}
+
+\pagestyle{myheadings}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+% Incluir capitulos aqui  % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\input{Cap01/Capitulo1}
+\cleardoublepage
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\input{Cap02/Capitulo2}
+\cleardoublepage
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\input{Cap03/Capitulo3}
+\cleardoublepage
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\input{Cap04/Capitulo4}
+\cleardoublepage
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\input{Conc/Conclusao.tex}
+\cleardoublepage
+%%% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\markright{Bibliografia}
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+% Definir estilo bibliografico  % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\bibliographystyle{apalike}
+{
+	\addcontentsline{toc}{chapter}{Bibliografia}
+	\bibliography{Ref/SampleReferences}
+}
+\cleardoublepage
+%%% % % % % % % % % % % % % % % % % % % % % % % % % % %
+% Apendices (ABNT: apos as Referencias). Cada \chapter vira "Apendice A", etc.
+%%% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\appendix
+\markright{Apêndices}
+\input{Apend/Apendices}
+\cleardoublepage
+%%% % % % % % % % % % % % % % % % % % % % % % % % % % %
+%%% % % % % % % % % % % % % % % % % % % % % % % % % % %
+\end{document}

@@ -1,0 +1,23 @@
+% =====================================================================
+% Macros do TCC -- Cozy Pong.
+% =====================================================================
+
+% Convencao de pendencias -- ambas saem em VERMELHO e NEGRITO no PDF:
+%
+%   \todo{...} -> pendencia PONTUAL: uma decisao, uma referencia ou um dado
+%                 que so o autor pode obter (imagem, parecer do CEP, etc.).
+%
+%   \ph{...}   -> PLACEHOLDER: trecho de TEXTO a redigir, tipicamente apos a
+%                 coleta de dados (resultados, conclusao) ou de conteudo
+%                 pessoal (agradecimentos, epigrafe).
+%
+% Ambas sao leves (sem tikz/todonotes); xcolor ja vem da classe JITH.
+% Para localizar todas: grep -rn "\\todo{\|\\ph{" --include=*.tex .
+
+% Robustas: aparecem dentro de \caption{}, que e argumento movel (vai para a
+% Lista de Figuras/Tabelas). Sem \DeclareRobustCommand, o \color quebraria a LOF.
+\DeclareRobustCommand{\todo}[1]{{\normalfont\bfseries\color{red}[TODO:\ #1]}}
+\DeclareRobustCommand{\ph}[1]{{\normalfont\bfseries\color{red}[PLACEHOLDER:\ #1]}}
+
+% Nome do jogo com estilizacao consistente (descomentar se desejar padronizar):
+% \newcommand{\cozypong}{\textit{Cozy Pong}}

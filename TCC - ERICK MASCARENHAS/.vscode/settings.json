@@ -1,0 +1,32 @@
+{
+  // ---- LaTeX Workshop: usar latexmk (respeita o .latexmkrc do projeto) ----
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-pdf",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    { "name": "latexmk (TCC)", "tools": ["latexmk"] }
+  ],
+  "latex-workshop.latex.recipe.default": "latexmk (TCC)",
+
+  // Compila ao salvar (Ctrl+S) — build incremental, rápido
+  "latex-workshop.latex.autoBuild.run": "onSave",
+
+  // NÃO limpar auxiliares a cada build (o latexmk usa .aux/.gls p/ pular passadas)
+  "latex-workshop.latex.autoClean.run": "never",
+
+  // Preview do PDF numa aba do VS Code, com SyncTeX
+  "latex-workshop.view.pdf.viewer": "tab",
+
+  // Saída fica na mesma pasta (preserva os caminhos relativos Cap01/, images/, Ref/)
+  "latex-workshop.latex.outDir": "%DIR%"
+}

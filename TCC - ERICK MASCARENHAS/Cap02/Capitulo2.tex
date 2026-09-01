@@ -1,0 +1,147 @@
+\chapter{Fundamentação Teórica}\label{cap:fundamentacao}
+\glsresetall
+
+% =====================================================================
+% Reune os fundamentos necessarios para o desenvolvimento do jogo e para o
+% protocolo de validacao: (i) os construtos de estresse/ansiedade e sua
+% distincao; (ii) RV, imersao e presenca; (iii) exergames e jogos de ritmo;
+% (iv) musica e regulacao emocional; (v) medidas psicofisiologicas (VFC/EDA);
+% (vi) instrumentos psicometricos; e (vii) trabalhos relacionados.
+% Voz: presente do indicativo (revisao de literatura). Definir sigla na 1a
+% ocorrencia. Termos em ingles em \textit{} na 1a vez.
+% Citacoes: \citep{...} para o que ja esta no .bib; \todo{...} para lacunas.
+% =====================================================================
+
+Este capítulo reúne os fundamentos teóricos necessários à compreensão do jogo desenvolvido e do protocolo de validação proposto. São apresentados os construtos de estresse e ansiedade e sua necessária distinção; a realidade virtual imersiva e os conceitos de presença e \textit{cybersickness}; os \textit{exergames} e os jogos de ritmo como categoria de intervenção; o papel da música e do ritmo na regulação emocional; as medidas psicofisiológicas empregadas na aferição objetiva da resposta ao estresse; e os instrumentos psicométricos que fornecem os desfechos subjetivos. O capítulo encerra com a revisão dos trabalhos relacionados que posiciona o \textit{Cozy Pong} frente à literatura.
+
+% =====================================================================
+\section{Estresse e Ansiedade}\label{sec:fund-estresse}
+
+O estresse é uma resposta do organismo a demandas que ameaçam ou excedem seus recursos percebidos, e articula-se em componentes psicológicos, comportamentais e fisiológicos. Uma distinção fundamental para este trabalho separa o estresse \emph{percebido}, uma avaliação cognitiva sobre o quanto a vida recente se apresenta imprevisível, incontrolável e sobrecarregada \citep{Cohen1983}, da \emph{ansiedade de estado}, um estado emocional transitório de apreensão e tensão acompanhado de ativação autonômica \citep{Spielberger1983}. A ansiedade de estado contrasta com a ansiedade de traço, a tendência relativamente estável de um indivíduo a reagir com ansiedade a situações diversas \citep{Spielberger1983}.
+
+Essa distinção tem consequência metodológica direta. Medidas de estado, sensíveis a variações de curto prazo, são apropriadas para aferir o efeito imediato de uma intervenção, ao passo que medidas de traço ou de sintomas ao longo de semanas servem à caracterização da amostra, não à medição de mudança. Instrumentos de rastreamento como o \gls{gad} \citep{Spitzer2006} e o \gls{phq} \citep{Kroenke2001} avaliam sintomas ao longo das últimas duas semanas e, por isso, não devem ser modificados para medir mudança imediata: alterar seu período de recordação criaria um instrumento novo e não validado. A mensuração de mudança deve recorrer a instrumentos orientados ao estado, como a \gls{stais}, escalas visuais analógicas (\gls{vas}) ou o \gls{sam} \citep{Marteau1992,Facco2011,BradleyLang1994}.
+
+Uma segunda distinção separa a experiência subjetiva da ativação fisiológica. A resposta ao estresse mobiliza o \gls{sna}, com aumento da atividade do \gls{sns} e retração da atividade do \gls{snp}, o que se reflete em alterações cardiovasculares e eletrodérmicas. Contudo, uma redução na ativação fisiológica não equivale, por si só, a uma redução na ansiedade, e um aumento da \gls{fc} durante uma atividade pode refletir esforço físico em vez de estresse psicológico. Por isso, o presente trabalho distingue explicitamente os construtos de ansiedade de estado, estresse percebido, ativação autonômica, esforço físico, carga cognitiva, \textit{cybersickness}, presença e fruição, e busca sustentar suas conclusões em evidência convergente entre medidas subjetivas, fisiológicas e de telemetria do jogo.
+
+% =====================================================================
+\section{Realidade Virtual, Imersão e Presença}\label{sec:fund-rv}
+
+A realidade virtual (\gls{rv}) é um ambiente interativo gerado por computador, projetado para produzir no usuário uma sensação de presença espacial. Neste trabalho, a \gls{rv} é entregue por um \gls{hmd}, um monitor montado à frente dos olhos que, aliado ao rastreamento de movimento, substitui o campo visual do usuário pelo ambiente sintético. O Meta Quest 3S, dispositivo autônomo adotado neste trabalho, oferece rastreamento com seis graus de liberdade (\gls{dof}), estimando posição e orientação da cabeça e dos controles, o que viabiliza a interação motora exigida por um \textit{exergame}.
+
+Dois conceitos organizam a experiência de \gls{rv}. A \emph{imersão} designa a capacidade objetiva do sistema de envolver sensorialmente o usuário, determinada por características técnicas como campo de visão, taxa de quadros (\gls{fps}) e latência. A \emph{presença} designa a resposta subjetiva a essa imersão, a sensação de estar de fato no ambiente virtual \citep{Schubert2001}. A presença não é uma medida direta de redução de estresse, mas pode moderar a eficácia da intervenção, pois um participante que não experimenta presença tende a responder de forma diferente ao ambiente. Por isso, ela é aferida neste trabalho por meio do \gls{ipq} \citep{Schubert2001}.
+
+A contrapartida indesejada da exposição à \gls{rv} é a \textit{cybersickness}, um conjunto de sintomas de mal-estar (náusea, desconforto oculomotor e desorientação) desencadeado pelo conflito entre estímulos sensoriais. Como esses sintomas podem, por si sós, alterar o estado emocional e as medidas fisiológicas, o protocolo os monitora pelo \gls{ssq} \citep{Kennedy1993}, preferencialmente em sua adaptação validada para o português \citep{Goncalves2024}, e define critérios de interrupção. A instabilidade da taxa de quadros e a latência excessiva contribuem para a \textit{cybersickness}, o que faz do desempenho gráfico estável um requisito não apenas de qualidade, mas de segurança e validade da medição.
+
+% =====================================================================
+\section{Exergames e Jogos de Ritmo}\label{sec:fund-exergames}
+
+\textit{Exergames} são jogos digitais que exigem atividade física do jogador como forma de interação. Revisão sistemática de dezesseis estudos sobre a experiência emocional em \textit{exergames} conclui que a prática de atividade física por esse meio aumenta emoções positivas e melhora medidas de ansiedade, estresse e vigor, com sessões de cerca de trinta minutos já suficientes para produzir benefício e sem relato de efeitos emocionais adversos \citep{Marques2023}. Os jogos de ritmo constituem uma subcategoria na qual o jogador executa ações sincronizadas a estímulos musicais, tipicamente batidas ou eventos alinhados à métrica da canção. Em \gls{rv}, esse gênero popularizou-se por títulos que combinam movimento corporal amplo e trilha sonora marcada, como o \textit{Beat Saber}, cuja prática foi caracterizada como exercício de intensidade leve, com resposta cardíaca inferior à do exercício convencional, porém com maior fruição e menor esforço percebido \citep{RubioArias2024}.
+
+A jogabilidade guiada pelo ritmo é o traço distintivo da intervenção avaliada neste trabalho. A hipótese subjacente é a de que a sincronização entre movimento e música, mais do que a atividade motora isolada, favorece um estado de fluência e regulação emocional. É esse enquadramento, lúdico e rítmico, que o \textit{Cozy Pong} instancia e que o Capítulo~\ref{cap:metodologia} confronta com duas atividades de referência, uma de baixa demanda e outra de prática esportiva competitiva convencional.
+
+% =====================================================================
+\section{Música, Ritmo e Regulação Emocional}\label{sec:fund-musica}
+
+A audição musical modula respostas emocionais e fisiológicas, e músicas de andamento moderado e caráter suave associam-se a relaxamento e a redução de ativação \citep{Trost2017}. O gênero \textit{lo-fi}, marcado por batidas moderadas, texturas quentes e repetição previsível, consolidou-se como trilha de fundo para relaxamento, estudo e concentração. Estudo-piloto de métodos mistos com jovens adultos observou redução significativa da ansiedade de estado após exposição a esse gênero, com relatos de interrupção de pensamentos intrusivos e promoção de relaxamento \citep{Dsouza2024}, o que o torna um estímulo natural para uma intervenção de regulação de estresse.
+
+Além do efeito da audição passiva, a literatura sobre \textit{entrainment} rítmico sugere que mover-se em sincronia com um pulso previsível pode ter valor regulatório próprio, distinto do valor da música ouvida sem movimento associado. \citet{Trost2017} distinguem quatro níveis de arrastamento rítmico no ser humano, o perceptual, o fisiológico autonômico, o motor e o social, e argumentam que todos contribuem para a experiência afetiva subjetiva, sendo o nível autonômico aquele em que um ritmo externo influencia ritmos corporais internos, como a frequência cardíaca. Essa premissa fundamenta o projeto do \textit{Cozy Pong}, que acopla o movimento de rebatida à métrica da trilha \textit{lo-fi}, e orienta diretamente o desenho experimental adotado. Ao contrastar o ato de jogar com a audição passiva da mesma trilha, o estudo confronta empiricamente o movimento associado à música com a música ouvida sem movimento, mantendo o estímulo sonoro constante entre as duas condições (Seção~\ref{sec:condicoes}). Convém observar, contudo, que esse contraste não isola a \emph{sincronização} propriamente dita, pois envolve também a imersão e a interatividade do jogo; isolá-la exigiria uma variante dessincronizada do próprio jogo, conforme discutido na Seção~\ref{sec:limitacoes}.
+
+% =====================================================================
+\section{Medidas Psicofisiológicas}\label{sec:fund-psicofisiologia}
+
+A aferição objetiva da resposta ao estresse apoia-se em sinais do \gls{sna}. Este trabalho emprega dois canais complementares, a atividade cardiovascular e a atividade eletrodérmica.
+
+\subsection{Variabilidade da Frequência Cardíaca}\label{subsec:fund-vfc}
+
+A \gls{vfc} é a variação na duração dos intervalos entre batimentos cardíacos consecutivos e reflete a modulação autonômica do coração \citep{TaskForce1996}. Seu cálculo exige os intervalos entre batimentos, o \gls{ibi}, ou, em registro eletrocardiográfico, os intervalos \gls{rr} entre picos R sucessivos, e não apenas a \gls{fc} média. Entre os índices no domínio do tempo, a \gls{rmssd} é a raiz quadrada da média dos quadrados das diferenças entre intervalos normais sucessivos e associa-se predominantemente à modulação vagal de curto prazo; por ser sua distribuição frequentemente assimétrica, analisa-se com frequência o seu logaritmo natural, $\ln(\mathrm{RMSSD})$. A \gls{sdnn} representa a variabilidade global no período analisado, mas depende fortemente da duração do registro. No domínio da frequência, distinguem-se a potência de baixa frequência (\gls{lf}) e a de alta frequência (\gls{hf}); esta última é fortemente influenciada pela respiração e deve ser interpretada com cautela quando a respiração não é medida. A razão \gls{lf}/\gls{hf}, historicamente descrita como índice de equilíbrio simpatovagal, tem limitações fisiológicas importantes e não deve ser tomada como desfecho primário \citep{Billman2013}.
+
+Um cuidado central é que a \gls{vfc} é sensível à respiração, à postura, à atividade física, à idade e a artefatos de sinal \citep{TaskForce1996}. Medidas obtidas durante a atividade física do jogo violam as condições de estacionariedade assumidas por muitas análises de \gls{vfc} e, por isso, os desfechos primários devem provir de janelas de repouso e de recuperação com pouco movimento, ao passo que as medidas durante o jogo têm caráter secundário ou exploratório.
+
+\subsection{Atividade Eletrodérmica}\label{subsec:fund-eda}
+
+A \gls{eda}, tradicionalmente designada \gls{gsr}, é a variação das propriedades elétricas da pele causada sobretudo pela atividade das glândulas sudoríparas sob controle simpático. Sua representação mais comum é a condutância da pele, expressa em microsiemens, decomposta em um componente tônico, o nível de condutância da pele (\gls{scl}), que varia lentamente e indica a ativação simpática geral, e um componente fásico, a resposta de condutância da pele (\gls{scr}), de variação rápida. A \gls{eda} é sensível à ativação, mas não distingue, isoladamente, se essa ativação decorre de estresse, excitação, esforço físico, temperatura ou movimento. Como o manuseio dos controles e o esforço do jogo produzem alterações alheias ao estresse emocional, também aqui as comparações primárias devem privilegiar os períodos de repouso e de recuperação.
+
+% =====================================================================
+\section{Instrumentos Psicométricos}\label{sec:fund-instrumentos}
+
+Os desfechos subjetivos deste trabalho apoiam-se em instrumentos padronizados, empregados apenas em versões validadas e, para participantes brasileiros, em suas adaptações para o português brasileiro quando disponíveis. A Tabela~\ref{tab:instrumentos} resume os instrumentos e o construto que cada um mede.
+
+O instrumento historicamente predominante para ansiedade de estado é a escala de estado do \gls{stai} \citep{Spielberger1983}, adotada na maior parte dos estudos revisados e frequentemente empregada como critério de validação para instrumentos mais breves.
+
+A medida de estado adotada neste trabalho é a escala visual analógica, aplicada a ansiedade, estresse e calma, com âncoras idênticas em todas as administrações. Sua adequação repousa em dois atributos: apresenta validade convergente com a escala de estado do \gls{stai} e foi concebida para aplicação repetida, sendo sensível a variações de curto prazo \citep{Facco2011}. Complementam-na o \gls{sam}, que avalia de forma pictórica e não verbal valência, ativação e dominância \citep{BradleyLang1994}, e a subescala de tensão do \gls{brums}, validada no Brasil e desenvolvida para uso repetido em contextos de exercício físico \citep{Rohlfs2008}, característica que a torna particularmente apropriada a um \textit{exergame}.
+
+A distinção entre valência e ativação, que o \gls{sam} torna explícita, é relevante para este estudo: a redução de estresse pode manifestar-se como diminuição da ativação, como melhora da valência afetiva ou como ambas, e um instrumento unidimensional não separaria esses componentes.
+
+Para caracterização basal, e não como desfecho, empregam-se o \gls{pss} \citep{Cohen1983}, em sua versão brasileira \citep{Luft2007}, e o \gls{gad} \citep{Spitzer2006}, igualmente com validação brasileira \citep{Moreno2016}. Ambos medem períodos de semanas e, por isso, servem à descrição da amostra e à análise de moderação, jamais à medição de mudança imediata.
+
+Após cada condição, instrumentos adicionais controlam explicações alternativas. O \gls{tlx} mede a carga de trabalho subjetiva \citep{HartStaveland1988} e verifica a manipulação de dificuldade entre as configurações de jogo; a escala de esforço percebido de Borg (\gls{rpe}) quantifica o esforço físico \citep{Borg1982}, medida indispensável em um desenho no qual as atividades exigem intensidades distintas e parte da resposta fisiológica pode decorrer do exercício, e não da regulação emocional. O \gls{ipq} afere presença \citep{Schubert2001} e o \gls{ssq} monitora a \textit{cybersickness} \citep{Kennedy1993,Goncalves2024}; ambos se aplicam somente às condições realizadas em \gls{rv}.
+
+\begin{table}[htbp]
+\centering
+\caption{Instrumentos psicométricos adotados e o construto avaliado por cada um. A coluna Momento indica se o instrumento serve à caracterização basal (uma vez) ou à medição de estado (repetida), detalhados no cronograma do Capítulo~\ref{cap:metodologia}. Todos são de uso livre para pesquisa.}
+\label{tab:instrumentos}
+\small
+\begin{tabularx}{\textwidth}{p{2.6cm}Xp{2.6cm}}
+\toprule
+\textbf{Instrumento} & \textbf{Construto avaliado} & \textbf{Momento} \\
+\midrule
+\gls{vas} & Ansiedade, estresse e calma atuais & Repetida \\
+\gls{sam} & Valência, ativação e dominância & Repetida \\
+\gls{brums} (Tensão) & Estado de humor & Repetida \\
+\gls{tlx} & Carga de trabalho subjetiva & Pós-condição \\
+\gls{rpe} & Esforço físico percebido & Pós-condição \\
+\gls{ipq} & Presença & Pós-condição (\gls{rv}) \\
+\gls{ssq} & \textit{Cybersickness} & Basal e pós-condição (\gls{rv}) \\
+\gls{pss} & Estresse percebido (recente) & Basal \\
+\gls{gad} & Sintomas de ansiedade generalizada & Basal \\
+\bottomrule
+\end{tabularx}\\[2pt]
+{\footnotesize Fonte: Elaborada pelo autor.}
+\end{table}
+
+% =====================================================================
+\section{Trabalhos Relacionados}\label{sec:trabalhos-relacionados}
+
+A literatura em que este trabalho se insere organiza-se em quatro linhas, revisadas a seguir segundo o procedimento descrito na Seção~\ref{sec:rsl}: intervenções de relaxamento em \gls{rv}, \textit{exergames} e jogos de ritmo, estudos que comparam \gls{rv} a atividades convencionais e trabalhos sobre ritmo e regulação afetiva. A Tabela~\ref{tab:trabalhos-relacionados} sintetiza o posicionamento do \textit{Cozy Pong} frente aos estudos mais próximos.
+
+\subsection{Relaxamento em Realidade Virtual}\label{subsec:rel-rv}
+
+A linha mais consolidada emprega ambientes virtuais contemplativos, tipicamente cenários naturais, sem componente lúdico ou motor. \citet{Ahn2025} conduziram ensaio controlado randomizado com $41$ universitários alocados em três braços, relaxamento em \gls{rv} com cenários naturais, relaxamento muscular progressivo e lista de espera, em seis sessões de vinte minutos ao longo de duas semanas. O braço de \gls{rv} reduziu o estresse percebido com tamanho de efeito grande ($d = -1{,}55$), superando o relaxamento muscular progressivo nesse desfecho, ainda que este tenha sido superior em eficiência objetiva de sono. O estudo é particularmente relevante aqui por três razões: emprega a mesma população-alvo, adota comparador ativo em vez de apenas lista de espera e demonstra que a \gls{rv} pode superar uma técnica convencional em desfecho subjetivo.
+
+\citet{Kim2021} avaliaram $83$ adultos com estresse elevado sob desenho \textit{crossover} randomizado de dois períodos, contrastando relaxamento em \gls{rv} com biofeedback após indução de estresse por subtração seriada. Ambas as condições reduziram significativamente a ansiedade de estado e o desconforto autorrelatado, sem diferença entre elas, mas divergiram no plano fisiológico: a \gls{rv} produziu maior ativação parassimpática, medida pelo NN50, enquanto o biofeedback produziu maior relaxamento muscular. Esse é o estudo metodologicamente mais próximo do presente trabalho, e dele derivam três decisões aqui adotadas: o desenho \textit{crossover}, a indução de estresse por aritmética mental e o uso conjunto de medidas subjetivas e de \gls{vfc}. Seu achado central, de convergência subjetiva com divergência fisiológica entre técnicas, motiva a hipótese H6.
+
+\subsection{Exergames e Jogos de Ritmo}\label{subsec:rel-exergames}
+
+A revisão sistemática de \citet{Marques2023}, que reuniu dezesseis estudos sobre a experiência emocional em \textit{exergames}, conclui que a prática de atividade física por esse meio aumenta emoções positivas e melhora medidas de ansiedade, estresse e vigor, com sessões de cerca de trinta minutos já suficientes para produzir benefício e sem relato de efeitos adversos. A revisão registra, contudo, duas lacunas que este trabalho endereça: o predomínio de instrumentos de rastreamento clínico, concebidos para períodos de semanas e portanto pouco sensíveis à mudança aguda, e a escassez de desfechos fisiológicos ao lado dos autorrelatados.
+
+No plano dos jogos de ritmo especificamente, \citet{RubioArias2024} compararam, em desenho \textit{crossover} randomizado com $22$ participantes, duas sessões de \textit{exergame} imersivo, entre elas o \textit{Beat Saber}, com uma sessão de exercício convencional de intensidade moderada. A resposta cardíaca foi significativamente menor nos jogos, caracterizados como exercício de intensidade leve, ao passo que o exercício convencional produziu maior esforço percebido e menor fruição. O achado é duplamente informativo para o presente trabalho: sustenta a expectativa de que o \textit{Cozy Pong} se situe na faixa de esforço leve, compatível com uma proposta relaxante, e evidencia que a vantagem dos jogos sobre o exercício convencional se manifesta na dimensão da experiência, e não na intensidade fisiológica.
+
+\subsection{Ritmo, Música e Regulação Afetiva}\label{subsec:rel-ritmo}
+
+\citet{Trost2017} sistematizam o arrastamento rítmico como mecanismo de indução afetiva pela música, distinguindo os níveis perceptual, fisiológico autonômico, motor e social. A distinção é diretamente operacionalizável no desenho experimental deste trabalho: a condição de audição isolada aciona os níveis perceptual e autonômico, ao passo que as condições de jogo acrescentam o nível motor. No plano empírico, \citet{Dsouza2024} observaram, em estudo-piloto de métodos mistos com jovens adultos, redução significativa da ansiedade de estado após audição de música \textit{lo-fi}, com relatos qualitativos de interrupção de pensamentos intrusivos. Esse resultado é o que sustenta tratar a condição de audição como comparador \emph{ativo}, e não como controle neutro.
+
+\subsection{Lacuna e Posicionamento}\label{subsec:rel-lacuna}
+
+A revisão evidencia três lacunas convergentes. Primeiro, os estudos de relaxamento em \gls{rv} concentram-se em ambientes contemplativos e passivos, sem componente lúdico ou motor, ao passo que os estudos de \textit{exergames} raramente medem recuperação de estresse com desfechos fisiológicos. O gênero que une ambos, o jogo de ritmo em \gls{rv}, permanece avaliado sobretudo quanto a intensidade de exercício e fruição \citep{RubioArias2024}, e não quanto a regulação emocional. Segundo, quando há comparador, ele costuma ser passivo ou uma técnica de outro meio, o que confunde a técnica com a plataforma; o presente trabalho mantém o meio constante ao implementar a meditação guiada no mesmo aplicativo. Terceiro, nenhum dos estudos revisados contrasta duas configurações do \emph{mesmo} jogo para isolar o efeito das escolhas de projeto, contraste que constitui a contribuição propriamente computacional deste trabalho.
+
+\begin{table}[htbp]
+\centering
+\caption{Posicionamento do \textit{Cozy Pong} frente aos trabalhos relacionados mais próximos.}
+\label{tab:trabalhos-relacionados}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{3.1cm}*{5}{>{\centering\arraybackslash}p{1.85cm}}}
+\toprule
+Trabalho & \gls{rv} imersiva & Ritmo/ música & Componente lúdico & Medida fisiológica & Comparador ativo \\
+\midrule
+\citet{Ahn2025}        & Sim & Não & Não & Não & Sim \\
+\citet{Kim2021}        & Sim & Não & Não & Sim & Sim \\
+\citet{RubioArias2024} & Sim & Sim & Sim & Sim & Sim \\
+\citet{Marques2023}    & Parcial & Parcial & Sim & Parcial & Parcial \\
+\citet{Dsouza2024}     & Não & Sim & Não & Não & Não \\
+\midrule
+\textit{Cozy Pong} (este trabalho) & Sim & Sim & Sim & Sim & Sim \\
+\bottomrule
+\end{tabular}\\[2pt]
+{\footnotesize Fonte: Elaborada pelo autor. ``Parcial'' indica que a característica varia entre os estudos incluídos na revisão.}
+\end{table}
