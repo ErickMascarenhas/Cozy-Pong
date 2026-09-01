@@ -20,6 +20,14 @@ public class SongSelectionMenuUI : MonoBehaviour
 
     public void LoadSongStats()
     {
+        // Ver ScoreResultUI: nenhum recorde e exibido durante o experimento.
+        if (ExperimentMode.IsActive)
+        {
+            if (maxScoreText) maxScoreText.text = "";
+            if (maxGradeText) maxGradeText.text = "";
+            return;
+        }
+
         int hasPlayed = PlayerPrefs.GetInt(songID + "_Played", 0);
 
         if (hasPlayed == 0)
