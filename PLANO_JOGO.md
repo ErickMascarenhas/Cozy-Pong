@@ -1,5 +1,17 @@
 # Plano de adequação do Cozy Pong à versão experimental
 
+> **Status: executado.** Os blocos A, B, C, F e G estão implementados na branch
+> `feat/experiment-mode`. O bloco D foi cancelado por decisão do orientando (a
+> meditação passa a ser conduzida por aplicativo externo já validado) e o bloco E
+> foi resolvido sem cena nova, reaproveitando o ambiente do lobby.
+>
+> O que restou de trabalho manual está em [`EXPERIMENTO.md`](EXPERIMENTO.md):
+> completar 13 beatmaps, escolher e travar o aplicativo de meditação, e calibrar
+> o volume no piloto.
+>
+> As decisões da Seção 4 estão registradas ali com o que foi efetivamente
+> adotado.
+
 **O que este documento é:** a lista das mudanças que o aplicativo precisa sofrer
 para que o experimento descrito no Capítulo 3 do TCC seja executável, e para que
 os dados que ele produzir sejam analisáveis e reportáveis.
@@ -303,7 +315,29 @@ O TCLE declara garantias específicas. O aplicativo precisa sustentá-las.
 
 ---
 
-## 4. Decisões que dependem de você
+## 4. Decisões — resolvidas
+
+O que foi decidido e implementado:
+
+| # | Assunto | Resolução |
+|---|---|---|
+| D1 | Entrega de C3 | Modo `C3` no mesmo aplicativo, no PC, tela escurecida, fones. Playlist e volume idênticos a C1 |
+| D2 | Duração da exposição | **20 min** nas quatro condições, parametrizado em `exposureSeconds` |
+| D3 | Playlists | Definidas por análise dos 53 beatmaps. C1 decresce de 80 a 71 BPM; C2 cresce de 110 a 133 BPM |
+| D4 | Critério de tempo do `HitType` | Unificado com o `e_i` da Equação 3.1. O jogo julga e o TCC reporta a mesma grandeza |
+| D5 | Guia visual de respiração | Prejudicado: a meditação saiu do aplicativo |
+| D6 | Controles do pesquisador | Painel na tela do operador, teclas P e F10, nunca dentro do HMD |
+| D7 | Placar em C1 | Oculto em C1, visível em C2. Telemetria grava tudo nos dois casos |
+| D8 | Falha em C2 | Faixa reinicia e o cronômetro continua, com marcador `TRACK_RESTART` |
+
+Além dessas, o próprio R5 foi invalidado: a meditação guiada passa a ser
+conduzida por aplicativo já estabelecido, por escopo e por validade de
+construto. O custo — o contraste C1×C4 passa a confundir a atividade com a
+implementação que a entrega — está registrado na Seção 3.15 do TCC.
+
+O texto original das decisões segue abaixo, como registro do raciocínio.
+
+---
 
 Estas mudam o que eu implemento. Marquei minha recomendação, mas a escolha é sua.
 
