@@ -74,6 +74,7 @@ public class GameScoreManager : MonoBehaviour
 
     public void ResetGame()
     {
+        ApplyExperimentConfig();
         currentHealth = maxHealth;
         totalScore = 0;
         currentComboMultiplier = 1;
@@ -98,7 +99,37 @@ public class GameScoreManager : MonoBehaviour
             }
         }
         UpdateUI();
+        ApplyScoreUiVisibility();
         if (feedbackText) feedbackText.text = "";
+    }
+
+    /// <summary>
+    /// No experimento, o regime de erro vem da condicao, e nao do Inspector de
+    /// cada musica.
+    /// </summary>
+    private void ApplyExperimentConfig()
+    {
+        if (!ExperimentMode.IsActive || ExperimentMode.Config == null) return;
+        ExperimentConfig config = ExperimentMode.Config;
+        isImmortal = config.immortal;
+        usingErrorBoxes = config.useErrorBoxes;
+    }
+
+    /// <summary>
+    /// Em C1 o placar, o combo e a nota ficam ocultos. A Secao 3.2.8 do TCC
+    /// descreve a retroalimentacao da configuracao relaxante como "de apoio,
+    /// sem elementos de punicao", e placar visivel e pressao de desempenho,
+    /// que e justamente o construto sob medida. A telemetria continua
+    /// registrando tudo: muda so o que o participante ve.
+    /// </summary>
+    private void ApplyScoreUiVisibility()
+    {
+        if (!ExperimentMode.IsActive || ExperimentMode.Config == null) return;
+        bool show = ExperimentMode.Config.showScoreUi;
+        if (scoreText) scoreText.gameObject.SetActive(show);
+        if (comboText) comboText.gameObject.SetActive(show);
+        if (comboBarFill) comboBarFill.gameObject.SetActive(show);
+        if (comboBarBackground) comboBarBackground.gameObject.SetActive(show);
     }
 
     private void InitializeHitCounts()
@@ -203,6 +234,17 @@ public class GameScoreManager : MonoBehaviour
             feedbackText.text = "GAME OVER";
             feedbackText.color = Color.red;
         }
+
+        // No experimento nao ha tela de derrota nem recorde: a faixa reinicia e
+        // o cronometro segue, para que a exposicao mantenha a mesma duracao nas
+        // quatro condicoes.
+        if (ExperimentMode.IsActive)
+        {
+            if (ExperimentSessionManager.Instance != null)
+                ExperimentSessionManager.Instance.NotifyPlayerFailed();
+            return;
+        }
+
         PlayerPrefs.SetInt(currentSongID + "_Played", 1);
         PlayerPrefs.Save();
         onPlayerDeath.Invoke();
