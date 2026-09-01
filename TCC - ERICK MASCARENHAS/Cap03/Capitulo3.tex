@@ -69,20 +69,22 @@ A jogabilidade central consiste em rebater, com a raquete, bolas que se aproxima
 
 As bolas de saque seguem uma trajetória determinística. Uma bola de saque é lançada e executa uma sequência de quiques com trajetória parabólica calculada analiticamente a partir dos pontos de origem e destino e de uma altura de pico, de modo que o instante em que a bola chega ao ponto de rebatida seja previsível e alinhado ao ritmo. Um componente de canhão anima o lançamento, mirando na direção da velocidade inicial e aplicando um leve recuo a cada disparo, o que reforça a leitura visual e sonora do evento.
 
-A avaliação de cada rebatida combina dois fatores, a força e o tempo. A força é estimada pela velocidade relativa no contato entre bola e raquete: velocidades muito altas são classificadas como excessivas e velocidades muito baixas como fracas. O tempo é estimado pela diferença entre o tempo de voo efetivo da bola e o tempo de voo esperado, com uma janela estreita para o acerto ideal e uma janela mais larga para o acerto tolerável. O resultado final de cada rebatida é uma de quatro categorias, definidas no tipo \texttt{HitType}: \textit{Perfect} (força e tempo ideais), \textit{Ok} (força fraca ou tempo tolerável), \textit{Bad} (força excessiva ou tempo fora da janela) e \textit{Miss} (bola não rebatida, que atinge o chão, ou bola proibida rebatida). A Tabela~\ref{tab:hittype} sintetiza os limiares adotados na configuração de referência.
+A avaliação de cada rebatida combina dois fatores, a força e o tempo. A força é estimada pela velocidade relativa no contato entre bola e raquete: velocidades muito altas são classificadas como excessivas e velocidades muito baixas como fracas. O tempo é o \emph{erro de sincronização} do evento, isto é, a menor distância entre o instante da rebatida e alguma batida da música, exatamente a grandeza $e_i$ definida na Equação~\ref{eq:sinc} e reportada nos resultados. Adota-se uma janela estreita para o acerto ideal e uma janela mais larga para o acerto tolerável. O resultado final de cada rebatida é uma de quatro categorias, definidas no tipo \texttt{HitType}: \textit{Perfect} (força e tempo ideais), \textit{Ok} (força fraca ou tempo tolerável), \textit{Bad} (força excessiva ou tempo fora da janela) e \textit{Miss} (bola não rebatida, que atinge o chão, ou bola proibida rebatida). A Tabela~\ref{tab:hittype} sintetiza os limiares adotados na configuração de referência.
+
+Cabe explicitar por que a grandeza julgada pelo jogo e a grandeza reportada no trabalho são deliberadamente a mesma. Uma implementação alternativa, e mais simples, julgaria o tempo pela diferença entre o voo efetivo da bola e o voo previsto; a quantidade resultante é próxima do erro de sincronização, mas não idêntica a ele. Fazer o jogo pontuar uma coisa e o texto relatar outra criaria uma discrepância sem contrapartida, e por isso ambas as funções derivam do mesmo cálculo, sobre a lista completa de batidas do mapa rítmico.
 
 \begin{table}[H]
     \centering
-    \caption{Categorias de rebatida (\texttt{HitType}) e os limiares de força e tempo adotados na configuração de referência do \textit{Cozy Pong}. Os valores são parâmetros ajustáveis. \todo{confirmar os valores finais da configuração empregada no experimento.}}
+    \caption{Categorias de rebatida (\texttt{HitType}) e os limiares de força e erro de sincronização adotados na configuração relaxante. Os limiares de tempo da configuração animada constam da Tabela~\ref{tab:parametros}.}
     \label{tab:hittype}
     \small
     \begin{tabularx}{\textwidth}{p{2.2cm}Xp{3.2cm}}
         \toprule
         Categoria & Condição & Efeito na pontuação/vida \\
         \midrule
-        \textit{Perfect} & Tempo dentro de $0{,}2$~s e força entre os limiares & $+200$ pontos, $+20$ de vida \\
-        \textit{Ok}      & Tempo até $0{,}4$~s ou força abaixo de $1{,}5$ & $+100$ pontos, $+5$ de vida \\
-        \textit{Bad}     & Força acima de $3{,}5$ ou tempo acima de $0{,}4$~s & $+50$ pontos, sem ganho de vida \\
+        \textit{Perfect} & Erro de sincronização até $0{,}25$~s e força entre os limiares & $+200$ pontos, $+20$ de vida \\
+        \textit{Ok}      & Erro até $0{,}50$~s ou força abaixo de $1{,}5$ & $+100$ pontos, $+5$ de vida \\
+        \textit{Bad}     & Força acima de $3{,}5$ ou erro acima de $0{,}50$~s & $+50$ pontos, sem ganho de vida \\
         \textit{Miss}    & Bola não rebatida ou bola proibida rebatida & $0$ ponto, $-20$ de vida \\
         \bottomrule
     \end{tabularx}\\[2pt]
@@ -144,15 +146,49 @@ O \textit{Cozy Pong} é empregado no experimento em duas configurações, que co
 
 Cabe explicitar o que esse contraste isola. As duas configurações não diferem em um único parâmetro, mas em um \emph{conjunto coerente} de escolhas de projeto: a trilha e a dificuldade variam em conjunto, como variariam em qualquer jogo real, no qual a música acompanha a intensidade pretendida da experiência. O contraste, portanto, não separa o efeito do andamento musical do efeito da dificuldade; ele opõe dois \emph{pacotes de projeto} completos, um concebido para acalmar e outro para energizar. Essa é a pergunta de projeto efetivamente relevante para quem desenvolve jogos de bem-estar, e é assim que a hipótese H2 deve ser lida. A decomposição dos dois fatores exigiria condições adicionais, com trilha animada e dificuldade baixa e vice-versa, indicadas como extensão futura.
 
-\todo{consolidar e documentar a parametrizacao numerica final das duas configuracoes: faixas musicais e seus andamentos em BPM, densidade de notas por minuto, velocidade da bola, limiares de tempo e forca da Tabela~\ref{tab:hittype} e regime de consequencia do erro. Fazer apos o estudo-piloto, garantindo que a configuracao animada eleve a demanda sem tornar a tarefa frustrante.}
+A Tabela~\ref{tab:parametros} consolida a parametrização numérica das duas configurações. Todos os mapas rítmicos do projeto foram escritos com uma nota por batida, o que torna a densidade de bolas uma função direta do andamento: a cada $n$ batidas uma bola é servida, de modo que a taxa é de $\mathrm{BPM}/n$ bolas por minuto. As duas configurações exploram essa relação, combinando andamento e fator de subdivisão para separar as faixas de densidade sem sobreposição.
+
+A ordem das faixas dentro de cada configuração segue o princípio \textit{iso} da musicoterapia, segundo o qual a intervenção parte de um andamento próximo ao estado provável do ouvinte e o conduz gradualmente na direção pretendida. A configuração relaxante decresce de $80$ para $71$~BPM ao longo da exposição; a animada cresce de $110$ para $133$~BPM.
+
+\begin{table}[H]
+    \centering
+    \caption{Parametrização das duas configurações do \textit{Cozy Pong} empregadas no experimento.}
+    \label{tab:parametros}
+    \small
+    \begin{tabularx}{\textwidth}{p{5.2cm}YY}
+        \toprule
+        \textbf{Parâmetro} & \textbf{Relaxante (C1)} & \textbf{Animada (C2)} \\
+        \midrule
+        Andamento das faixas & 71 a 80 BPM & 110 a 133 BPM \\
+        Ordem das faixas & decrescente & crescente \\
+        Densidade de bolas & 17,7 a 20,0 por min & 27,5 a 33,2 por min \\
+        Intervalo entre bolas & 3,00 a 3,38 s & 1,81 a 2,18 s \\
+        Altura extra do arco & 0,25 m & 0,15 m \\
+        Janela de vida da bola & 1,72 s & 1,40 s \\
+        Limiar de sincronia \textit{Perfect} & 0,25 s & 0,15 s \\
+        Limiar de sincronia \textit{Ok} & 0,50 s & 0,30 s \\
+        Regime de erro & imortal & caixas de erro \\
+        Placar, combo e nota & ocultos & visíveis \\
+        \bottomrule
+    \end{tabularx}\\[2pt]
+    {\footnotesize Fonte: Elaborada pelo autor.}
+\end{table}
+
+Duas escolhas merecem justificativa. A altura do arco é menor na configuração animada porque é ela que determina a duração do voo: uma trajetória mais baixa é também mais rápida, o que atende à maior velocidade prevista para essa configuração e, ao mesmo tempo, evita que bolas consecutivas coexistam no ar quando o intervalo entre elas cai para menos de dois segundos. Já os limiares de julgamento são mais estreitos em C2 porque a exigência de precisão é parte do pacote de projeto que se pretende contrastar, e não um efeito colateral da densidade.
+
+Esses valores estão declarados no código-fonte do aplicativo, e não em arquivos de configuração binários, de modo que permanecem versionados, comparáveis entre revisões e verificáveis por terceiros. Cada sessão registra, em seus metadados, a versão do aplicativo e os parâmetros efetivamente aplicados.
+
+\todo{confirmar estes valores no estudo-piloto, verificando que a configuracao animada eleva a demanda sem tornar a tarefa frustrante, e ajustar a tabela se o piloto indicar mudanca.}
 
 \subsection{Condição de Meditação Guiada em Realidade Virtual}\label{subsec:meditacao-vr}
 
-A quarta condição experimental, a meditação guiada em \gls{rv} (Seção~\ref{sec:condicoes}), é implementada como um modo adicional dentro do \emph{mesmo} aplicativo Unity que hospeda o \textit{Cozy Pong}, e não por meio de um aplicativo comercial de terceiros. Essa decisão é metodológica: ao compartilhar o mesmo binário, o mesmo dispositivo, o mesmo \textit{pipeline} de renderização e áudio e o mesmo mecanismo de registro de eventos, a condição de meditação difere da condição de jogo apenas pela atividade proposta, e não pela plataforma de software. Um aplicativo comercial introduziria diferenças não controladas de qualidade gráfica, latência, taxa de quadros, calibração de volume e conteúdo, que se confundiriam com o efeito da técnica de relaxamento.
+A quarta condição experimental, a meditação guiada em \gls{rv} (Seção~\ref{sec:condicoes}), é conduzida por um \emph{aplicativo de meditação já estabelecido}, executado no mesmo \gls{hmd}, e não por um modo desenvolvido dentro do \textit{Cozy Pong}. A decisão é de validade de construto e de escopo. A condição existe para representar aquilo que hoje efetivamente se utiliza como prática de relaxamento digital; um exercício de meditação escrito e produzido pelo próprio autor, sem experiência clínica na técnica e sem evidência de eficácia, representaria mal esse comparador e transformaria o contraste C1~\textit{vs}~C4 em uma comparação entre duas produções amadoras. Empregar um aplicativo consolidado torna o comparador mais forte e o teste, por consequência, mais conservador.
 
-A condição consiste em um ambiente virtual visualmente sóbrio, sem elementos de jogo, acompanhado de uma narração de meditação guiada padronizada, com foco na respiração, e da mesma trilha \textit{lo-fi} em volume reduzido. O participante permanece sentado, sem interação motora exigida.
+A condição consiste em uma sessão guiada de foco na respiração, de duração idêntica à das demais condições, com o participante sentado e sem interação motora exigida. São padronizados entre participantes o aplicativo, a versão, a sessão escolhida dentro dele, o volume do dispositivo e a instrução verbal que a antecede, registrada no Apêndice~\ref{ap:condicoes}. O aplicativo é mantido \emph{offline} e sem atualização durante todo o período de coleta, de modo que o conteúdo apresentado ao último participante seja o mesmo apresentado ao primeiro.
 
-\todo{produzir a cena de meditacao guiada no projeto Unity e definir a narracao: gravar audio proprio ou adotar um roteiro de dominio publico traduzido; registrar a fonte e a duracao exata no texto final.}
+Essa escolha tem um custo, registrado aqui e retomado na Seção~\ref{sec:limitacoes}: ao contrário de C1 e C2, a condição C4 não compartilha o binário, o \textit{pipeline} de renderização nem a cadeia de áudio do \textit{Cozy Pong}. O contraste C1~\textit{vs}~C4 passa, portanto, a comparar a atividade \emph{e} a implementação que a entrega, e não a atividade isoladamente. A marcação temporal é preservada por procedimento (Seção~\ref{sec:processamento}).
+
+\todo{registrar o aplicativo escolhido, a versao exata, o titulo da sessao utilizada e sua duracao; confirmar que a licenca de uso permite emprego em pesquisa academica e anexar essa confirmacao ao processo do CEP.}
 
 % =====================================================================
 \section{Condições Experimentais}\label{sec:condicoes}
@@ -170,12 +206,12 @@ A manipulação experimental compreende quatro condições, apresentadas a segui
     O participante permanece sentado ouvindo a mesma trilha \textit{lo-fi}, na mesma ordem e volume e pelo mesmo intervalo, sem \gls{rv} e sem qualquer elemento de jogabilidade. Mantém o estímulo musical constante e, assim, separa o efeito do jogo do efeito da música que o acompanha. Como a música \textit{lo-fi} possui valor relaxante próprio (Seção~\ref{sec:fund-musica}), esta condição é um comparador ativo, e não um controle neutro, o que torna o teste deliberadamente conservador.
 
     \item[\textbf{C4 --- Meditação guiada em \gls{rv} (comparador de referência).}]
-    O participante realiza, com o mesmo \gls{hmd} e dentro do mesmo aplicativo (Seção~\ref{subsec:meditacao-vr}), uma sessão de meditação guiada com foco na respiração, sentado e sem interação motora. Representa a prática de relaxamento digital hoje mais difundida e permite responder, com números, se o \textit{Cozy Pong} se equipara ou supera aquilo que já se utiliza. Por compartilhar o meio, o dispositivo e o \textit{software} com C1 e C2, o contraste isola a \emph{atividade} sem confundi-la com a plataforma.
+    O participante realiza, com o mesmo \gls{hmd}, uma sessão de meditação guiada com foco na respiração conduzida por aplicativo já estabelecido (Seção~\ref{subsec:meditacao-vr}), sentado e sem interação motora. Representa a prática de relaxamento digital hoje mais difundida e permite responder, com números, se o \textit{Cozy Pong} se equipara ou supera aquilo que já se utiliza. Compartilha com C1 e C2 o meio e o dispositivo, mas não o \textit{software}, ressalva discutida na Seção~\ref{sec:limitacoes}.
 \end{description}
 
 \begin{table}[H]
     \centering
-    \caption{Atributos das quatro condições experimentais. C1 e C2 opõem dois pacotes de projeto (trilha e dificuldade variam em conjunto); C1 e C3 diferem na presença do jogo, mantida a mesma trilha; C1 e C4 diferem na atividade, mantido o meio.}
+    \caption{Atributos das quatro condições experimentais. C1 e C2 opõem dois pacotes de projeto (trilha e dificuldade variam em conjunto); C1 e C3 diferem na presença do jogo, mantida a mesma trilha; C1 e C4 diferem na atividade, mantidos o meio e o dispositivo.}
     \label{tab:condicoes}
     \small
     \begin{tabularx}{\textwidth}{p{2.5cm}YYYY}
@@ -184,7 +220,7 @@ A manipulação experimental compreende quatro condições, apresentadas a segui
         \midrule
         Atividade & jogar & jogar & ouvir & meditar \\
         Meio & \gls{rv} & \gls{rv} & sentado, sem \gls{rv} & \gls{rv} \\
-        Trilha sonora & \textit{lo-fi} calma & animada, mais rápida & \textit{lo-fi} calma (idêntica a C1) & \textit{lo-fi} calma, volume reduzido \\
+        Trilha sonora & \textit{lo-fi} calma & animada, mais rápida & \textit{lo-fi} calma (idêntica a C1) & a do aplicativo de meditação \\
         Estrutura rítmica & sim & sim & não & não \\
         Demanda/dificuldade & baixa & alta & nenhuma & nenhuma \\
         Esforço físico & leve & moderado & mínimo & mínimo \\
@@ -208,7 +244,7 @@ O conjunto foi construído para que cada contraste com a condição de interesse
         \addlinespace
         C1 \textit{vs} C2 & pacote de projeto: trilha e dificuldade em conjunto & Projetar a experiência para acalmar importa, ou basta jogar? \\
         \addlinespace
-        C1 \textit{vs} C4 & atividade (meio constante) & O jogo se equipara ou supera a meditação guiada em \gls{rv}? \\
+        C1 \textit{vs} C4 & atividade, entregue por outro \textit{software} & O jogo se equipara ou supera a meditação guiada em \gls{rv}? \\
         \bottomrule
     \end{tabularx}\\[2pt]
     {\footnotesize Fonte: Elaborada pelo autor.}
@@ -224,7 +260,7 @@ Uma quinta condição, de meditação convencional fora da \gls{rv}, foi conside
     \caption{Contraste esquemático das quatro condições experimentais. \todo{inserir a figura descrita abaixo.}}
     \label{fig:modos}
     \fbox{\begin{minipage}[c][5cm][c]{0.85\textwidth}\centering
-        \textit{[Imagem a inserir: figura com quatro painéis: (a) participante com o HMD jogando Cozy Pong relaxante; (b) o mesmo jogo na configuração animada, com mais notas na tela; (c) participante sentado, de fones, apenas ouvindo a trilha; (d) participante com o HMD na cena de meditação guiada.]}
+        \textit{[Imagem a inserir: figura com quatro painéis: (a) participante com o HMD jogando Cozy Pong relaxante; (b) o mesmo jogo na configuração animada, com mais notas na tela; (c) participante sentado, de fones, apenas ouvindo a trilha; (d) participante com o HMD em sessão de meditação guiada.]}
     \end{minipage}}\\[2pt]
     {\footnotesize Fonte: Elaborada pelo autor.}
 \end{figure}
@@ -474,7 +510,7 @@ Cada participante completa uma sessão de orientação e as sessões experimenta
         5 & 5 min & Tarefa padronizada de indução de estresse por aritmética mental. \\
         6 & 2--3 min & \gls{vas} e \gls{sam} pós-estressor (verificação de manipulação). \\
         7 & 2--3 min & Preparação da condição designada e instruções padronizadas. Em C1, C2 e C4, colocação e ajuste do \gls{hmd}; em C3, acomodação sentada e colocação dos fones. \\
-        8 & 15 min & Exposição à condição designada, de duração idêntica nas quatro. Dados fisiológicos registrados continuamente e, em C1 e C2, também a telemetria do jogo. \\
+        8 & 20 min & Exposição à condição designada, de duração idêntica nas quatro. Dados fisiológicos registrados continuamente e, em C1 e C2, também a telemetria do jogo. \\
         9 & 5--8 min & \gls{vas}, \gls{sam}, BRUMS, \gls{tlx}, Borg CR10 e itens de fruição, imediatamente após a exposição. Em C1, C2 e C4, acrescentam-se \gls{ipq} e \gls{ssq}; em C1 e C2, os itens de sincronização percebida. \\
         10 & 10 min & Recuperação sentado com registro fisiológico contínuo. Os $5$ min finais, livres de artefato, servem à análise primária de \gls{vfc} de recuperação. \\
         11 & 2--3 min & \gls{vas} e \gls{sam} finais, verificação de eventos adversos e formulário de conclusão. \\
@@ -489,7 +525,7 @@ O laboratório mantém condições estáveis de temperatura, iluminação, ruíd
 % =====================================================================
 \section{Sincronização e Processamento de Sinais}\label{sec:processamento}
 
-Todos os sistemas são sincronizados por um mecanismo comum de marcação temporal, como o \gls{lsl}, um computador de aquisição compartilhado ou relógios sincronizados com marcadores explícitos de eventos. No mínimo, marcam-se o início e o fim da linha de base, do estressor, dos pontos de questionário, do início e do fim da exposição e da recuperação. Em C1, C2 e C4, o próprio aplicativo Unity emite os marcadores, o que garante precisão idêntica nas três; em C3, os marcadores de início e fim são registrados por procedimento padronizado do pesquisador. A precisão da sincronização é verificada em piloto antes do recrutamento.
+Todos os sistemas são sincronizados por um mecanismo comum de marcação temporal, como o \gls{lsl}, um computador de aquisição compartilhado ou relógios sincronizados com marcadores explícitos de eventos. No mínimo, marcam-se o início e o fim da linha de base, do estressor, dos pontos de questionário, do início e do fim da exposição e da recuperação. Em C1, C2 e C3 o próprio aplicativo desenvolvido neste trabalho emite os marcadores, o que garante precisão idêntica nas três; em C4, conduzida por aplicativo de terceiros, o mesmo aplicativo é executado em paralelo, no computador do pesquisador, apenas como cronômetro e fonte de marcadores, de modo que a precisão da marcação seja igualmente idêntica. A precisão da sincronização é verificada em piloto antes do recrutamento.
 
 O processamento cardíaco segue as recomendações de \citet{Laborde2017}. Parte-se da série de intervalos \gls{rr}, removem-se intervalos fisiologicamente implausíveis, identificam-se e corrigem-se de forma documentada batimentos ausentes, detecções extras e artefatos de movimento, e relata-se a proporção de intervalos corrigidos, com rejeição de janelas que excedam limiar de artefato definido antes da análise. Calculam-se, em janelas padronizadas de cinco minutos de repouso e de recuperação, a \gls{fc} média, a \gls{rmssd}, o $\ln(\mathrm{RMSSD})$ e a \gls{sdnn}.
 
@@ -607,6 +643,8 @@ A limitação mais importante diz respeito ao grau de decomposição que o desen
 Nem C3 nem C4 são controles neutros, e isso é deliberado. C3 emprega a mesma trilha \textit{lo-fi}, cujo efeito relaxante é reconhecido, e C4 é uma técnica de relaxamento consolidada. Ambos funcionam, portanto, como comparadores ativos, o que torna o teste conservador: uma diferença em favor de C1 indica ganho \emph{sobre} atividades que já relaxam, mas a ausência de diferença não permite concluir que a intervenção seja ineficaz, apenas que não supera essas alternativas. C3 está ainda sujeita a sonolência e a tédio ao longo do intervalo, fatores que devem ser registrados e considerados na interpretação.
 
 O esforço físico não é comparável entre as condições, sendo maior em C2 e mínimo em C3 e C4. Como a \gls{fc} e a \gls{eda} respondem fortemente ao exercício, parte das diferenças fisiológicas pode refletir intensidade de atividade, e não regulação emocional. O protocolo mitiga esse risco ao restringir os desfechos primários a janelas de recuperação de baixo movimento e ao incluir o esforço percebido como covariável, mas não o elimina.
+
+A condição C4 é entregue por aplicativo de terceiros (Seção~\ref{subsec:meditacao-vr}), e não pelo mesmo binário que hospeda C1 e C2. Em troca de um comparador legítimo, conduzido por conteúdo profissionalmente produzido, o contraste C1~\textit{vs}~C4 passa a confundir a \emph{atividade} com a \emph{implementação} que a entrega: qualidade gráfica, latência, taxa de quadros, tratamento sonoro e produção de voz diferem entre as duas condições e não podem ser equalizados. A alternativa, produzir a meditação dentro do próprio projeto, eliminaria esse confundimento, mas ao custo de comparar o \textit{Cozy Pong} a um exercício de meditação sem evidência de eficácia, o que enfraqueceria justamente a pergunta que C4 existe para responder. Optou-se pelo comparador forte, e a ressalva permanece registrada. Padroniza-se o que é padronizável: aplicativo, versão, sessão, volume, postura e instrução verbal, mantidos idênticos entre participantes e congelados durante toda a coleta.
 
 Uma terceira limitação é a impossibilidade de mascaramento. Os participantes percebem imediatamente qual condição realizam, o que expõe o estudo a características de demanda e a efeitos de expectativa, atenuados por uma descrição neutra, mas não controlados. Soma-se a exposição repetida ao estressor, cuja resposta tende a atenuar-se ao longo das quatro sessões; o efeito é estimado pelo termo de sessão da Equação~\ref{eq:lmm}, mas não anulado.
 
