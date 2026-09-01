@@ -57,14 +57,12 @@ public class GuidedBall : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Racket") || collision.gameObject.CompareTag("Player"))
         {
+            // Apenas a fisica do retorno. A classificacao e a pontuacao da rebatida
+            // sao responsabilidade exclusiva de BallGameLogic, que recebe a mesma
+            // colisao: registrar aqui tambem contava cada rebatida duas vezes, com
+            // limiares diferentes dos usados la.
             _hasBeenHitByPlayer = true;
             LaunchToPoint(_returnTarget, 0.5f);
-            float timeDifference = Mathf.Abs(_currentFlightTime - _expectedFlightDuration);
-            HitType resultHit;
-            if (timeDifference <= 0.3f) resultHit = HitType.Perfect;
-            else if (timeDifference <= 0.6f) resultHit = HitType.Ok;
-            else resultHit = HitType.Bad;
-            if (GameScoreManager.Instance != null) GameScoreManager.Instance.RegisterHit(resultHit);
         }
     }
 
