@@ -3,15 +3,24 @@ using UnityEngine;
 [RequireComponent(typeof(Light))]
 public class AudioReactLight : MonoBehaviour
 {
-    [Header("Referências")]
+    [Header("Referencias")]
     public AudioSource musicSource;
+
+    [Header("Cor")]
+    [Tooltip("Cicla o matiz continuamente. Desligado no experimento: luz saturada e " +
+             "pulsante contradiz a ambientacao relaxante e e o estimulo associado a " +
+             "crise fotossensivel declarada no TCLE.")]
+    public bool cycleHue = false;
+    [Tooltip("Cor usada quando o ciclo de matiz esta desligado.")]
+    public Color fixedColor = new Color(1f, 0.85f, 0.65f);
+    public float colorChangeSpeed = 0.1f;
+
     [Header("Configuracoes")]
     public float minIntensity = 0.5f;
     public float maxIntensity = 3.0f;
     public float sensitivity = 15f;
     public float smoothSpeed = 12f;
-    [Header("Cores")]
-    public float colorChangeSpeed = 0.1f;
+
     private Light _light;
     private float[] _spectrum = new float[512];
 
@@ -22,7 +31,10 @@ public class AudioReactLight : MonoBehaviour
 
     private void Update()
     {
-        _light.color = Color.HSVToRGB(Mathf.Repeat(Time.time * colorChangeSpeed, 1f), 1f, 1f);
+        _light.color = cycleHue
+            ? Color.HSVToRGB(Mathf.Repeat(Time.time * colorChangeSpeed, 1f), 1f, 1f)
+            : fixedColor;
+
         float targetIntensity = minIntensity;
         if (musicSource != null && musicSource.isPlaying)
         {
