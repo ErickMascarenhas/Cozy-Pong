@@ -190,15 +190,23 @@ public class WristMenuManager : MonoBehaviour
 
     public void ToggleMute()
     {
+        // Suspenso durante o experimento: silenciar a trilha no meio da
+        // exposicao mudaria o estimulo sem deixar registro.
+        if (ExperimentMode.IsActive) return;
+
         if (AudioListener.volume > 0)
         {
+            _volumeBeforeMute = AudioListener.volume;
             AudioListener.volume = 0f;
         }
         else
         {
-            AudioListener.volume = 1f;
+            // Antes isto voltava sempre para 1, descartando o valor escolhido.
+            AudioListener.volume = _volumeBeforeMute > 0f ? _volumeBeforeMute : 1f;
         }
     }
+
+    private float _volumeBeforeMute = 1f;
 
     private IEnumerator RestartRoutine(GameObject obj)
     {

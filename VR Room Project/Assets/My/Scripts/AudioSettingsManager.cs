@@ -13,6 +13,17 @@ public class AudioSettingsManager : MonoBehaviour
 
     private void Start()
     {
+        // Durante o experimento o volume e fixado pela condicao e nao pode ser
+        // alterado: a trilha de C1 e a de C3 precisam chegar ao participante no
+        // mesmo nivel, e o nivel nao pode variar entre participantes.
+        if (ExperimentMode.IsActive)
+        {
+            if (masterSlider != null) masterSlider.interactable = false;
+            if (musicSlider != null) musicSlider.interactable = false;
+            if (sfxSlider != null) sfxSlider.interactable = false;
+            return;
+        }
+
         if (masterSlider != null) masterSlider.value = PlayerPrefs.GetFloat("MasterVol", 0.75f);
         if (musicSlider != null) musicSlider.value = PlayerPrefs.GetFloat("MusicVol", 0.75f);
         if (sfxSlider != null) sfxSlider.value = PlayerPrefs.GetFloat("SFXVol", 0.75f);
