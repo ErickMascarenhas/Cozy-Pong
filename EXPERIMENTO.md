@@ -111,9 +111,50 @@ valor fica registrado nos metadados de cada sessão.
 
 ---
 
-## 4. Como conduzir uma sessão
+## 4. Os dois modos de execução
 
-### 4.1 Armar
+Há duas formas de rodar uma condição, e elas servem a propósitos diferentes.
+
+| | Sessão armada | Playlist pelo lobby |
+|---|---|---|
+| Como começa | arquivo de sessão (Seção 5) | botão no painel do lobby |
+| Duração | cronômetro de 20 min | acaba quando a playlist acaba |
+| Entre faixas | encadeia sozinho, sem parar | tela de conclusão, o jogador avança |
+| Registro em disco | três CSVs | nenhum |
+| Placar e recordes | conforme a condição, sem gravar | conforme a condição, sem gravar |
+| Para que serve | **coletar dados** | jogar, testar, conferir |
+
+**A coleta usa a sessão armada.** A exposição precisa ser contínua e ter duração
+idêntica nas quatro condições; uma tela de conclusão entre as faixas quebra as
+duas coisas. Use a playlist do lobby para jogar e verificar as condições, não
+para coletar.
+
+### 4.1 A lista de condições no lobby
+
+O painel que listava as 53 músicas agora lista as condições. Apertar uma leva
+direto à primeira faixa da playlist — sempre a primeira, independentemente de
+onde você parou antes.
+
+Ao terminar cada faixa aparece a tela de conclusão de sempre, com as
+estatísticas da partida. O botão que antes repetia a música agora leva à
+**próxima faixa da playlist**, e mostra qual é. Na última faixa ele vira
+*Finish playlist*. **Return to Lobby** continua ali e encerra a playlist a
+qualquer momento.
+
+C3 não tem tela de conclusão entre as faixas: sem jogo não há resultado a
+mostrar, então ela encadeia sozinha. C4 aparece na lista, mas desabilitada — a
+meditação é conduzida por aplicativo externo.
+
+Nada disso exigiu alteração na cena. Os objetos de estado, os carregadores de
+transição e os botões existentes são localizados em tempo de execução, e as
+entradas da lista são clonadas de uma entrada de música, o que preserva o
+leiaute original.
+
+---
+
+## 5. Como conduzir uma sessão armada
+
+### 5.1 Armar
 
 No editor: menu **Cozy Pong → Sessão experimental**. Preencha o código do
 participante, o número da sessão e a condição, e clique em **Armar sessão**.
@@ -121,12 +162,12 @@ participante, o número da sessão e a condição, e clique em **Armar sessão**
 A janela mostra o resumo da condição e a playlist com os tempos acumulados, para
 você conferir antes de começar.
 
-Enquanto não houver sessão armada, o jogo roda exatamente como a versão pública:
-lobby, escolha de música, recordes, controles de volume. Nada disso muda.
+Enquanto não houver sessão armada, o jogo abre no lobby com a lista de condições
+(Seção 4.1), e os controles de preferências e volume continuam disponíveis.
 
-Para voltar ao jogo normal: **Desarmar**.
+Para voltar ao lobby: **Desarmar**.
 
-### 4.2 No Quest
+### 5.2 No Quest
 
 O arquivo de sessão também pode ser enviado por adb:
 
@@ -153,7 +194,7 @@ Ou por linha de comando, em builds de computador:
 CozyPong.exe -participant P07 -session 3 -condition C1
 ```
 
-### 4.3 Durante
+### 5.3 Durante
 
 O painel do pesquisador aparece na tela do operador — nunca dentro do HMD.
 Mostra tempo decorrido e restante, faixa atual, se o registro está aberto,
@@ -165,7 +206,7 @@ quantas notas já foram gravadas e qualquer erro de gravação.
 Em C3 e C4 o painel escurece o resto da tela, para o monitor não virar um
 estímulo visual não previsto.
 
-### 4.4 Depois
+### 5.4 Depois
 
 Os arquivos ficam em `Application.persistentDataPath/ExperimentData/`.
 
@@ -177,7 +218,7 @@ adb pull /sdcard/Android/data/<pacote>/files/ExperimentData ./dados
 
 ---
 
-## 5. O que sai de cada sessão
+## 6. O que sai de cada sessão
 
 Três arquivos, nomeados `P07_S03_C1_2026-09-14T15-22-10.*`.
 
@@ -206,12 +247,12 @@ colunas de tempo vazias — vazio significa "não se aplica", nunca zero.
 
 ---
 
-## 6. O que o modo experimento muda no jogo
+## 7. O que o modo experimento muda no jogo
 
 | | Jogo normal | Sessão experimental |
 |---|---|---|
 | Duração | acaba com a música | cronômetro de 20 min |
-| Escolha de música | livre, 53 faixas | playlist fixa da condição |
+| Escolha no lobby | livre, 53 faixas | lobby suspenso |
 | Aleatoriedade | não semeada | semeada pela condição |
 | Volume | dois sistemas, persistente | travado pelo mixer |
 | Recordes | salvos e exibidos | não lidos nem gravados |
@@ -222,7 +263,7 @@ colunas de tempo vazias — vazio significa "não se aplica", nunca zero.
 
 ---
 
-## 7. Antes de valer
+## 8. Antes de valer
 
 - [ ] Definir e travar o aplicativo de meditação
 - [ ] Rodar o piloto e conferir P1 a P5 do `PILOTO_ROTEIRO.md`
