@@ -288,14 +288,32 @@ public class ExperimentSessionManager : MonoBehaviour
             int count = _config.playlist.Count;
             if (count == 0) break;
 
-            if (index > 0 && index % count == 0)
+            int position;
+            if (index < count)
             {
+                position = index;
+            }
+            else if (_config.repeatLastTrackWhenShort)
+            {
+                // Mantem a exposicao no ponto mais intenso do arco em vez de
+                // voltar ao andamento inicial.
+                position = count - 1;
                 _playlistLoops++;
-                Marker("PLAYLIST_LOOP", "volta " + _playlistLoops +
-                       " - a playlist acabou antes do cronometro");
+                Marker("TRACK_REPEAT_LAST", "repeticao " + _playlistLoops + " de " +
+                       _config.playlist[position].songObjectName);
+            }
+            else
+            {
+                position = index % count;
+                if (position == 0)
+                {
+                    _playlistLoops++;
+                    Marker("PLAYLIST_LOOP", "volta " + _playlistLoops +
+                           " - a playlist acabou antes do cronometro");
+                }
             }
 
-            yield return PlayTrack(_config.playlist[index % count]);
+            yield return PlayTrack(_config.playlist[position]);
             index++;
         }
         if (_stopRequested && _endReason == "duracao_completa") _endReason = "interrompida";

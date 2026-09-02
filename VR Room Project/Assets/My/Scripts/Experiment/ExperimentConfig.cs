@@ -13,15 +13,10 @@ public class ExperimentTrack
     /// <summary>
     /// Uma bola e servida a cada beatSkipFactor notas do arquivo de beatmap.
     ///
-    /// ATENCAO: a subdivisao dos mapas NAO e uniforme no projeto. A maioria foi
-    /// escrita com uma nota por batida, mas "Helen 2", "METEORITES",
-    /// "Herbal Tea" e "DAYDREAM" tem uma nota a cada DUAS batidas. Por isso o
-    /// fator e definido por faixa, e nao globalmente: e ele que traz cada
-    /// faixa para a banda de densidade pretendida pela condicao.
-    ///
-    /// Ao completar um mapa, preserve o espacamento que ele ja usa. Reescrever
-    /// um mapa de meia subdivisao como uma nota por batida dobra a densidade
-    /// daquela faixa e quebra a parametrizacao da condicao.
+    /// Os dez mapas usados no experimento foram regerados com uma nota por
+    /// batida, entao aqui a densidade e simplesmente BPM / beatSkipFactor
+    /// bolas por minuto. As demais faixas do projeto mantem subdivisoes
+    /// variadas e nao entram em nenhuma playlist experimental.
     /// </summary>
     public int beatSkipFactor;
 
@@ -107,6 +102,18 @@ public class ExperimentConfig
     /// <summary>Em C2, ao esgotar as caixas de erro a faixa reinicia e o cronometro continua.</summary>
     public bool restartTrackOnFailure;
 
+    /// <summary>
+    /// Se a playlist acabar antes do cronometro, repete a ULTIMA faixa em vez de
+    /// voltar ao inicio da lista.
+    ///
+    /// Usado em C2. A biblioteca nao tem cinco faixas rapidas longas o bastante
+    /// para cobrir vinte minutos, entao faltam cerca de dois minutos. Repetir a
+    /// ultima mantem a exposicao no ponto mais intenso do arco crescente;
+    /// voltar a primeira derrubaria o andamento de 133 para 110 BPM justamente
+    /// no fecho da condicao concebida para energizar.
+    /// </summary>
+    public bool repeatLastTrackWhenShort;
+
     // ---------- fisica e julgamento ----------
     /// <summary>Tempo ate a bola ser destruida e contada como Miss, em segundos.</summary>
     public float ballLifeTime = 1.72f;
@@ -161,11 +168,12 @@ public class ExperimentConfig
 /// As configuracoes das condicoes experimentais.
 ///
 /// PLAYLISTS
-/// A densidade de bolas de uma faixa e 60 / (espacamento das notas no arquivo x
-/// beatSkipFactor). O espacamento varia entre os mapas do projeto, entao o
-/// fator de cada faixa foi escolhido para trazer todas as faixas de uma
-/// condicao para a mesma banda de densidade: 17,7 a 20,0 bolas por minuto em
-/// C1 e 27,5 a 33,2 em C2.
+/// Cinco faixas por condicao. Os dez mapas correspondentes foram regerados
+/// sobre a grade metrica estimada do proprio audio, com uma nota por batida,
+/// de modo que a densidade e BPM / 4 bolas por minuto: 18,8 a 23,0 em C1 e
+/// 27,5 a 33,3 em C2. As faixas foram escolhidas por duracao e por apoio
+/// ritmico medido, isto e, pela fracao de batidas em que o audio de fato
+/// apresenta um ataque detectavel.
 ///
 /// A ordem das faixas segue o principio iso da musicoterapia: a intervencao
 /// parte de um andamento proximo ao estado provavel do participante logo apos
@@ -182,36 +190,32 @@ public static class ExperimentConfigs
 
     private static List<ExperimentTrack> CalmPlaylist()
     {
-        // Densidade de 17,7 a 20,0 bolas por minuto (intervalo de 3,0 a 3,4 s).
-        // Sete faixas obrigatorias somam 1227,8 s; o corte de 20 min cai dentro
-        // de "Eastridge Turnstile". "Windy" e reserva.
+        // Cinco faixas, andamento decrescente de 92 para 75 BPM, densidade de
+        // 23,0 a 18,8 bolas por minuto. Somam 1259,3 s de audio, entao o corte
+        // dos 20 min cai dentro de "Day In Paris", com 59 s de folga.
         return new List<ExperimentTrack>
         {
-            new ExperimentTrack("CELESTIAL GOLD",      4,  80, 203.7f),
-            new ExperimentTrack("REMEMBER",            4,  77, 154.8f),
-            new ExperimentTrack("Miss You",            4,  75, 179.3f),
-            new ExperimentTrack("Day In Paris",        4,  75, 240.2f),
-            new ExperimentTrack("Distant",             4,  75, 147.3f),
-            new ExperimentTrack("Faithful Mission",    4,  74, 152.8f),
-            new ExperimentTrack("Eastridge Turnstile", 4,  74, 149.7f),
-            new ExperimentTrack("Windy",               4,  71, 155.6f, true)
+            new ExperimentTrack("Colorful Flowers",  4, 92, 243.9f),
+            new ExperimentTrack("Slowly",            4, 89, 249.9f),
+            new ExperimentTrack("Your Little Wings", 4, 89, 247.2f),
+            new ExperimentTrack("Way Home",          4, 85, 278.2f),
+            new ExperimentTrack("Day In Paris",      4, 75, 240.1f)
         };
     }
 
     private static List<ExperimentTrack> LivelyPlaylist()
     {
-        // Densidade de 27,5 a 33,2 bolas por minuto (intervalo de 1,8 a 2,2 s),
-        // cerca de 1,7 vez a de C1. Seis faixas obrigatorias somam 1252,5 s;
-        // o corte de 20 min cai dentro de "Herbal Tea". "DAYDREAM" e reserva.
+        // Cinco faixas, andamento crescente de 110 para 133 BPM, densidade de
+        // 27,5 a 33,3 bolas por minuto, cerca de 1,5 vez a de C1. Somam
+        // 1067,9 s, entao faltam 132 s para os 20 min: a ultima faixa e
+        // repetida (ver repeatLastTrackWhenShort).
         return new List<ExperimentTrack>
         {
-            new ExperimentTrack("Leaving",      4, 110, 268.5f),
-            new ExperimentTrack("Warm Horizon", 4, 110, 175.5f),
-            new ExperimentTrack("STRANDED",     4, 114, 216.2f),
-            new ExperimentTrack("Helen 2",      2, 120, 224.1f),
-            new ExperimentTrack("METEORITES",   2, 126, 183.5f),
-            new ExperimentTrack("Herbal Tea",   2, 130, 184.8f),
-            new ExperimentTrack("DAYDREAM",     2, 133, 174.7f, true)
+            new ExperimentTrack("Leaving",    4, 110, 268.4f),
+            new ExperimentTrack("STRANDED",   4, 114, 216.1f),
+            new ExperimentTrack("Helen 2",    4, 120, 224.0f),
+            new ExperimentTrack("Herbal Tea", 4, 130, 184.8f),
+            new ExperimentTrack("DAYDREAM",   4, 133, 174.6f)
         };
     }
 
@@ -261,6 +265,7 @@ public static class ExperimentConfigs
                     immortal = false,
                     useErrorBoxes = true,
                     restartTrackOnFailure = true,
+                    repeatLastTrackWhenShort = true,
                     ballLifeTime = 1.40f,
                     arcHeight = 0.15f,
                     velocityHomeRunThreshold = 3.5f,
