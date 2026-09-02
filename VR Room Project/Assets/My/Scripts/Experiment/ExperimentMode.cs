@@ -63,7 +63,19 @@ public class ExperimentSessionRequest
 /// </summary>
 public static class ExperimentMode
 {
+    /// <summary>Sessao armada: cronometro, registro em disco e lobby suspenso.</summary>
     public static bool IsActive { get; private set; }
+
+    /// <summary>
+    /// Playlist iniciada pelo lobby, sem cronometro e sem registro. Serve para
+    /// jogar ou conferir uma condicao inteira com os mesmos parametros da
+    /// sessao experimental, faixa a faixa, passando pela tela de conclusao.
+    /// </summary>
+    public static bool IsPractice { get; private set; }
+
+    /// <summary>Verdadeiro nos dois modos: ha uma condicao cujos parametros valem.</summary>
+    public static bool UsesConditionConfig { get { return IsActive || IsPractice; } }
+
     public static ExperimentSessionRequest Request { get; private set; }
     public static ExperimentConfig Config { get; private set; }
     public static ExperimentCondition Condition { get; private set; }
@@ -100,9 +112,40 @@ public static class ExperimentMode
     public static void Deactivate()
     {
         IsActive = false;
+        IsPractice = false;
         Request = null;
         Config = null;
         Condition = ExperimentCondition.None;
+    }
+
+    /// <summary>
+    /// Aplica os parametros de uma condicao sem armar a sessao. Ignorado se uma
+    /// sessao experimental estiver em andamento.
+    /// </summary>
+    public static void BeginPractice(ExperimentCondition condition)
+    {
+        if (IsActive) return;
+
+        ExperimentConfig config = ExperimentConfigs.Get(condition);
+        if (config == null || condition == ExperimentCondition.None) return;
+
+        Config = config;
+        Condition = condition;
+        Seed = ExperimentConfigs.DefaultSeed;
+        IsPractice = true;
+
+        // Mesma semente da sessao: a sequencia espacial da playlist e a mesma
+        // que os participantes vao receber.
+        ExperimentRandom.Reseed(Seed);
+    }
+
+    public static void EndPractice()
+    {
+        if (IsActive) return;
+        IsPractice = false;
+        Config = null;
+        Condition = ExperimentCondition.None;
+        ExperimentRandom.Clear();
     }
 
     /// <summary>Codigo curto da condicao corrente, para nomes de arquivo e logs.</summary>

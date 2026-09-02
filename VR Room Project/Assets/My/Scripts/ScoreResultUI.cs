@@ -93,7 +93,7 @@ public class ScoreResultUI : MonoBehaviour
         // Recorde e um estado que sobrevive entre participantes. Ver o recorde
         // de quem jogou antes e pressao de desempenho, e o experimento mede
         // justamente isso: no modo experimento nada e lido nem gravado.
-        if (ExperimentMode.IsActive) return;
+        if (ExperimentMode.UsesConditionConfig) return;
 
         GameScoreManager mgr = GameScoreManager.Instance;
         if (mgr != null && !string.IsNullOrEmpty(mgr.currentSongID))

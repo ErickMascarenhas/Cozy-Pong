@@ -109,7 +109,7 @@ public class GameScoreManager : MonoBehaviour
     /// </summary>
     private void ApplyExperimentConfig()
     {
-        if (!ExperimentMode.IsActive || ExperimentMode.Config == null) return;
+        if (!ExperimentMode.UsesConditionConfig || ExperimentMode.Config == null) return;
         ExperimentConfig config = ExperimentMode.Config;
         isImmortal = config.immortal;
         usingErrorBoxes = config.useErrorBoxes;
@@ -124,7 +124,7 @@ public class GameScoreManager : MonoBehaviour
     /// </summary>
     private void ApplyScoreUiVisibility()
     {
-        if (!ExperimentMode.IsActive || ExperimentMode.Config == null) return;
+        if (!ExperimentMode.UsesConditionConfig || ExperimentMode.Config == null) return;
         bool show = ExperimentMode.Config.showScoreUi;
         if (scoreText) scoreText.gameObject.SetActive(show);
         if (comboText) comboText.gameObject.SetActive(show);

@@ -31,7 +31,7 @@ public class BallGameLogic : MonoBehaviour
         // No experimento os limiares vem da condicao, e nao do prefab: e o que
         // permite afirmar no Capitulo 3 que a configuracao animada julga com
         // mais rigor que a relaxante.
-        if (ExperimentMode.IsActive && ExperimentMode.Config != null)
+        if (ExperimentMode.UsesConditionConfig && ExperimentMode.Config != null)
         {
             ExperimentConfig config = ExperimentMode.Config;
             velocityHomeRunThreshold = config.velocityHomeRunThreshold;

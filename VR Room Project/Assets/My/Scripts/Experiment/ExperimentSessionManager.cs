@@ -247,7 +247,26 @@ public class ExperimentSessionManager : MonoBehaviour
         if (_inGameObject != null) _inGameObject.SetActive(needsInGame);
         if (_lobbyObject != null) _lobbyObject.SetActive(!needsInGame);
 
+        // A familiarizacao acontece no ambiente do lobby, e ali existe uma lista
+        // de musicas clicavel. Com os controles em maos, o participante poderia
+        // iniciar uma faixa e quebrar a sessao, entao a lista sai de cena.
+        if (!needsInGame) HideSongMenu();
+
         DeactivateAllSongs();
+    }
+
+    private void HideSongMenu()
+    {
+        SongSelectionMenuUI[] entries = Resources.FindObjectsOfTypeAll<SongSelectionMenuUI>();
+        for (int i = 0; i < entries.Length; i++)
+        {
+            if (!entries[i].gameObject.scene.IsValid()) continue;
+            Canvas canvas = entries[i].GetComponentInParent<Canvas>();
+            if (canvas == null) continue;
+            canvas.gameObject.SetActive(false);
+            Marker("SONG_MENU_HIDDEN", canvas.name);
+            return;
+        }
     }
 
     private void DeactivateAllSongs()

@@ -33,22 +33,28 @@ public static class ExperimentBootstrap
         ExperimentSessionRequest request = ReadFromCommandLine();
         if (request == null) request = ReadFromFile(DefaultSessionFilePath);
 
-        if (request == null)
+        if (request != null) ExperimentMode.Activate(request);
+
+        if (ExperimentMode.IsActive)
         {
-            ExperimentMode.Deactivate();
-            ExperimentRandom.Clear();
+            GameObject host = new GameObject("[Experiment]");
+            UnityEngine.Object.DontDestroyOnLoad(host);
+            host.AddComponent<SessionLogger>();
+            host.AddComponent<FrameRateMonitor>();
+            host.AddComponent<ExperimentSessionManager>();
+            host.AddComponent<ResearcherOverlay>();
             return;
         }
 
-        ExperimentMode.Activate(request);
-        if (!ExperimentMode.IsActive) return;
+        // Sem sessao armada o jogo roda normalmente, mas o lobby passa a listar
+        // as condicoes em vez das 53 musicas, e a playlist escolhida e encadeada
+        // pela tela de conclusao.
+        ExperimentMode.Deactivate();
+        ExperimentRandom.Clear();
 
-        GameObject host = new GameObject("[Experiment]");
-        UnityEngine.Object.DontDestroyOnLoad(host);
-        host.AddComponent<SessionLogger>();
-        host.AddComponent<FrameRateMonitor>();
-        host.AddComponent<ExperimentSessionManager>();
-        host.AddComponent<ResearcherOverlay>();
+        GameObject playlistHost = new GameObject("[Playlist]");
+        UnityEngine.Object.DontDestroyOnLoad(playlistHost);
+        playlistHost.AddComponent<PlaylistNavigator>();
     }
 
     // ------------------------------------------------------------------

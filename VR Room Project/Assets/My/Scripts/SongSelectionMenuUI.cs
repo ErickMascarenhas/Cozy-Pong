@@ -21,7 +21,7 @@ public class SongSelectionMenuUI : MonoBehaviour
     public void LoadSongStats()
     {
         // Ver ScoreResultUI: nenhum recorde e exibido durante o experimento.
-        if (ExperimentMode.IsActive)
+        if (ExperimentMode.UsesConditionConfig)
         {
             if (maxScoreText) maxScoreText.text = "";
             if (maxGradeText) maxGradeText.text = "";
