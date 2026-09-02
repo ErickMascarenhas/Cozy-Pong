@@ -95,7 +95,13 @@ Cabe explicitar por que a grandeza julgada pelo jogo e a grandeza reportada no t
 
 O elemento que conecta o jogo à música é o mapa rítmico (\textit{beatmap}), que associa cada evento de jogo a um instante da canção. Cada nota é representada por um par ordenado de tempo, em milissegundos a partir do início da faixa, e um tipo inteiro que codifica a variante do evento, por exemplo a raia ou o comportamento da bola. Os mapas são persistidos em arquivos de texto simples, uma linha por nota no formato \texttt{tempo\_ms, tipo}, o que facilita a inspeção e a edição.
 
-A produção dos mapas é feita por um editor próprio, integrado ao projeto, que reproduz a música e permite marcar notas em tempo real por meio do teclado, atribuindo-lhes o tipo selecionado, além de salvar e recarregar mapas. Essa ferramenta viabiliza o mapeamento manual das faixas \textit{lo-fi} e, no contexto experimental, a construção controlada dos mapas empregados na sessão de jogo.
+A produção dos mapas é feita por um editor próprio, integrado ao projeto, que reproduz a música e permite marcar notas em tempo real por meio do teclado, atribuindo-lhes o tipo selecionado, além de salvar e recarregar mapas. Essa ferramenta viabiliza o mapeamento manual das faixas \textit{lo-fi} da versão pública do jogo.
+
+Para as dez faixas empregadas no experimento, contudo, o mapeamento manual foi substituído por um procedimento assistido por análise de áudio, por três motivos. O mapeamento à mão introduz um desvio próprio de cada faixa, que varia com a atenção de quem mapeia; ele tende a cobrir apenas parte da canção, deixando trechos sem eventos; e adota subdivisões métricas distintas de faixa para faixa, o que impede parametrizar a densidade de forma uniforme.
+
+O procedimento adotado estima, para cada faixa, a grade métrica do próprio áudio. Calcula-se a envoltória de intensidade de ataques (\textit{onset strength}) e busca-se, em torno do andamento nominal, o período que maximiza a magnitude do coeficiente de Fourier correspondente; a fase da grade é obtida do argumento desse mesmo coeficiente. O procedimento foi validado contra os mapas manuais já existentes: em $17$ das $24$ faixas examinadas, o desvio entre as notas manuais e a grade estimada apresentou dispersão inferior a $10$~ms, e a mediana desses desvios ficou em $+2{,}1$~ms, o que indica ausência de viés sistemático no método. Os desvios individuais dos mapas manuais, por sua vez, variaram de $-15$ a $+60$~ms entre faixas, confirmando a irregularidade que o procedimento elimina.
+
+Determina-se ainda, batida a batida, se o áudio apresenta um ataque detectável, e delimita-se a região em que o pulso está efetivamente presente, de modo que não sejam lançadas bolas sobre introduções e desfechos sem percussão audível. Nas dez faixas selecionadas, essa região cobre em média $91\%$ da duração da canção, e a fração de notas apoiadas por um ataque detectável varia de $85\%$ a $99{,}7\%$. Os mapas resultantes são gravados no mesmo formato de texto do editor, com uma nota por batida.
 
 % PLACEHOLDER IMAGEM: editor de beatmaps.
 \begin{figure}[H]
@@ -146,9 +152,11 @@ O \textit{Cozy Pong} é empregado no experimento em duas configurações, que co
 
 Cabe explicitar o que esse contraste isola. As duas configurações não diferem em um único parâmetro, mas em um \emph{conjunto coerente} de escolhas de projeto: a trilha e a dificuldade variam em conjunto, como variariam em qualquer jogo real, no qual a música acompanha a intensidade pretendida da experiência. O contraste, portanto, não separa o efeito do andamento musical do efeito da dificuldade; ele opõe dois \emph{pacotes de projeto} completos, um concebido para acalmar e outro para energizar. Essa é a pergunta de projeto efetivamente relevante para quem desenvolve jogos de bem-estar, e é assim que a hipótese H2 deve ser lida. A decomposição dos dois fatores exigiria condições adicionais, com trilha animada e dificuldade baixa e vice-versa, indicadas como extensão futura.
 
-A Tabela~\ref{tab:parametros} consolida a parametrização numérica das duas configurações. A densidade de bolas de uma faixa resulta de dois fatores, o espaçamento das notas em seu mapa rítmico e o número de notas puladas entre dois lançamentos. Como o espaçamento não é uniforme entre os mapas produzidos, a maioria adotando uma nota por batida e alguns uma nota a cada duas batidas, o fator de subdivisão é definido faixa a faixa, e não globalmente, de modo a trazer todas as faixas de uma mesma configuração para a mesma banda de densidade. As duas bandas resultantes não se sobrepõem.
+Cada configuração emprega uma \textbf{playlist fixa de cinco faixas}, idêntica para todos os participantes na ordem, no conteúdo e no volume. Os dez mapas rítmicos correspondentes foram produzidos especificamente para o experimento, com \emph{uma nota por batida}, de modo que a densidade de bolas de uma faixa é simplesmente o seu andamento dividido pelo fator de subdivisão adotado, aqui fixado em quatro para todas as faixas. A Tabela~\ref{tab:parametros} consolida a parametrização resultante; as duas bandas de densidade não se sobrepõem.
 
-A ordem das faixas dentro de cada configuração segue o princípio \textit{iso} da musicoterapia, segundo o qual a intervenção parte de um andamento próximo ao estado provável do ouvinte e o conduz gradualmente na direção pretendida. A configuração relaxante decresce de $80$ para $71$~BPM ao longo da exposição; a animada cresce de $110$ para $133$~BPM.
+A ordem das faixas dentro de cada configuração segue o princípio \textit{iso} da musicoterapia, segundo o qual a intervenção parte de um andamento próximo ao estado provável do ouvinte e o conduz gradualmente na direção pretendida. A configuração relaxante decresce de $92$ para $75$~BPM ao longo da exposição; a animada cresce de $110$ para $133$~BPM.
+
+A playlist relaxante soma $1259$~s de áudio e cobre os $20$ minutos com folga, encerrando dentro da quinta faixa. A animada soma $1068$~s: a biblioteca disponível não possui cinco faixas rápidas longas o bastante para cobrir a exposição inteira, e faltam cerca de $132$~s. Nesse caso a última faixa é repetida, e não a primeira, para que o fecho da condição permaneça no ponto mais intenso do arco crescente em vez de retornar ao andamento inicial. A repetição é idêntica para todos os participantes e registrada na telemetria.
 
 \begin{table}[H]
     \centering
@@ -159,10 +167,11 @@ A ordem das faixas dentro de cada configuração segue o princípio \textit{iso}
         \toprule
         \textbf{Parâmetro} & \textbf{Relaxante (C1)} & \textbf{Animada (C2)} \\
         \midrule
-        Andamento das faixas & 71 a 80 BPM & 110 a 133 BPM \\
+        Faixas na playlist & 5 & 5 \\
+        Andamento das faixas & 92 a 75 BPM & 110 a 133 BPM \\
         Ordem das faixas & decrescente & crescente \\
-        Densidade de bolas & 17,7 a 20,0 por min & 27,5 a 33,2 por min \\
-        Intervalo entre bolas & 3,00 a 3,38 s & 1,81 a 2,18 s \\
+        Densidade de bolas & 23,0 a 18,8 por min & 27,5 a 33,3 por min \\
+        Intervalo entre bolas & 2,61 a 3,20 s & 2,18 a 1,80 s \\
         Altura extra do arco & 0,25 m & 0,15 m \\
         Janela de vida da bola & 1,72 s & 1,40 s \\
         Limiar de sincronia \textit{Perfect} & 0,25 s & 0,15 s \\

@@ -29,15 +29,15 @@ C4 permite uso em pesquisa acadêmica e anexar essa confirmação ao processo.
 
 ## 2. O jogo
 
-Implementado. O que resta está detalhado em [`EXPERIMENTO.md`](EXPERIMENTO.md):
+Implementado, e os dez beatmaps das playlists já estão prontos. O que resta está
+detalhado em [`EXPERIMENTO.md`](EXPERIMENTO.md):
 
-- **Completar 13 beatmaps** (~117 s em C1, ~127 s em C2). Preservando o
-  espaçamento que cada mapa já usa — quatro faixas de C2 têm uma nota a cada
-  duas batidas, e reescrevê-las a uma nota por batida dobraria a densidade.
 - **Escolher e travar o aplicativo de meditação** de C4: versão, sessão, volume,
   modo avião durante toda a coleta.
 - **Calibrar o volume de hardware** no piloto e anotá-lo.
 - **Definir `Application.version`** no ProjectSettings (hoje `0.1`).
+- **Jogar as duas playlists de ponta a ponta** antes do piloto, para conferir que
+  a densidade de C2 (até 33,3 bolas por minuto) é exigente sem ser frustrante.
 
 ---
 

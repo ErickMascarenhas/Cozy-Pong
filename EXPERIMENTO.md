@@ -5,66 +5,86 @@ ainda falta você fazer.
 
 ---
 
-## 1. O que falta você fazer
+## 1. As playlists
 
-Três itens. Nenhum deles é código.
+Cinco faixas por condição, ordem fixa, idêntica para todos os participantes.
+Os dez mapas rítmicos já estão prontos (Seção 2).
 
-### 1.1 Completar 13 beatmaps
+**C1 (relaxante) — a mesma playlist é usada em C3**
 
-Todos os mapas rítmicos do projeto terminam antes da música. Isso não importava
-quando a sessão acabava junto com a faixa, mas agora a exposição dura 20 minutos
-encadeando faixas inteiras: onde o mapa acaba, as bolas param e o participante
-fica ouvindo música sem jogar.
+Andamento decrescente, princípio *iso*: começa perto do estado provável depois
+do estressor e desacelera.
 
-Só estas faixas precisam de mapa completo. As demais 40 podem ficar como estão.
-
-**Condição C1 (relaxante) — também usada em C3**
-
-| # | Faixa | BPM | Skip | Música | Mapa | Falta |
+| # | Faixa | BPM | Áudio | Jogável | Bolas/min | Acum. |
 |---|---|---|---|---|---|---|
-| 1 | CELESTIAL GOLD | 80 | 4 | 203,7 s | 174,1 s | **29,7 s** |
-| 2 | REMEMBER | 77 | 4 | 154,8 s | 146,9 s | **7,9 s** |
-| 3 | Miss You | 75 | 4 | 179,3 s | 153,3 s | **26,0 s** |
-| 4 | Day In Paris | 75 | 4 | 240,2 s | 205,7 s | **34,5 s** |
-| 5 | Distant | 75 | 4 | 147,3 s | 144,5 s | **2,8 s** |
-| 6 | Faithful Mission | 74 | 4 | 152,8 s | 145,2 s | **7,6 s** |
-| 7 | Eastridge Turnstile | 74 | 4 | 149,7 s | 141,0 s | **8,7 s** |
-| 8 | Windy *(reserva)* | 71 | 4 | 155,6 s | 133,2 s | 22,5 s |
+| 1 | Colorful Flowers | 92 | 243,9 s | 10,8–220,8 | 23,0 | 243,9 |
+| 2 | Slowly | 89 | 249,9 s | 2,0–230,3 | 22,3 | 493,8 |
+| 3 | Your Little Wings | 89 | 247,2 s | 2,0–235,5 | 22,2 | 741,0 |
+| 4 | Way Home | 85 | 278,2 s | 20,5–252,7 | 21,3 | 1019,2 |
+| 5 | Day In Paris | 75 | 240,1 s | 2,0–232,8 | 18,8 | 1259,3 |
 
-As sete primeiras somam 1227,8 s, então o corte dos 20 min cai dentro de
-*Eastridge Turnstile*. **Windy é reserva**: só entra se você encurtar ou trocar
-alguma das anteriores. Deixe por último.
+Total 1259,3 s. O corte dos 20 min cai dentro de *Day In Paris*, com **59 s de
+folga**.
 
-Total de mapa a acrescentar nas obrigatórias: **117 s**.
+**C2 (animada)**
 
-**Condição C2 (animada)**
+Andamento crescente.
 
-| # | Faixa | BPM | Skip | Música | Mapa | Falta |
+| # | Faixa | BPM | Áudio | Jogável | Bolas/min | Acum. |
 |---|---|---|---|---|---|---|
-| 1 | Leaving | 110 | 4 | 268,5 s | 228,1 s | **40,4 s** |
-| 2 | Warm Horizon | 110 | 4 | 175,5 s | 169,7 s | **5,8 s** |
-| 3 | STRANDED | 114 | 4 | 216,2 s | 184,5 s | **31,6 s** |
-| 4 | Helen 2 | 120 | **2** | 224,1 s | 210,4 s | **13,7 s** |
-| 5 | METEORITES | 126 | **2** | 183,5 s | 151,7 s | **31,7 s** |
-| 6 | Herbal Tea | 130 | **2** | 184,8 s | 181,1 s | **3,7 s** |
-| 7 | DAYDREAM *(reserva)* | 133 | **2** | 174,7 s | 156,2 s | 18,5 s |
+| 1 | Leaving | 110 | 268,4 s | 2,8–230,2 | 27,5 | 268,4 |
+| 2 | STRANDED | 114 | 216,1 s | 2,0–206,1 | 28,5 | 484,5 |
+| 3 | Helen 2 | 120 | 224,0 s | 11,6–209,5 | 30,0 | 708,5 |
+| 4 | Herbal Tea | 130 | 184,8 s | 2,0–182,3 | 32,5 | 893,3 |
+| 5 | DAYDREAM | 133 | 174,6 s | 2,0–170,6 | 33,3 | 1067,9 |
 
-As seis primeiras somam 1252,5 s; o corte cai dentro de *Herbal Tea*.
-Total a acrescentar: **127 s**.
+Total 1067,9 s: **faltam 132 s** para os 20 minutos.
 
-> ### ⚠ Preserve o espaçamento que cada mapa já usa
->
-> A subdivisão **não é uniforme** no projeto. Onze das quinze faixas acima têm
-> uma nota por batida; **Helen 2, METEORITES, Herbal Tea e DAYDREAM têm uma nota
-> a cada duas batidas**, e é por isso que elas usam `skip 2` enquanto as outras
-> usam `skip 4`.
->
-> Se você completar uma dessas quatro escrevendo uma nota por batida, a
-> densidade daquela faixa **dobra** e a configuração animada vira algo
-> impraticável, com bolas se sobrepondo no ar. Continue no mesmo espaçamento em
-> que o mapa já está.
+A biblioteca não tem cinco faixas rápidas longas o bastante. A solução foi
+repetir a **última** faixa, e não a primeira: assim o fecho da condição fica no
+ponto mais intenso do arco, em vez de cair de 133 para 110 BPM justamente no
+final da condição feita para energizar. A repetição é idêntica para todos e vai
+para o log como `TRACK_REPEAT_LAST`.
 
-### 1.2 Escolher o aplicativo de meditação (C4)
+---
+
+## 2. Os beatmaps
+
+Os dez mapas foram gerados por análise do áudio, não à mão. Estão gravados em
+`Assets/Songs/Txts/Use this/`, no mesmo formato do editor, e o cabeçalho de cada
+arquivo registra o BPM ajustado, a fase e a região com pulso.
+
+**Como foram feitos.** Para cada faixa, a envoltória de ataques do áudio é
+calculada e busca-se, em torno do BPM nominal, o período que maximiza a
+magnitude do coeficiente de Fourier correspondente; a fase sai do argumento
+desse mesmo coeficiente. Depois, batida a batida, verifica-se se há ataque
+detectável, para delimitar onde o pulso realmente existe e não lançar bolas
+sobre introduções e desfechos sem percussão.
+
+**Como sei que está certo.** Comparei a grade estimada com os mapas manuais que
+já existiam. Em 17 das 24 faixas examinadas a dispersão ficou abaixo de 10 ms, e
+a mediana dos desvios foi de **+2,1 ms** — ou seja, o método não tem viés. Os
+mapas manuais, por sua vez, tinham desvios próprios de −15 a +60 ms conforme a
+faixa, e alguns bem piores: o mapa antigo de *CELESTIAL GOLD* estava 282 ms fora.
+
+Alguns números do resultado: cobertura média de 91% da duração de cada faixa, e
+de 85% a 99,7% das notas caem sobre uma batida com ataque detectável.
+
+Uma consequência útil: agora **todos os dez mapas têm uma nota por batida**, com
+fator de subdivisão 4 em todas as faixas. Antes a subdivisão variava (*Helen 2*
+tinha uma nota a cada duas batidas, *Path Of The Fireflies* uma a cada 1,5), o
+que obrigava um fator diferente por faixa.
+
+*Path Of The Fireflies* chegou a entrar na seleção de C2 e foi descartada: só
+74,7% de suas batidas têm ataque detectável, contra 96,0% de *DAYDREAM*. Em um
+jogo de ritmo, uma bola em cada quatro caindo onde não há nada audível é um
+defeito, não uma variação.
+
+---
+
+## 3. O que falta você fazer
+
+### 3.1 Escolher o aplicativo de meditação (C4)
 
 Precisa ficar registrado, antes da coleta e sem mudar depois:
 
@@ -78,7 +98,7 @@ Precisa ficar registrado, antes da coleta e sem mudar depois:
 E confirmar que a **licença de uso permite emprego em pesquisa acadêmica** —
 isso vai anexado ao processo do CEP.
 
-### 1.3 Calibrar o volume no piloto
+### 3.2 Calibrar o volume no piloto
 
 Os níveis do mixer estão em 0 dB (mestre e música) e −3 dB (efeitos). Esses
 valores são um ponto de partida, não uma medição: o nível que chega ao ouvido
@@ -91,9 +111,9 @@ valor fica registrado nos metadados de cada sessão.
 
 ---
 
-## 2. Como conduzir uma sessão
+## 4. Como conduzir uma sessão
 
-### 2.1 Armar
+### 4.1 Armar
 
 No editor: menu **Cozy Pong → Sessão experimental**. Preencha o código do
 participante, o número da sessão e a condição, e clique em **Armar sessão**.
@@ -106,7 +126,7 @@ lobby, escolha de música, recordes, controles de volume. Nada disso muda.
 
 Para voltar ao jogo normal: **Desarmar**.
 
-### 2.2 No Quest
+### 4.2 No Quest
 
 O arquivo de sessão também pode ser enviado por adb:
 
@@ -133,7 +153,7 @@ Ou por linha de comando, em builds de computador:
 CozyPong.exe -participant P07 -session 3 -condition C1
 ```
 
-### 2.3 Durante
+### 4.3 Durante
 
 O painel do pesquisador aparece na tela do operador — nunca dentro do HMD.
 Mostra tempo decorrido e restante, faixa atual, se o registro está aberto,
@@ -145,7 +165,7 @@ quantas notas já foram gravadas e qualquer erro de gravação.
 Em C3 e C4 o painel escurece o resto da tela, para o monitor não virar um
 estímulo visual não previsto.
 
-### 2.4 Depois
+### 4.4 Depois
 
 Os arquivos ficam em `Application.persistentDataPath/ExperimentData/`.
 
@@ -157,7 +177,7 @@ adb pull /sdcard/Android/data/<pacote>/files/ExperimentData ./dados
 
 ---
 
-## 3. O que sai de cada sessão
+## 5. O que sai de cada sessão
 
 Três arquivos, nomeados `P07_S03_C1_2026-09-14T15-22-10.*`.
 
@@ -170,8 +190,9 @@ encerramento, reinícios de faixa, FPS mediano e percentil 5, quadros perdidos.
 
 Marcadores: `SESSION_START`, `BUILD`, `SEED`, `AUDIO_LOCKED`, `VISUAL_PRESET`,
 `EXPOSURE_START`, `TRACK_START`, `TRACK_END`, `TRACK_RESTART`,
-`TRACK_FORCED_PLAY`, `TRACK_MISSING`, `PLAYLIST_LOOP`, `PAUSE_START`,
-`PAUSE_END`, `INTERRUPTION`, `EXPOSURE_END`, `SESSION_END`, `APP_QUIT`.
+`TRACK_FORCED_PLAY`, `TRACK_MISSING`, `TRACK_REPEAT_LAST`, `PLAYLIST_LOOP`,
+`PAUSE_START`, `PAUSE_END`, `INTERRUPTION`, `EXPOSURE_END`, `SESSION_END`,
+`APP_QUIT`.
 
 Os três relógios existem por motivos diferentes: `unix_ms` alinha com a Polar e
 o sensor de EDA, `dsp_s` é o relógio de áudio e `session_s` é o que você lê.
@@ -185,7 +206,7 @@ colunas de tempo vazias — vazio significa "não se aplica", nunca zero.
 
 ---
 
-## 4. O que o modo experimento muda no jogo
+## 6. O que o modo experimento muda no jogo
 
 | | Jogo normal | Sessão experimental |
 |---|---|---|
@@ -201,9 +222,8 @@ colunas de tempo vazias — vazio significa "não se aplica", nunca zero.
 
 ---
 
-## 5. Antes de valer
+## 7. Antes de valer
 
-- [ ] Completar os 13 beatmaps da Seção 1.1
 - [ ] Definir e travar o aplicativo de meditação
 - [ ] Rodar o piloto e conferir P1 a P5 do `PILOTO_ROTEIRO.md`
 - [ ] Fixar o volume de hardware e anotá-lo
